@@ -1,0 +1,102 @@
+{% include 'common/index-header.html' %}
+
+{% include 'common/left_nav.html' %}
+
+<section class="alert">
+    <div>{{ add }}</div>
+</section>
+
+<section class="alert">
+	<form method="get" action="/new_server/">
+		 <button class="btn btn-success">新建服务器</button>
+	</form>
+</section>
+<section class="content">
+	<section class="widget">
+		<header>
+			<span class="icon">&#128196;</span>
+			<hgroup>
+				<h1>服务器列表</h1>
+			</hgroup>
+		</header>
+
+
+        <div id="body">
+              <script>
+                  ajaxRequest('ajaxserver','get',{});
+              </script>
+        </div>
+
+		<div class="content info" style="display: none;">
+			<table class="table" id="myTable">
+				<thead>
+					<tr>
+						<th>自增序号</th>
+						<th >主机名称</th>
+						<th>管理IP</th>
+						<th>其它IP</th>
+						<th>名称</th>
+{#						<th>系统版本</th>#}
+{#						<th>监控模版</th>#}
+{#						<th>所属组</th>#}
+{#						<th>服务器类型</th>#}
+						<th>CPU</th>
+						<th>内存</th>
+						<th>磁盘</th>
+						<th>SN号</th>
+						<th>AN号</th>
+						<th>单元</th>
+						<th>所在机房</th>
+						<th>所在机柜</th>
+						<th>机柜单元</th>
+{#						<th>购买日期</th>#}
+{#						<th>过保日期</th>#}
+{#						<th>设备类型</th>#}
+{#						<th>设备端口</th>#}
+{#						<th>变更日期</th>#}
+{#						<th>变更内容</th>#}
+{#						<th>变更人</th>#}
+{#						<th>描述</th>#}
+						<th>状态</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+					<tbody>
+                    {% for item in ret %}
+						<tr>
+							<td>{{ item.id }}</td>
+							<td>{{ item.hostname }}</td>
+							<td>{{ item.manage_ip }}</td>
+							<td>{{ item.other_ip }}</td>
+							<td>{{ item.app_name }}</td>
+{#							<td>{{ item.system_version }} </td>#}
+{#							<td>{{ item.zabbix_template }} </td>#}
+{#							<td>{{ item.owner_group }} </td>#}
+{#							<td>{{ item.server_type }} </td>#}
+							<td>{{ item.cpu }} </td>
+							<td>{{ item.mem }} </td>
+                            <td>{{ item.disk }}</td>
+							<td>{{ item.sn }}</td>
+							<td>{{ item.an }}</td>
+							<td>{{ item.units }}</td>
+							<td>{{ item.idc_name }}</td>
+							<td>{{ item.rack_number }} </td>
+							<td>{{ item.rack_units }} </td>
+{#							<td>{{ item.create_date }} </td>#}
+{#							<td>{{ item.end_date }} </td>#}
+{#							<td>{{ item.switch_name }} </td>#}
+{#							<td>{{ item.switch_port }} </td>#}
+{#                            <td>{{ item.change_time }}</td>#}
+{#							<td>{{ item.change_dev_info }}</td>#}
+{#							<td>{{ item.change_people }}</td>#}
+{#							<td>{{ item.description }}</td>#}
+							<td>{{ item.status }}</td>
+							<td><button class="btn btn-warning">编辑</button>&nbsp;<button class="btn btn-danger">删除</button></td>
+						</tr>
+                    {% endfor %}
+					</tbody>
+				</table>
+		</div>
+	</section>
+</section>
+{% include 'common/footer.html' %}

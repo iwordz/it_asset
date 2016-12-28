@@ -1,0 +1,55 @@
+{% load staticfiles %}
+<!-- 新 Bootstrap 核心 CSS 文件 -->
+
+
+<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+
+<script src="{% static 'js/extendPagination.js' %}"></script>
+<script src="{% static 'js/jquery.wysiwyg.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>
+<script src="{% static 'js/cycle.js' %}"></script>
+<script src="{% static 'js/jquery.checkbox.min.js' %}"></script>
+<script src="{% static 'js/flot.js' %}"></script>
+<script src="{% static 'js/flot.resize.js' %}"></script>
+<script src="{% static 'js/flot-time.js' %}"></script>
+<script src="{% static 'js/flot-pie.js' %}"></script>
+<script src="{% static 'js/flot-graphs.js' %}"></script>
+<script src="{% static 'js/cycle.js' %}"></script>
+<script src="{% static 'js/jquery.tablesorter.min.js' %}"></script>
+<script src="{% static 'js/server_down.js' %}"></script>
+<script src="{% static 'js/server_top.js' %}"></script>
+<script src="{% static 'jedate/jedate.js' %}"></script>
+{#<script src="{% static 'js/jquery-1.7.1.min.js' %}"></script>#}
+{#<script src="{% static 'js/cypager.min.js' %}"></script>#}
+
+<script type="text/javascript">
+// Feature slider for graphs
+$('.cycle').cycle({
+	fx: "scrollHorz",
+	timeout: 0,
+    slideResize: 0,
+    prev:    '.left-btn', 
+    next:    '.right-btn'
+});
+</script>
+
+<script type="text/javascript">
+    //jeDate.skin('gray');
+	jeDate({
+		dateCell:"#indate",//isinitVal:true,
+		format:"YYYY-MM",
+		isTime:false, //isClear:false,
+		minDate:"2015-10-19 00:00:00",
+		maxDate:"2016-11-8 00:00:00"
+	})
+    jeDate({
+		dateCell:"#dateinfo",
+		format:"YYYY年MM月DD日 hh:mm:ss",
+		isinitVal:true,
+		isTime:true, //isClear:false,
+		minDate:"2014-09-19 00:00:00",
+		okfun:function(val){alert(val)}
+	})
+</script>
+</body>
+</html>

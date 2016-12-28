@@ -1,0 +1,352 @@
+{% include 'common/index-header.html' %}
+
+{% include 'common/left_nav.html' %}
+
+<section class="alert">
+    <div>{{ add }}</div>
+</section>
+
+<section class="alert">
+	<form method="get" action="/new_vm/">
+		 <button class="btn btn-success">新建VM服务器</button>
+	</form>
+</section>
+<section class="content">
+	<section class="widget">
+		<header>
+			<span class="icon">&#128196;</span>
+			<hgroup>
+				<h1>VM服务器列表</h1>
+			</hgroup>
+		</header>
+        <div class="content" id="body">
+              <script>
+                  var page = getQueryString('p');
+                  ajaxRequest("vm",'ajax_vm','get',{"p":page},true);
+              </script>
+        </div>
+	</section>
+</section>
+
+
+<form method = "post" action = "/new_vm/"> {% csrf_token %}
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="myModalLabel">编辑VM服务器</h1>
+                </div>
+                <input type="hidden" name="id" id="id" value="">
+                <input type="hidden" name="editor" id="editor" value="1">
+                <input type="hidden" name="editor_current_page" id="editor_current_page">
+                <div class="content">
+                <div class="field-wrap">
+                    主机名称:<input type="text" value="host name" name="hostname" id="hostname"/>
+                </div>
+                <div class="field-wrap">
+                    管理IP:<input type="text" value="manager IP" name="manage_ip" id="manage_ip"/>
+                </div>
+                <div class="field-wrap">
+                    其它IP:<input type="text" value="other IP" name="other_ip" id="other_ip"/>
+                </div>
+                <div class="field-wrap">
+                    应用名称:<input type="text" value="application name" name="app_name" id="app_name"/>
+                </div>
+                <div class="field-wrap">
+                    系统版本:<input type="text" value="os system version" name="system_version" id="system_version"/>
+                </div>
+                <div class="field-wrap">
+                    监控模版:<input type="text" value="monitor template" name="zabbix_template" id="zabbix_template"/>
+                </div>
+
+                <div class="field-wrap">
+{#                    所属组:<input type="text" value="server owner group" name="owner_group" id="owner_group"/>#}
+                     所属组:<select name="owner_group" id="owner_group" class="selectpicker">
+
+                    </select>
+                </div>
+                <div class="field-wrap">
+                    cpu:<input type="text" value="server cpu" name="cpu" id="cpu"/>
+                </div>
+                <div class="field-wrap">
+                    memory:<input type="text" value="server memory" name="mem" id="mem"/>
+                </div>
+                <div class="field-wrap">
+                    disk:<input type="text" value="disk" name="disk" id="disk"/>
+                </div>
+                    <div class="field-wrap">
+                    宿主机:<input type="text" value="hypervisor host" name="hypervisor_host" id="hypervisor_host"/>
+                </div>
+                <div class="field-wrap">
+                    变更内容:<input type="text" value="server change des" name="change_dev_info" id="change_dev_info"/>
+                </div>
+                <div class="field-wrap">
+                    变更人:<input type="text" value="server changer" name="change_people" id="change_people"/>
+                </div>
+                <div class="field-wrap">
+                    描述:<input type="text" value="des" name="description" id="description"/>
+                </div>
+                <div class="field-wrap">
+                    服务器状态:<select name="status">
+                    <option value="1">开启并使用</option>
+                    <option value="0">开启未使用</option>
+                    <option value="2">停机</option>
+                </select>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">更改</button>
+                    <button type="submit" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="modal fade" id="myModalView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                </div>
+                <div class="modal-header">
+                    <h1 class="modal-title" id="myModalLabel">查看VM服务器详细</h1>
+                </div>
+
+                <div class="content">
+                <div class="field-wrap">
+                    主机名称:<input type="text" value="host name" name="hostname" id="view_hostname"/>
+                </div>
+                <div class="field-wrap">
+                    管理IP:<input type="text" value="manager IP" name="manage_ip" id="view_manage_ip"/>
+                </div>
+                <div class="field-wrap">
+                    其它IP:<input type="text" value="other IP" name="other_ip" id="view_other_ip"/>
+                </div>
+                <div class="field-wrap">
+                    应用名称:<input type="text" value="application name" name="app_name" id="view_app_name"/>
+                </div>
+                <div class="field-wrap">
+                    系统版本:<input type="text" value="os system version" name="system_version" id="view_system_version"/>
+                </div>
+                <div class="field-wrap">
+                    监控模版:<input type="text" value="monitor template" name="zabbix_template" id="view_zabbix_template"/>
+                </div>
+
+                <div class="field-wrap">
+{#                    所属组:<input type="text" value="server owner group" name="owner_group" id="view_owner_group"/>#}
+                    所属组:<select name="owner_group" id="view_owner_group" class="selectpicker">
+
+                    </select>
+                </div>
+{#                <div class="field-wrap">#}
+{#                    服务器类型:<input type="text" value="server type" name="server_type" id="view_server_type"/>#}
+{#                </div>#}
+                <div class="field-wrap">
+                    cpu:<input type="text" value="server cpu" name="cpu" id="view_cpu"/>
+                </div>
+                <div class="field-wrap">
+                    memory:<input type="text" value="server memory" name="mem" id="view_mem"/>
+                </div>
+                <div class="field-wrap">
+                    disk:<input type="text" value="disk" name="disk" id="view_disk"/>
+                </div>
+                    <div class="field-wrap">
+                    宿主机:<input type="text" value="hypervisor_host" name="hypervisor_host" id="vm_hypervisor_host"/>
+                </div>
+                <div class="field-wrap">
+                    变更日期:<input type="text" value="service change time" name="change_time" id="view_change_time"/>
+                </div>
+                <div class="field-wrap">
+                    变更内容:<input type="text" value="server change des" name="change_dev_info" id="view_change_dev_info"/>
+                </div>
+                <div class="field-wrap">
+                    变更人:<input type="text" value="server changer" name="change_people" id="view_change_people"/>
+                </div>
+                <div class="field-wrap">
+                    描述:<input type="text" value="des" name="description" id="view_description"/>
+                </div>
+                <div class="field-wrap">
+                    服务器状态:<select name="status" id="view_status">
+                    <option value="1">开启并使用</option>
+                    <option value="0">开启未使用</option>
+                    <option value="2">停机</option>
+                </select>
+                </div>
+            </div>
+            </div>
+        </div>
+
+<div class="modal fade" id="myModalDel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="myModalLabel"><strong>确定删除当前服务器信息?</strong></h1>
+            </div>
+            <input type="hidden" name="delete_id" id="delete_id">
+            <input type="hidden" name="delete_current_page" id="delete_current_page">
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success btn-delete">删除</button>
+                <button type="submit" class="btn btn-danger" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'common/footer.html' %}
+
+<script type="text/javascript">
+
+    $(".btn-danger.delete").click(function () {
+        var rack_id = $(this).data("deleteid");
+        var delete_page = $(this).data("page");
+        $("#delete_id").val(rack_id);
+        $("#delete_current_page").val(delete_page);
+    });
+
+    $(".btn-success.btn-delete").click(function () {
+        $("#myModalDel").attr('aria-hidden', true);
+        var id1 = $("#delete_id").val();
+        var current_page = $("#delete_current_page").val();
+        $.ajax({
+            type: "get",
+            url: "/deleteVmById/?id=" + id1+"&p=" + current_page,
+            beforeSend: function (XMLHttpRequest) {
+
+            },
+            success: function (data, textStatus) {
+                alert(data['ret']);
+                window.location.reload();
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                //HideLoading();
+            },
+            error: function () {
+                //请求出错处理
+            }
+        });
+    });
+
+
+    //////////////////////rack editor function start
+    $(".btn-success.editor").click(function () {
+        ///alert("editor");
+        var id = $(this).data("id");
+        var curr_page = $(this).data("page");
+        $("#editor_current_page").val(curr_page);
+        $.ajax({
+            type: "get",
+            url: "/getVmById/?id=" + id,
+            beforeSend: function (XMLHttpRequest) {
+
+            },
+            success: function (data, textStatus) {
+
+                var result = data['result'];
+                var idc = data['idc'];
+                var room = data['room'];
+                var server_group = data['owner_group'];
+                for (var key in result) {
+                    $("#" + key).val(result[key]);
+
+                    if (key == 'rack_number') {
+                        var rack_number_html = '';
+                        for (var k in idc) {
+                            selected_html_1 = "";
+                            if (idc[k]['id'] == result[key]) {
+                                selected_html_1 = " selected ";
+                            }
+                            rack_number_html += "<option value='" + idc[k]['id'] + "' " + selected_html_1 + ">" + idc[k]['idc_name'] + "</option>";
+                        }
+                        $("#rack_number").html(rack_number_html)
+                    }
+                    if (key == 'owner_group') {
+                        var ower_group_html = '';
+                        //alert(server_group);
+                        for (var k_3 in server_group) {
+                            selected_html_3 = "";
+                            if (server_group[k_3]['id'] == result[key]) {
+                                selected_html_3 = " selected ";
+                            }
+                            ower_group_html += "<option value='" + server_group[k_3]['id'] + "' " + selected_html_3 + ">" + server_group[k_3]['name'] + "</option>";
+                        }
+                        $("#owner_group").html(ower_group_html)
+                    }//ower_group
+                }
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                //HideLoading();
+            },
+            error: function () {
+                //请求出错处理
+            }
+        });
+    });
+
+    //////////////////////server info list function start
+    $(".btn-warning.view").click(function () {
+        var id = $(this).data("view");
+        $.ajax({
+            type: "get",
+            url: "/getVmById/?id=" + id,
+            beforeSend: function (XMLHttpRequest) {
+
+            },
+            success: function (data, textStatus) {
+
+                var result = data['result'];
+                var idc = data['idc'];
+                var room = data['room'];
+                var server_group = data['owner_group'];
+                for (var key in result) {
+                    $("#view_" + key).val(result[key]);
+                    if (key == 'idc_name') {
+                        var idc_name_html = '';
+                        for (var k in room) {
+                            selected_html = "";
+                            if (room[k]['id'] == result[key]) {
+                                selected_html = " selected ";
+                            }
+                            idc_name_html += "<option value='" + room[k]['id'] + "' " + selected_html + ">" + room[k]['room_name'] + "</option>";
+                        }
+                        $("#view_idc_name").html(idc_name_html)
+                    }//rack_number
+                    if (key == 'rack_number') {
+                        var rack_number_html = '';
+                        for (var k in idc) {
+                            selected_html_1 = "";
+                            if (idc[k]['id'] == result[key]) {
+                                selected_html_1 = " selected ";
+                            }
+                            rack_number_html += "<option value='" + idc[k]['id'] + "' " + selected_html_1 + ">" + idc[k]['idc_name'] + "</option>";
+                        }
+                        $("#view_rack_number").html(rack_number_html)
+                    }
+                    if (key == 'owner_group') {
+                        var ower_group_html = '';
+                        for (var k_3 in server_group) {
+                            selected_html_3 = "";
+                            if (server_group[k_3]['id'] == result[key]) {
+                                selected_html_3 = " selected ";
+                            }
+                            ower_group_html += "<option value='" + server_group[k_3]['id'] + "' " + selected_html_3 + ">" + server_group[k_3]['name'] + "</option>";
+                        }
+                        $("#view_owner_group").html(ower_group_html)
+                    }//ower_group
+                }
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                //HideLoading();
+            },
+            error: function () {
+                //请求出错处理
+            }
+        });
+    });
+
+</script>
+
+
+{% include 'common/footer.html' %}

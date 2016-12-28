@@ -1,0 +1,27 @@
+{% include 'common/index-header.html' %}
+{% include 'common/left_nav.html' %}
+<section class="content">
+	<section class="widget" style="height: 400px; min-height:300px">
+		<header>
+			<span class="icon">&#128196;</span>
+			<hgroup>
+				<h1>新建用户</h1>
+				<h2>Create new Manager User</h2>
+			</hgroup>
+		</header>
+        <form method="post" action="/new_users/">{% csrf_token %}
+		 <div class="content">
+			<div class="field-wrap">
+				登录用户名:<input name="user_name" type="text" value=""/>
+			</div>
+			<div class="field-wrap">
+				登录密码:<input name="user_passwd" type="password" value=""/>
+			</div>
+
+			<button type="submit" class="green">Post</button> <button type="submit" class="">Preview</button>
+		 </div>
+        </form>
+	</section>
+
+</section>
+{% include 'common/footer.html' %}

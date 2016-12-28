@@ -1,0 +1,55 @@
+section.widget header span.icon {
+	line-height: 0;
+}
+
+
+span.icon, .timeline span.icon {
+	line-height: 0;
+}
+
+section.widget header h2 {
+	float: left;
+}
+
+section.widget header aside button.right-btn, section.widget header aside button.left-btn {
+	vertical-align : middle;
+	padding-bottom: 20px;
+	margin-top: -2px;
+}
+
+section.widget header aside span a, section.widget header aside span a:hover {
+	line-height: 5px;
+}
+
+section.alert .close, div.green .close, div.orange .close, div.red .close {
+	top: -7px;
+}
+
+section.alert div {
+	position: relative;
+}
+
+.gallery a span {
+	top: -30px;
+}
+
+
+na ul li {
+	position: relative;
+}
+
+nav ul li a {
+	padding: 25px 15px 25px 65px;
+	position: relative;
+}
+
+nav .icon {
+	position: absolute;
+	top: 15px;
+	left: 0;
+}
+
+.pip {
+	top: 27px;
+	right: 75px;
+}

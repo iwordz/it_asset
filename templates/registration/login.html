@@ -1,0 +1,64 @@
+{% include 'common/header.html' %}
+<body class="login">
+<section>
+    <h1><strong>用户登录</strong></h1>
+     {% if password_is_wrong %}
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <div style="color: #ffffff;"><h4>错误!</h4>用户名或密码错误</div>
+        </div>
+    {% endif %}
+    <form method="post" action="/check_login/">{% csrf_token %}
+        <tr>
+            <th><label for="id_user_name">User name:</label></th>
+            <td><input id="id_user_name" name="user_name" type="text"/></td>
+        </tr>
+        <tr>
+            <th><label for="id_passs_word">Passs word:</label></th>
+            <td><input id="id_passs_word" name="passs_word" type="password"/></td>
+        </tr>
+        <button class="blue">登录</button>
+    </form>
+</section>
+<script src="http://ajax.useso.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+    // Page load delay by Curtis Henson - http://curtishenson.com/articles/quick-tip-delay-page-loading-with-jquery/
+    $(function () {
+        $('.login button').click(function (e) {
+            // Get the url of the link
+            var toLoad = $(this).attr('href');
+
+            // Do some stuff
+            $(this).addClass("loading");
+
+            // Stop doing stuff
+            // Wait 700ms before loading the url
+            setTimeout(function () {
+                window.location = toLoad
+            }, 10000);
+
+            // Don't let the link do its natural thing
+            e.preventDefault
+        });
+
+        $('input').each(function () {
+
+            var default_value = this.value;
+
+            $(this).focus(function () {
+                if (this.value == default_value) {
+                    this.value = '';
+                }
+            });
+
+            $(this).blur(function () {
+                if (this.value == '') {
+                    this.value = default_value;
+                }
+            });
+
+        });
+    });
+</script>
+</body>
+</html>

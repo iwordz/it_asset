@@ -1,0 +1,27 @@
+{% include 'common/index-header.html' %}
+{% include 'common/left_nav.html' %}
+<section class="content">
+	<section class="widget" style="height: 400px; min-height:300px">
+		<header>
+			<span class="icon">&#128196;</span>
+			<hgroup>
+				<h1>新建托管商</h1>
+				<h2>Create new Manager User</h2>
+			</hgroup>
+		</header>
+        <form method="post" action="/new_service_provider/">{% csrf_token %}
+		 <div class="content">
+			<div class="field-wrap">
+				托管商名称:<input name="service_provider_name" type="text" value=""/>
+			</div>
+			<div class="field-wrap">
+				托管商地址:<input name="service_provider_addr" type="text" value=""/>
+			</div>
+
+			<button type="submit" class="green">新建</button> <button type="reset" class="">重置</button>
+		 </div>
+        </form>
+	</section>
+
+</section>
+{% include 'common/footer.html' %}

@@ -1,0 +1,84 @@
+{% include 'common/index-header.html' %}
+
+{% include 'common/left_nav.html' %}
+
+<section class="alert">
+    <div>{{ add }}</div>
+</section>
+
+<section class="alert">
+    <form method="get" action="/new_rack/">
+        <button class="btn btn-success">新建机柜</button>
+    </form>
+</section>
+<section class="content">
+    <section class="widget">
+        <header>
+            <span class="icon">&#128196;</span>
+            <hgroup>
+                <h1>机柜图</h1>
+            </hgroup>
+        </header>
+        <div class="content">
+            {% load staticfiles %}
+            <table border="0" align="center" cellpadding="2" cellspacing="0">
+                <tbody>
+                <tr>
+                    <td width="1104" rowspan="2" align="center" valign="top">
+                        <table class="jjtable" bgcolor="#ffffff" border="0" cellpadding="1" cellspacing="3"
+                               width="1024">
+                            <tbody>
+                            <tr align="center" valign="top">
+                                <table class="jjtable" bgcolor="#ffffff" border="0" cellpadding="1" cellspacing="3"
+                                       width="1024">
+                                    <tbody>
+                                    <tr align="center" valign="top">
+                                        {% for idc_name,server_list in ret %}
+                                            <td background="{% static 'images/serverico/jg.gif' %}" bgcolor="#eeeeee"
+                                                width="147">
+                                                <table border="0" cellpadding="1" cellspacing="0" height="440"
+                                                       width="99%">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td class="jgtable" align="center" height="30" valign="bottom">
+                                                            <font
+                                                                    class="jgtitle">{{ idc_name }}</font></td>
+                                                    </tr>
+                                                    {% for itm_1 in server_list %}
+                                                        <tr>
+                                                            <td class="jgtable" align="center" height="30"
+                                                                valign="bottom">
+                                                                <img src="{% static 'images/serverico/1u_normal.gif' %}"
+                                                                     style="vertical-align: bottom;"
+                                                                     onmouseover="displayDIV('operate 0 '); return false"
+                                                                     onmouseout="hiddenDIV('operate 0 '); return false"
+                                                                     height="12"
+                                                                     width="127">
+
+                                                                <div id="operate 0 "
+                                                                     style="border-style: outset; border-width: 1px 2px 2px 1px; background: none 0% 0% repeat scroll rgb(255, 255, 255); display: none; position: absolute; width: 200px; text-align: left;">
+                                                                    <table cellpadding="3" cellspacing="1">
+                                                                        <tbody>
+                                                                        <tr>
+                                                                            <td>
+                                                                                IP:{{ itm_1.manage_ip }}<br>操作系统:{{ itm_1.system_version }}<br>位置:{{ itm_1.rack_number }}<br>机型:{{ itm_1.units }}U<br>
+                                                                            </td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                &nbsp;</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </td>
+                                        {% endfor %}
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+        </div>
+    </section>
+</section>
+{% include 'common/footer.html' %}

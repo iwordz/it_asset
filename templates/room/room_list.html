@@ -1,0 +1,138 @@
+{% include 'common/index-header.html' %}
+
+{% include 'common/left_nav.html' %}
+
+<section class="alert">
+    <div>{{ add }}</div>
+</section>
+
+<section class="alert">
+	<form method="get" action="/new_room/">
+		 <button class="green">新建机房</button>
+	</form>
+</section>
+<section class="content">
+	<section class="widget">
+		<header>
+			<span class="icon">&#128196;</span>
+			<hgroup>
+				<h1>机房列表</h1>
+				<h2>CMS content Room list</h2>
+			</hgroup>
+		</header>
+        <div class="content" id="body">
+              <script>
+                  var page = getQueryString('p');
+                  ajaxRequest("room_list",'ajaxroomlist','get',{"p":page});
+              </script>
+        </div>
+	</section>
+</section>
+
+
+<form method = "post" action = "/new_room/"> {% csrf_token %}
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="myModalLabel">编辑机房</h1>
+                </div>
+                <input type="hidden" name="id" id="id" value="">
+                <input type="hidden" name="editor" id="editor" value="1">
+                <input type="hidden" name="editor_current_page" id="editor_current_page">
+                <div class="field-wrap">
+                    机房名称:<input type="text" id="room_name" value="host name" id="room_name" name="room_name"/>
+                </div>
+                <div class="field-wrap">
+                    机房位置:<input type="text" value="room_addr" id="room_addr" name="room_addr"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">更改</button>
+                    <button type="submit" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="modal fade" id="myModalDel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="myModalLabel"><strong>确定删除编辑机柜?</strong></h1>
+            </div>
+            <input type="hidden" name="delete_id" id="delete_id">
+            <input type="hidden" name="delete_current_page" id="delete_current_page">
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success btn-delete">删除</button>
+                <button type="submit" class="btn btn-danger" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'common/footer.html' %}
+
+<script type="text/javascript">
+
+    $(".btn-danger.delete").click(function () {
+        var rack_id = $(this).data("deleteid");
+        var delete_page = $(this).data("page");
+        $("#delete_id").val(rack_id);
+        $("#delete_current_page").val(delete_page);
+    });
+
+    $(".btn-success.btn-delete").click(function () {
+        $("#myModalDel").attr('aria-hidden', true);
+        var id1 = $("#delete_id").val();
+        var current_page = $("#delete_current_page").val();
+        $.ajax({
+            type: "get",
+            url: "/deleteRoomById/?id=" + id1+"&p=" + current_page,
+            beforeSend: function (XMLHttpRequest) {
+
+            },
+            success: function (data, textStatus) {
+                alert(data['ret']);
+                window.location.reload();
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                //HideLoading();
+            },
+            error: function () {
+                //请求出错处理
+            }
+        });
+    });
+
+
+    //////////////////////rack editor function start
+    $(".btn-success.editor").click(function () {
+        //alert("editor");
+        var id = $(this).data("id");
+        var curr_page = $(this).data("page");
+        $("#editor_current_page").val(curr_page)
+        $.ajax({
+            type: "get",
+            url: "/getRoomById/?id=" + id,
+            beforeSend: function (XMLHttpRequest) {
+
+            },
+            success: function (data, textStatus) {
+
+                var result = data['result'];
+                for (var key in result)
+                {
+                    $("#" + key).val(result[key]);
+                }
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                //HideLoading();
+            },
+            error: function () {
+                //请求出错处理
+            }
+        });
+    });
+</script>
+{% include 'common/footer.html' %}

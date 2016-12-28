@@ -1,0 +1,27 @@
+{% include 'common/index-header.html' %}
+{% include 'common/left_nav.html' %}
+<section class="content">
+	<section class="widget" style="height: 400px; min-height:300px">
+		<header>
+			<span class="icon">&#128196;</span>
+			<hgroup>
+				<h1>新建机房</h1>
+				<h2>Create new Manager User</h2>
+			</hgroup>
+		</header>
+        <form method="post" action="/new_room/">{% csrf_token %}
+		 <div class="content">
+			<div class="field-wrap">
+				机房名称:<input name="room_name" type="text" value=""/>
+			</div>
+			<div class="field-wrap">
+				机房地址:<input name="room_addr" type="text" value=""/>
+			</div>
+
+			<button type="submit" class="green">新建</button> <button type="reset" class="">重置</button>
+		 </div>
+        </form>
+	</section>
+
+</section>
+{% include 'common/footer.html' %}

@@ -1,0 +1,109 @@
+{% include 'common/index-header.html' %}
+
+{% include 'common/left_nav.html' %}
+
+<section class="alert">
+	<form method="link" action="/new_rack_config/">
+		 <button class="green">新建机柜配置</button>
+	</form>
+</section>
+<section class="content">
+	<section class="widget">
+		<header>
+			<span class="icon">&#128196;</span>
+			<hgroup>
+				<h1>Pages</h1>
+				<h2>CMS content pages</h2>
+			</hgroup>
+			<aside>
+				<span>
+					<a href="#">&#9881;</a>
+					<ul class="settings-dd">
+						<li><label>Option a</label><input type="checkbox" /></li>
+						<li><label>Option b</label><input type="checkbox" checked="checked" /></li>
+						<li><label>Option c</label><input type="checkbox" /></li>
+					</ul>
+				</span>
+			</aside>
+		</header>
+		<div class="content">
+			<table id="myTable" border="0" width="100">
+				<thead>
+					<tr>
+						<th>Page title</th>
+						<th >Date</th>
+						<th>Child pages</th>
+						<th>Comments</th>
+						<th>Author</th>
+					</tr>
+				</thead>
+					<tbody>
+						<tr>
+							<td><input type="checkbox" /> Home</td>
+							<td>01/3/2013</td>
+							<td>0</td>
+							<td>0</td>
+							<td>John Doe</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /> Services</td>
+							<td>01/3/2013</td>
+							<td>4</td>
+							<td>0</td>
+							<td>John Doe</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /> Portfolio</td>
+							<td>02/3/2013</td>
+							<td>12</td>
+							<td>0</td>
+							<td>John Doe</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /> About us</td>
+							<td>02/3/2013</td>
+							<td>2</td>
+							<td>0</td>
+							<td>John Doe</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /> Blog</td>
+							<td>02/3/2013</td>
+							<td>32</td>
+							<td>0</td>
+							<td>John Doe</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /> Contact us</td>
+							<td>03/3/2013</td>
+							<td>0</td>
+							<td>0</td>
+							<td>John Doe</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /> Our clients</td>
+							<td>04/3/2013</td>
+							<td>1</td>
+							<td>0</td>
+							<td>John Doe</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" /> Partnerships</td>
+							<td>04/3/2013</td>
+							<td>0</td>
+							<td>0</td>
+							<td>John Doe</td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" />Jobs</td>
+							<td>04/3/2013</td>
+							<td>0</td>
+							<td>0</td>
+							<td>John Doe</td>
+						</tr>
+					</tbody>
+				</table>
+		</div>
+	</section>
+</section>
+{% include 'common/footer.html' %}

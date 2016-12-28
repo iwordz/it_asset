@@ -1,0 +1,85 @@
+{% include 'common/index-header.html' %}
+{% include 'common/left_nav.html' %}
+<form method="post" action="/new_network_config/">{% csrf_token %}
+ <section class="content">
+	<section class="widget" style="min-height:300px">
+		<header>
+			<span class="icon">&#128196;</span>
+			<hgroup>
+				<h1>新建网络设备</h1>
+			</hgroup>
+		</header>
+		<div class="content">
+        <div class="field-wrap">
+				设备名称:<input type="text" value="Network Device Name" name="device_name"/>
+			</div>
+			<div class="field-wrap">
+				所在机房:
+                <select name="idc_name" class="selectpicker" data-style="btn-success">
+                    {% for itm in room_list %}
+                     <option value="{{ itm.id }}">{{   itm.room_name }}</option>
+                    {% endfor %}
+                </select>
+			</div>
+			<div class="field-wrap">
+				管理IP:<input type="text" value="manager IP" name="manage_ip"/>
+			</div>
+            <div class="field-wrap">
+				其它IP:<input type="text" value="other IP" name="other_ip"/>
+			</div>
+            <div class="field-wrap">
+				设备类型:<select name="dev_type">
+                <option value="1">类型1</option>
+                <option value="2">类型2</option>
+                <option value="3">类型3</option>
+            </select>
+			</div>
+            <div class="field-wrap">
+				设备端口:<input type="text" value="dev ports" name="dev_ports"/>
+			</div>
+        <div class="field-wrap">
+				设备SN号:<input type="text" value="device sn code" name="sn"/>
+			</div>
+        <div class="field-wrap">
+				设备AN号:<input type="text" value="device an code" name="an"/>
+			</div>
+        <div class="field-wrap">
+				设备槽:<input type="text" value="device units" name="units"/>
+			</div>
+        <div class="field-wrap">
+				所在机柜:<select name="rack_number" class="selectpicker" data-style="btn-success">
+                    {% for itm1 in rack_list %}
+                     <option value="{{ itm1.id }}">{{   itm1.idc_name }}</option>
+                    {% endfor %}
+                </select>
+			</div>
+        <div class="field-wrap">
+				机柜槽:<input type="text" value="rack units" name="rack_units"/>
+			</div>
+
+
+			<button type="submit" class="green">New</button> <button type="reset" class="">Cancel</button>
+		</div>
+	</section>
+ </section>
+</form>
+{% include 'common/footer.html' %}
+
+<script type="text/javascript">
+    //jeDate.skin('gray');
+	jeDate({
+		dateCell:"#indate",//isinitVal:true,
+		format:"YYYY-MM",
+		isTime:false, //isClear:false,
+		minDate:"2015-10-19 00:00:00",
+		maxDate:"2016-11-8 00:00:00"
+	})
+    jeDate({
+		dateCell:"#dateinfo",
+		format:"YYYY年MM月DD日 hh:mm:ss",
+		isinitVal:true,
+		isTime:true, //isClear:false,
+		minDate:"2014-09-19 00:00:00",
+		okfun:function(val){alert(val)}
+	})
+</script>

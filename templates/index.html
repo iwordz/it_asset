@@ -1,0 +1,54 @@
+{% include 'common/index-header.html' %}
+{%  include 'common/left_nav.html' %}
+<section class="alert">
+	<div class="blue">
+		<p>Welcome to It Asset Manage System!!!!</p>
+		<span class="close">&#10006;</span>
+	</div>
+</section>
+<section class="content">
+
+	<div class="widget-container">
+		<section class="widget big">
+			<header> 
+				<span class="icon">&#128318;</span>
+				<hgroup>
+					<h1><strong>IT资产统计</strong></h1>
+				</hgroup>
+			</header>
+			<div class="content">
+				<section class="stats-wrapper">
+					<div class="stats">
+						<p><span>{{ room }}</span></p>
+						<p>机房</p>
+					</div>
+					<div class="stats">
+						<p><span>{{ rack }}</span></p>
+						<p>机柜</p>
+					</div>
+				</section>
+				<section class="stats-wrapper">
+					<div class="stats">
+						<p><span>{{ server }}</span></p>
+						<p>物理服务器</p>
+					</div>
+					<div class="stats">
+						<p><span>{{ vm }}</span></p>
+						<p>虚拟机</p>
+					</div>
+				</section>
+                <section class="stats-wrapper">
+					<div class="stats">
+						<p><span>{{ online }}</span></p>
+						<p>存活机器</p>
+					</div>
+					<div class="stats">
+						<p><span>{{ offline }}</span></p>
+						<p>非存活机器</p>
+					</div>
+				</section>
+			</div>
+		</section>
+	</div>
+</section>
+{% include 'common/footer.html' %}

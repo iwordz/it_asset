@@ -1,0 +1,306 @@
+{% include 'common/index-header.html' %}
+
+{% include 'common/left_nav.html' %}
+
+<section class="alert">
+    <div>{{ add }}</div>
+</section>
+
+<section class="alert">
+    <form method="get" action="/new_network_config/">
+        <button class="btn btn-success">新建网络设备</button>
+    </form>
+</section>
+<section class="content">
+    <section class="widget">
+        <header>
+            <span class="icon">&#128196;</span>
+            <hgroup>
+                <h1>网络设备列表</h1>
+            </hgroup>
+        </header>
+        <div class="content" id="body">
+            <script>
+                var page = getQueryString('p');
+                ajaxRequest("network_config", 'ajax_network_config', 'get', {"p": page}, true);
+            </script>
+        </div>
+    </section>
+</section>
+
+<form method="post" action="/new_network_config/"> {% csrf_token %}
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="myModalLabel">编辑机房</h1>
+                </div>
+                <input type="hidden" name="id" id="id" value="">
+                <input type="hidden" name="editor" id="editor" value="1">
+                <input type="hidden" name="editor_current_page" id="editor_current_page">
+                <div class="field-wrap">
+				   设备名称:<input type="text" value="Network Device Name" name="device_name" id="device_name"/>
+		  	    </div>
+                <div class="field-wrap">
+                    所在机房:
+                    <select name="idc_name" id="idc_name" class="selectpicker">
+
+                    </select>
+                </div>
+                <div class="field-wrap">
+                    管理IP:<input type="text" value="manager IP" name="manage_ip" id="manage_ip"/>
+                </div>
+                <div class="field-wrap">
+                    其它IP:<input type="text" value="other IP" name="other_ip" id="other_ip"/>
+                </div>
+                <div class="field-wrap">
+                    设备类型:<select name="dev_type" id="dev_type">
+                    <option value="1">类型1</option>
+                    <option value="2">类型2</option>
+                    <option value="3">类型3</option>
+                </select>
+                </div>
+                <div class="field-wrap">
+                    设备端口:<input type="text" value="dev ports" name="dev_ports" id="dev_ports"/>
+                </div>
+                <div class="field-wrap">
+                    设备SN号:<input type="text" value="device sn code" name="sn" id="sn"/>
+                </div>
+                <div class="field-wrap">
+                    设备AN号:<input type="text" value="device an code" name="an" id="an"/>
+                </div>
+                <div class="field-wrap">
+                    设备槽:<input type="text" value="device units" name="units" id="units"/>
+                </div>
+                <div class="field-wrap">
+                    所在机柜:<select name="rack_number" id="rack_number">
+
+                </select>
+                </div>
+                <div class="field-wrap">
+                    机柜槽:<input type="text" value="rack units" name="rack_units" id="rack_units"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success">更改</button>
+                    <button type="submit" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div class="modal fade" id="myModalView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-danger" data-dismiss="modal">关闭</button>
+            </div>
+            <div class="modal-header">
+                <h1 class="modal-title" id="myModalLabel">查看网络设备详细信息</h1>
+            </div>
+            <div class="field-wrap">
+				   设备名称:<input type="text" value="Network Device Name" name="device_name" id="view_device_name"/>
+		  	    </div>
+            <div class="field-wrap">
+                所在机房:
+                <select name="idc_name" id="view_idc_name" class="selectpicker">
+
+                </select>
+            </div>
+            <div class="field-wrap">
+                管理IP:<input type="text" value="manager IP" name="manage_ip" id="view_manage_ip"/>
+            </div>
+            <div class="field-wrap">
+                其它IP:<input type="text" value="other IP" name="other_ip" id="view_other_ip"/>
+            </div>
+            <div class="field-wrap">
+                设备类型:<select name="dev_type" id="dev_type">
+                <option value="1">类型1</option>
+                <option value="2">类型2</option>
+                <option value="3">类型3</option>
+            </select>
+            </div>
+            <div class="field-wrap">
+                设备端口:<input type="text" value="dev ports" name="dev_ports" id="view_dev_ports"/>
+            </div>
+            <div class="field-wrap">
+                设备SN号:<input type="text" value="device sn code" name="sn" id="view_sn"/>
+            </div>
+            <div class="field-wrap">
+                设备AN号:<input type="text" value="device an code" name="an" id="view_an"/>
+            </div>
+            <div class="field-wrap">
+                设备槽:<input type="text" value="device units" name="units" id="view_units"/>
+            </div>
+            <div class="field-wrap">
+                所在机柜:<select name="rack_number" id="view_rack_number">
+
+            </select>
+            </div>
+            <div class="field-wrap">
+                机柜槽:<input type="text" value="rack units" name="rack_units" id="view_rack_units"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="myModalDel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="myModalLabel"><strong>确定删除编辑机柜?</strong></h1>
+            </div>
+            <input type="hidden" name="delete_id" id="delete_id">
+            <input type="hidden" name="delete_current_page" id="delete_current_page">
+
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success btn-delete">删除</button>
+                <button type="submit" class="btn btn-danger" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'common/footer.html' %}
+
+<script type="text/javascript">
+
+    $(".btn-danger.delete").click(function () {
+        var rack_id = $(this).data("deleteid");
+        var delete_page = $(this).data("page");
+        $("#delete_id").val(rack_id);
+        $("#delete_current_page").val(delete_page);
+    });
+
+    $(".btn-success.btn-delete").click(function () {
+        $("#myModalDel").attr('aria-hidden', true);
+        var id1 = $("#delete_id").val();
+        var current_page = $("#delete_current_page").val();
+        $.ajax({
+            type: "get",
+            url: "/deleteNetwork_configById/?id=" + id1 + "&p=" + current_page,
+            beforeSend: function (XMLHttpRequest) {
+
+            },
+            success: function (data, textStatus) {
+                alert(data['ret']);
+                window.location.reload();
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                //HideLoading();
+            },
+            error: function () {
+                //请求出错处理
+            }
+        });
+    });
+
+
+    //////////////////////rack editor function start
+    $(".btn-success.editor").click(function () {
+        //alert("editor");
+        var id = $(this).data("id");
+        var curr_page = $(this).data("page");
+        $("#editor_current_page").val(curr_page)
+        $.ajax({
+            type: "get",
+            url: "/getNetwork_configById/?id=" + id,
+            beforeSend: function (XMLHttpRequest) {
+
+            },
+            success: function (data, textStatus) {
+
+                var result = data['result'];
+                var idc = data['idc'];
+                var room = data['room'];
+                for (var key in result) {
+                    $("#" + key).val(result[key]);
+                    if (key == 'idc_name') {
+                        var idc_name_html = '';
+                        for (var k in room) {
+                            selected_html = "";
+                            if (room[k]['id'] == result[key]) {
+                                selected_html = " selected ";
+                            }
+                            idc_name_html += "<option value='" + room[k]['id'] + "' " + selected_html + ">" + room[k]['room_name'] + "</option>";
+                        }
+                        $("#idc_name").html(idc_name_html)
+                    }//rack_number
+                    if (key == 'rack_number') {
+                        var rack_number_html = '';
+                        for (var k in idc) {
+                            selected_html_1 = "";
+                            if (idc[k]['id'] == result[key]) {
+                                selected_html_1 = " selected ";
+                            }
+                            rack_number_html += "<option value='" + idc[k]['id'] + "' " + selected_html_1 + ">" + idc[k]['idc_name'] + "</option>";
+                        }
+                        $("#rack_number").html(rack_number_html)
+                    }//rack_number
+                }
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                //HideLoading();
+            },
+            error: function () {
+                //请求出错处理
+            }
+        });
+    });
+
+
+    //////////////////////server info list function start
+    $(".btn-warning.view").click(function () {
+        var id = $(this).data("view");
+        //alert(id);
+        $.ajax({
+            type: "get",
+            url: "/getNetwork_configById/?id=" + id,
+            beforeSend: function (XMLHttpRequest) {
+
+            },
+            success: function (data, textStatus) {
+
+                var result = data['result'];
+                var idc = data['idc'];
+                var room = data['room'];
+                for (var key in result) {
+                    $("#view_" + key).val(result[key]);
+                    if (key == 'idc_name') {
+                        var idc_name_html = '';
+                        for (var k in room) {
+                            selected_html = "";
+                            if (room[k]['id'] == result[key]) {
+                                selected_html = " selected ";
+                            }
+                            idc_name_html += "<option value='" + room[k]['id'] + "' " + selected_html + ">" + room[k]['room_name'] + "</option>";
+                        }
+                        $("#view_idc_name").html(idc_name_html)
+                    }//rack_number
+                    if (key == 'rack_number') {
+                        var rack_number_html = '';
+                        for (var k in idc) {
+                            selected_html_1 = "";
+                            if (idc[k]['id'] == result[key]) {
+                                selected_html_1 = " selected ";
+                            }
+                            rack_number_html += "<option value='" + idc[k]['id'] + "' " + selected_html_1 + ">" + idc[k]['idc_name'] + "</option>";
+                        }
+                        $("#view_rack_number").html(rack_number_html)
+                    }
+                }
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                //HideLoading();
+            },
+            error: function () {
+                //请求出错处理
+            }
+        });
+    });
+
+
+</script>
+
+
+{% include 'common/footer.html' %}

@@ -1,0 +1,58 @@
+ .jjtable {
+
+            border-top-width: 0px;
+
+            border-right-width: 0px;
+
+            border-bottom-width: 0px;
+
+            border-left-width: 0px;
+
+            border-top-style: solid;
+
+            border-right-style: solid;
+
+            border-bottom-style: solid;
+
+            border-left-style: solid;
+
+            border-top-color: #CCCCCC;
+
+            border-right-color: #999999;
+
+            border-bottom-color: #999999;
+
+            border-left-color: #CCCCCC;
+
+        }
+
+        .jgtable {
+
+            border-top-width: 0px;
+
+            border-right-width: 0px;
+
+            border-bottom-width: 1px;
+
+            border-left-width: 0px;
+
+            border-bottom-style: solid;
+
+            border-bottom-color: #999999;
+
+            veritical-align: bottom;
+
+        }
+
+        .jgtitle {
+
+            color: #ffffff;
+
+            font-weight: bold;
+
+        }
+
+        .big_title {
+            color: #FFFFFF;
+            font-size: 13px;
+        }

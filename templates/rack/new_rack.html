@@ -1,0 +1,44 @@
+{% include 'common/index-header.html' %}
+{% include 'common/left_nav.html' %}
+<form method="post" action="/new_rack/">{% csrf_token %}
+ <section class="content">
+	<section class="widget" style="min-height:300px">
+		<header>
+			<span class="icon">&#128196;</span>
+			<hgroup>
+				<h1>新建机柜</h1>
+				<h2>Create new content rack</h2>
+			</hgroup>
+		</header>
+		<div class="content">
+			<div class="field-wrap">
+				机柜名称:<input type="text" name="idc_name" value="rack name"/>
+			</div>
+			<div class="field-wrap">
+				机柜位置:<input type="text" value="rack number" name="rack_number"/>
+			</div>
+            <div class="field-wrap">
+				开始时间:<input id="start_time" type="text" value="start time" name="start_time" readonly onClick="jeDate({dateCell:'#start_time',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})"/>
+			</div>
+            <div class="field-wrap">
+				结束时间:<input id="end_time" type="text" value="end time" name="end_time" readonly onClick="jeDate({dateCell:'#end_time',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})"/>
+			</div>
+           <div class="field-wrap">
+            托管服务商:
+                <select name="service_provider" class="selectpicker" data-style="btn-success">
+                    {% for item in service_provider_list %}
+                     <option value="{{ item.id }}">{{   item.Service_provider_name }}</option>
+                    {% endfor %}
+                </select>
+           </div>
+{#            <div class="field-wrap wysiwyg-wrap">#}
+{#				<textarea  name="content" class="post" rows="5"></textarea>#}
+{#			</div>#}
+        <div class="field-wrap wysiwyg-wrap">
+			<button type="submit" class="btn btn-success">新建</button> <button type="reset" class="btn btn-warning">取消</button>
+        </div>
+		</div>
+	</section>
+ </section>
+</form>
+{% include 'common/footer.html' %}

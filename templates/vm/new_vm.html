@@ -1,0 +1,100 @@
+{% include 'common/index-header.html' %}
+{% include 'common/left_nav.html' %}
+
+<form method="post" action="/new_vm/">{% csrf_token %}
+    <section class="content">
+        <section class="widget" style="min-height:150px">
+            <header>
+                <hgroup>
+                   <h1>新建VM服务器</h1>
+                </hgroup>
+            </header>
+            <div class="content">
+                <div class="field-wrap">
+                    主机名称:<input type="text" value="host name" name="hostname"/>
+                </div>
+                <div class="field-wrap">
+                    管理IP:<input type="text" value="manager IP" name="manage_ip"/>
+                </div>
+                <div class="field-wrap">
+                    其它IP:<input type="text" value="other IP" name="other_ip"/>
+                </div>
+                <div class="field-wrap">
+                    应用名称:<input type="text" value="application name" name="app_name"/>
+                </div>
+                <div class="field-wrap">
+                    系统版本:<input type="text" value="os system version" name="system_version"/>
+                </div>
+                <div class="field-wrap">
+                    监控模版:<input type="text" value="monitor template" name="zabbix_template"/>
+                </div>
+                <div class="field-wrap">
+{#                    所属组:<input type="text" value="server owner group" name="owner_group"/>#}
+                      所属组:<select name="owner_group" class="selectpicker" data-style="btn-success">
+                        {% for itm_group in server_group %}
+                            <option value="{{ itm_group.id }}">{{ itm_group.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="field-wrap">
+                    cpu:<input type="text" value="server cpu" name="cpu"/>
+                </div>
+                <div class="field-wrap">
+                    memory:<input type="text" value="server memory" name="mem"/>
+                </div>
+                <div class="field-wrap">
+                    disk:<input type="text" value="disk" name="disk"/>
+                </div>
+
+               <div class="field-wrap">
+                    宿主机:<input type="text" value="server units" name="hypervisor_host"/>
+                </div>
+
+                <div class="field-wrap">
+                    变更日期:<input type="text" value="service change time" name="change_time"/>
+                </div>
+                <div class="field-wrap">
+                    变更内容:<input type="text" value="server change des" name="change_dev_info"/>
+                </div>
+                <div class="field-wrap">
+                    变更人:<input type="text" value="server changer" name="change_people"/>
+                </div>
+                <div class="field-wrap">
+                    描述:<input type="text" value="des" name="description"/>
+                </div>
+                <div class="field-wrap">
+                    服务器状态:<select name="status">
+                    <option value="1">开启并使用</option>
+                    <option value="0">开启未使用</option>
+                    <option value="2">停机</option>
+                </select>
+                </div>
+
+                <button type="submit" class="green">New</button>
+                <button type="reset" class="">Cancel</button>
+            </div>
+        </section>
+    </section>
+</form>
+{% include 'common/footer.html' %}
+
+<script type="text/javascript">
+    //jeDate.skin('gray');
+    jeDate({
+        dateCell: "#indate",//isinitVal:true,
+        format: "YYYY-MM",
+        isTime: false, //isClear:false,
+        minDate: "2015-10-19 00:00:00",
+        maxDate: "2016-11-8 00:00:00"
+    })
+    jeDate({
+        dateCell: "#dateinfo",
+        format: "YYYY年MM月DD日 hh:mm:ss",
+        isinitVal: true,
+        isTime: true, //isClear:false,
+        minDate: "2014-09-19 00:00:00",
+        okfun: function (val) {
+            alert(val)
+        }
+    })
+</script>
