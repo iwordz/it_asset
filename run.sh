@@ -1,6 +1,6 @@
 #!/bin/sh
-mysql_dir="/Users/fanghouguo/mysql5.7/bin/"
-it_asset_dir="/Users/fanghouguo/project_python/it_asset/"
+mysql_dir="./mysql5.7/bin/"
+it_asset_dir="./it_asset/"
 cd $mysql_dir
 ./mysqladmin -uroot -p12345678
 ;cmd=` ps -ef  | grep mysqld_safe | awk '{print $2}'`
