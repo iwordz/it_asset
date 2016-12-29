@@ -17,7 +17,7 @@ pip install MySQL-Python
 
 5.部分功能界面预览
 
-5.1 仪表盘功能
+5.1 合作者
 
 ![image](https://github.com/iwordz/it_asset/blob/master/static/images/1.jpg)
 
