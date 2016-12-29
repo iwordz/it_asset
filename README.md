@@ -15,14 +15,32 @@ pip install MySQL-Python
 
 4.本系统已经在Mac OSX和Centos上进行过测试
 
+5.部分功能界面预览
+
+5.1 仪表盘功能
+
 ![image](https://github.com/iwordz/it_asset/blob/master/static/images/1.jpg)
+
+5.2项目介绍
 
 ![image](https://github.com/iwordz/it_asset/blob/master/static/images/2.jpg)
 
+5.3仪表盘功能
+
 ![image](https://github.com/iwordz/it_asset/blob/master/static/images/3.jpg)
+
+5.4机柜分布图
 
 ![image](https://github.com/iwordz/it_asset/blob/master/static/images/4.jpg)
 
+5.5配置项管理
+
 ![image](https://github.com/iwordz/it_asset/blob/master/static/images/5.jpg)
 
+5.6用户管理
+
 ![image](https://github.com/iwordz/it_asset/blob/master/static/images/6.jpg)
+
+
+6.本系统部分使用了开源系统，如有侵犯您的版本，请联系我删除，谢谢合作！
+
