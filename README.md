@@ -1,7 +1,7 @@
 IT资产管理系统使用说明
 
 
-1.本系统需要使用Python Django、Python MySQL-db、Boostrap3、Jquery等模块支持
+1.本系统需要使用Python Django、Python MySQL-db、Bootstrap3、Jquery等模块支持
 
 2.支持原生Django部署且同时也支持Nginx+Wsgi方式部署
 
