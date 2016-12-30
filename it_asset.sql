@@ -65,8 +65,8 @@ CREATE TABLE `Module` (
 DROP TABLE IF EXISTS `Network_config`;
 CREATE TABLE `Network_config` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `idc_name` varchar(256) NOT NULL,
-  `manage_ip` varchar(256) NOT NULL,
+  `idc_name` varchar(255) NOT NULL,
+  `manage_ip` varchar(255) NOT NULL,
   `other_ip` varchar(256) NOT NULL,
   `dev_type` int(11) NOT NULL,
   `dev_ports` varchar(255) DEFAULT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE `Network_config` (
   `rack_units` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idc_name` (`idc_name`),
-  UNIQUE KEY `other_ip` (`other_ip`)
+  UNIQUE KEY `manage_ip` (`manage_ip`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -163,7 +163,7 @@ CREATE TABLE `Server_type` (
 DROP TABLE IF EXISTS `Service_provider`;
 CREATE TABLE `Service_provider` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `Service_provider_name` varchar(256) NOT NULL,
+  `Service_provider_name` varchar(255) NOT NULL,
   `Service_provider_addr` varchar(512) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `Service_provider_name` (`Service_provider_name`)
@@ -182,8 +182,8 @@ COMMIT;
 DROP TABLE IF EXISTS `VM`;
 CREATE TABLE `VM` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增加ID',
-  `hostname` varchar(256) NOT NULL COMMENT '主机名称',
-  `manage_ip` varchar(256) NOT NULL COMMENT '管理IP',
+  `hostname` varchar(255) NOT NULL COMMENT '主机名称',
+  `manage_ip` varchar(255) NOT NULL COMMENT '管理IP',
   `other_ip` varchar(256) NOT NULL COMMENT '其它IP',
   `app_name` varchar(256) NOT NULL COMMENT '应用名称',
   `system_version` varchar(255) DEFAULT NULL COMMENT '系统版本',
@@ -200,7 +200,7 @@ CREATE TABLE `VM` (
   `status` tinyint(1) DEFAULT NULL COMMENT '服务器状态 0=机器通电且没有服务运行 1=服务运行 2=停机',
   PRIMARY KEY (`id`),
   UNIQUE KEY `hostname` (`hostname`),
-  UNIQUE KEY `other_ip` (`other_ip`)
+  UNIQUE KEY `manage_ip` (`manage_ip`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
