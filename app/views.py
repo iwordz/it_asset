@@ -600,7 +600,7 @@ def deleteServerById(request):
     return HttpResponse(json.dumps(result), content_type="application/json")
 
 
-#@login_required()
+@login_required()
 def server(request):
     conn = SqlConn()
     key_list = ['id', 'hostname', 'manage_ip', 'other_ip', 'app_name', 'cpu', 'mem', 'disk', 'sn', 'an', 'units',
