@@ -323,7 +323,7 @@ def network_config(request):
     conn = SqlConn()
     key_list = ['id', 'idc_name', 'manage_ip', 'other_ip', 'dev_type', 'dev_ports', 'sn', 'an', 'units', 'rack_number',
                 'rack_units']
-    sql = Sql.get_s_sql('network_config', key_list, {})
+    sql = Sql.get_s_sql('Network_config', key_list, {})
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
     conn.close()
@@ -1075,7 +1075,7 @@ def new_service_provider(request):
 def service_provider(request):
     conn = SqlConn()
     key_list = ['id', 'service_provider_name', 'service_provider_addr']
-    sql = Sql.get_s_sql('service_provider', key_list, {})
+    sql = Sql.get_s_sql('Service_provider', key_list, {})
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
     conn.close()
