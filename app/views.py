@@ -1383,3 +1383,9 @@ def check_login(request):
 #     else:
 #         login_form = LoginForm()
 #     return render(request, 'login.html', {'form': login_form})
+
+def page_not_found(request):
+    return render_to_response('404.html')
+
+def page_error(request):
+    return render_to_response('500.html')
