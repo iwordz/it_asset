@@ -65,6 +65,7 @@ CREATE TABLE `Module` (
 DROP TABLE IF EXISTS `Network_config`;
 CREATE TABLE `Network_config` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `device_name` varchar(255) NOT NULL,
   `idc_name` varchar(255) NOT NULL,
   `manage_ip` varchar(255) NOT NULL,
   `other_ip` varchar(256) NOT NULL,

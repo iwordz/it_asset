@@ -363,7 +363,7 @@ def new_network_config(request):
                 'rack_number': rack_number,
                 'rack_units': rack_units
             }
-            table = 'network_config'
+            table = 'Network_config'
             if editor and id:
               sql = Sql.get_u_sql(table,insert,{"id":id})
             else:
