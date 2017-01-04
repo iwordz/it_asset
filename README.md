@@ -42,5 +42,14 @@ pip install MySQL-Python
 ![image](https://github.com/iwordz/it_asset/blob/master/static/images/6.jpg)
 
 
-6.本系统部分使用了开源系统，如有侵犯您的版本，请联系我删除，谢谢合作！
+6.正式发布
+
+
+打开setting.py设置如下参数：
+DEBUG=False
+ALLOWED_HOSTS = ["*"]
+
+
+7.本系统部分使用了开源系统，如有侵犯您的版本，请联系我删除，谢谢合作！
+
 
