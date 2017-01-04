@@ -163,7 +163,7 @@ def rack_jgt(request):
 
     conn.close()
     return render(request, 'rack/rack_demo.html',
-                  {'ret': new_result})
+                  {'ret': new_result,"menu":"submenu1"})
 
 
 @login_required
