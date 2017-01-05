@@ -22,34 +22,34 @@
 {#<script src="{% static 'js/jquery-1.7.1.min.js' %}"></script>#}
 {#<script src="{% static 'js/cypager.min.js' %}"></script>#}
 
-<script type="text/javascript">
-// Feature slider for graphs
-$('.cycle').cycle({
-	fx: "scrollHorz",
-	timeout: 0,
-    slideResize: 0,
-    prev:    '.left-btn', 
-    next:    '.right-btn'
-});
-</script>
+{#<script type="text/javascript">#}
+{#// Feature slider for graphs#}
+{#$('.cycle').cycle({#}
+{#	fx: "scrollHorz",#}
+{#	timeout: 0,#}
+{#    slideResize: 0,#}
+{#    prev:    '.left-btn', #}
+{#    next:    '.right-btn'#}
+{#});#}
+{#</script>#}
 
-<script type="text/javascript">
-    //jeDate.skin('gray');
-	jeDate({
-		dateCell:"#indate",//isinitVal:true,
-		format:"YYYY-MM",
-		isTime:false, //isClear:false,
-		minDate:"2015-10-19 00:00:00",
-		maxDate:"2016-11-8 00:00:00"
-	})
-    jeDate({
-		dateCell:"#dateinfo",
-		format:"YYYY年MM月DD日 hh:mm:ss",
-		isinitVal:true,
-		isTime:true, //isClear:false,
-		minDate:"2014-09-19 00:00:00",
-		okfun:function(val){alert(val)}
-	})
-</script>
+{#<script type="text/javascript">#}
+{#    //jeDate.skin('gray');#}
+{#	jeDate({#}
+{#		dateCell:"#indate",//isinitVal:true,#}
+{#		format:"YYYY-MM",#}
+{#		isTime:false, //isClear:false,#}
+{#		minDate:"2015-10-19 00:00:00",#}
+{#		maxDate:"2016-11-8 00:00:00"#}
+{#	})#}
+{#    jeDate({#}
+{#		dateCell:"#dateinfo",#}
+{#		format:"YYYY年MM月DD日 hh:mm:ss",#}
+{#		isinitVal:true,#}
+{#		isTime:true, //isClear:false,#}
+{#		minDate:"2014-09-19 00:00:00",#}
+{#		okfun:function(val){alert(val)}#}
+{#	})#}
+{#</script>#}
 </body>
 </html>

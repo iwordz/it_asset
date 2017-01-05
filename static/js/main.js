@@ -68,11 +68,11 @@ function makehtml(page_url, page, head, body,is_view) {
         var h_name = head[h_key].split("-");
         //var h_name_1 = h_key.split("_");
         var h_name_1 = h_key.substring(2,h_key.length);
-        console.log(h_name_1);
+        //console.log(h_name_1);
         new_body_fields[h_name_1] = h_name_1;
         table_header += "<th>" + head[h_key] + "</th>"
     }
-    console.log(new_body_fields);
+    //console.log(new_body_fields);
     table_header += '</tr></thead>';
     var table_body = '<tbody>';
     for (var b in body) {
@@ -109,14 +109,14 @@ function makehtml(page_url, page, head, body,is_view) {
     }
     table_body += '</tbody></table>';
     var table = table_header + table_body;
-    console.log(page);
+    //console.log(page);
     var page_html = getPagtion(page_url, page['totalpage'], page['current'], page['lastpage']);
     table += page_html;
     $("#body").html(table);
 }
 
 function parsebodydata(bodyData) {
-    console.log("start parse body data");
+    //console.log("start parse body data");
 }
 
 /////////////////////////common ajax function
