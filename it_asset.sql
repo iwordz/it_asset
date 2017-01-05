@@ -18,10 +18,10 @@ SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
---  Table structure for `Authorization`
+--  Table structure for `authorization`
 -- ----------------------------
-DROP TABLE IF EXISTS `Authorization`;
-CREATE TABLE `Authorization` (
+DROP TABLE IF EXISTS `authorization`;
+CREATE TABLE `authorization` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `module_id` int(11) NOT NULL,
   `uid` int(11) NOT NULL,
@@ -29,10 +29,10 @@ CREATE TABLE `Authorization` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
---  Table structure for `Idc`
+--  Table structure for `idc`
 -- ----------------------------
-DROP TABLE IF EXISTS `Idc`;
-CREATE TABLE `Idc` (
+DROP TABLE IF EXISTS `idc`;
+CREATE TABLE `idc` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `idc_name` varchar(24) NOT NULL,
   `rack_number` varchar(8) NOT NULL,
@@ -43,27 +43,27 @@ CREATE TABLE `Idc` (
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
---  Records of `Idc`
+--  Records of `idc`
 -- ----------------------------
 BEGIN;
-INSERT INTO `Idc` VALUES ('12', 'jg-1', '1', '1481684196', '1544756199', '2'), ('13', 'jg-2', '2', '1481626596', '1544698599', '1'), ('14', 'jg-3', '3', '1481626596', '1544698599', '1'), ('15', 'jg-4', '4', '1481655396', '1544727399', '1'), ('16', 'jg-5', '5', '1481626596', '1544698599', '1'), ('17', 'jg-6', '6', '1481626596', '1544698599', '1'), ('19', 'jg-7-1', '7', '1481790879', '1482050081', '1');
+INSERT INTO `idc` VALUES ('12', 'jg-1', '1', '1481684196', '1544756199', '2'), ('13', 'jg-2', '2', '1481626596', '1544698599', '1'), ('14', 'jg-3', '3', '1481626596', '1544698599', '1'), ('15', 'jg-4', '4', '1481655396', '1544727399', '1'), ('16', 'jg-5', '5', '1481626596', '1544698599', '1'), ('17', 'jg-6', '6', '1481626596', '1544698599', '1'), ('19', 'jg-7-1', '7', '1481790879', '1482050081', '1');
 COMMIT;
 
 -- ----------------------------
---  Table structure for `Module`
+--  Table structure for `module`
 -- ----------------------------
-DROP TABLE IF EXISTS `Module`;
-CREATE TABLE `Module` (
+DROP TABLE IF EXISTS `module`;
+CREATE TABLE `module` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `module_name` varchar(32) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
---  Table structure for `Network_config`
+--  Table structure for `network_config`
 -- ----------------------------
-DROP TABLE IF EXISTS `Network_config`;
-CREATE TABLE `Network_config` (
+DROP TABLE IF EXISTS `network_config`;
+CREATE TABLE `network_config` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `device_name` varchar(255) NOT NULL,
   `idc_name` varchar(255) NOT NULL,
@@ -77,22 +77,22 @@ CREATE TABLE `Network_config` (
   `rack_number` varchar(255) DEFAULT NULL,
   `rack_units` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `idc_name` (`idc_name`),
+  UNIQUE KEY `device_name` (`device_name`),
   UNIQUE KEY `manage_ip` (`manage_ip`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
---  Records of `Network_config`
+--  Records of `network_config`
 -- ----------------------------
 BEGIN;
-INSERT INTO `Network_config` VALUES ('1', '7', '192.168.0.255', '192.168.0.154', '1', '80', '124', '111', '111', '13', '1-1'), ('2', '1', '192.168.0.253', '192.168.0.254', '2', '901', '1', '2', '12', '12', '12');
+INSERT INTO `network_config` VALUES ('1', '7', '192.168.0.255', '192.168.0.154', '1', '80', '124', '111', '111', '13', '1-1','1'), ('2', '1', '192.168.0.253', '192.168.0.254', '2', '901', '1', '2', '12', '12', '12','1');
 COMMIT;
 
 -- ----------------------------
---  Table structure for `Room`
+--  Table structure for `room`
 -- ----------------------------
-DROP TABLE IF EXISTS `Room`;
-CREATE TABLE `Room` (
+DROP TABLE IF EXISTS `room`;
+CREATE TABLE `room` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `room_name` varchar(256) NOT NULL,
   `room_addr` varchar(512) NOT NULL,
@@ -100,17 +100,17 @@ CREATE TABLE `Room` (
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
---  Records of `Room`
+--  Records of `room`
 -- ----------------------------
 BEGIN;
-INSERT INTO `Room` VALUES ('11', '北京', '上海市'), ('12', '北京', '上海市'), ('13', '北京dafaf', '上海市'), ('14', '北京', '上海市'), ('15', '北京', '上海市'), ('16', '测试中文添加', '上海市');
+INSERT INTO `room` VALUES ('11', '北京', '上海市'), ('12', '北京', '上海市'), ('13', '北京dafaf', '上海市'), ('14', '北京', '上海市'), ('15', '北京', '上海市'), ('16', '测试中文添加', '上海市');
 COMMIT;
 
 -- ----------------------------
---  Table structure for `Server`
+--  Table structure for `server`
 -- ----------------------------
-DROP TABLE IF EXISTS `Server`;
-CREATE TABLE `Server` (
+DROP TABLE IF EXISTS `server`;
+CREATE TABLE `server` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增加ID',
   `hostname` varchar(24) NOT NULL COMMENT '主机名称',
   `manage_ip` varchar(255) NOT NULL COMMENT '管理IP',
@@ -142,27 +142,27 @@ CREATE TABLE `Server` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
---  Records of `Server`
+--  Records of `server`
 -- ----------------------------
 BEGIN;
-INSERT INTO `Server` VALUES ('2', 'fang-vpn', '192.168.0.253', '192.168.0.254', 'app1', 'centos-v6', '1', '1', '1', '32', '64', '2TB', '1', '111', '111', '1', '1', '11', '2016-12-13 14:60:28', '2018-12-12 14:60:33', '1111', '11111', null, null, null, '1111', '1'), ('4', 'fang-vpn-1', '192.168.1.2', '192.168.1.3', 'app-vpn-server', 'ubuntu12', '1', '1', '1', '12', '32', '2TB', '1', '1', '1', '7', '15', '12', '2016-12-15 16:31:56', '2016-12-31 16:31:59', '1', '12', '1481792022', 'change change-people notes', '1111', '1111', '0');
+INSERT INTO `server` VALUES ('2', 'fang-vpn', '192.168.0.253', '192.168.0.254', 'app1', 'centos-v6', '1', '1', '1', '32', '64', '2TB', '1', '111', '111', '1', '1', '11', '2016-12-13 14:60:28', '2018-12-12 14:60:33', '1111', '11111', null, null, null, '1111', '1'), ('4', 'fang-vpn-1', '192.168.1.2', '192.168.1.3', 'app-vpn-server', 'ubuntu12', '1', '1', '1', '12', '32', '2TB', '1', '1', '1', '7', '15', '12', '2016-12-15 16:31:56', '2016-12-31 16:31:59', '1', '12', '1481792022', 'change change-people notes', '1111', '1111', '0');
 COMMIT;
 
 -- ----------------------------
---  Table structure for `Server_type`
+--  Table structure for `server_type`
 -- ----------------------------
-DROP TABLE IF EXISTS `Server_type`;
-CREATE TABLE `Server_type` (
+DROP TABLE IF EXISTS `server_type`;
+CREATE TABLE `server_type` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- ----------------------------
---  Table structure for `Service_provider`
+--  Table structure for `service_provider`
 -- ----------------------------
-DROP TABLE IF EXISTS `Service_provider`;
-CREATE TABLE `Service_provider` (
+DROP TABLE IF EXISTS `service_provider`;
+CREATE TABLE `service_provider` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `Service_provider_name` varchar(255) NOT NULL,
   `Service_provider_addr` varchar(512) NOT NULL,
@@ -171,17 +171,17 @@ CREATE TABLE `Service_provider` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
---  Records of `Service_provider`
+--  Records of `service_provider`
 -- ----------------------------
 BEGIN;
-INSERT INTO `Service_provider` VALUES ('1', 'shang wan net', 'shanghai111'), ('2', 'shang ucloud', 'yangpuqu1111'), ('3', 'srv-1', 'srv-shanghai-1');
+INSERT INTO `service_provider` VALUES ('1', 'shang wan net', 'shanghai111'), ('2', 'shang ucloud', 'yangpuqu1111'), ('3', 'srv-1', 'srv-shanghai-1');
 COMMIT;
 
 -- ----------------------------
---  Table structure for `VM`
+--  Table structure for `vm`
 -- ----------------------------
-DROP TABLE IF EXISTS `VM`;
-CREATE TABLE `VM` (
+DROP TABLE IF EXISTS `vm`;
+CREATE TABLE `vm` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '自增加ID',
   `hostname` varchar(255) NOT NULL COMMENT '主机名称',
   `manage_ip` varchar(255) NOT NULL COMMENT '管理IP',
@@ -205,10 +205,10 @@ CREATE TABLE `VM` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
---  Records of `VM`
+--  Records of `vm`
 -- ----------------------------
 BEGIN;
-INSERT INTO `VM` VALUES ('1', 'vm-MongoDB-Master_server_1', '192.168.0.253', '192.168.0.254', 'app1', 'centos-v6', '1', '1', '32', '64', '2TB', '192.168.0.111', null, null, null, 'qqqqq', '0'), ('2', 'vm-cloud-1', '192.168.1.3', '192.168.1.4', 'MySQL_SALAVE', 'centos-v6', '1', '1', '13', '16', '12G', '192.168.1.1', null, 'change change-people notes', '1111', '192.168.1.3', '1');
+INSERT INTO `vm` VALUES ('1', 'vm-MongoDB-Master_server_1', '192.168.0.253', '192.168.0.254', 'app1', 'centos-v6', '1', '1', '32', '64', '2TB', '192.168.0.111', null, null, null, 'qqqqq', '0'), ('2', 'vm-cloud-1', '192.168.1.3', '192.168.1.4', 'MySQL_SALAVE', 'centos-v6', '1', '1', '13', '16', '12G', '192.168.1.1', null, 'change change-people notes', '1111', '192.168.1.3', '1');
 COMMIT;
 
 -- ----------------------------
