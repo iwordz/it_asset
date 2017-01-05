@@ -445,11 +445,11 @@ def ajax_network_config(request):
     conn = SqlConn()
     key_list = ['id','device_name', 'idc_name', 'manage_ip', 'other_ip', 'dev_type', 'dev_ports', 'sn', 'an', 'units', 'rack_number',
                 'rack_units']
-    sql = Sql.get_s_sql('network_config', key_list, {}, page, pageSize)
+    sql = Sql.get_s_sql('Network_config', key_list, {}, page, pageSize)
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
 
-    totalPage = Sql.get_count(conn, 'network_config', {})
+    totalPage = Sql.get_count(conn, 'Network_config', {})
     print "totalPage2=" + str(totalPage)
     if totalPage % pageSize:
         totalPage = totalPage / pageSize + 1
