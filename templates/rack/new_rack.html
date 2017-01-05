@@ -12,24 +12,25 @@
 		</header>
 		<div class="content">
 			<div class="field-wrap">
-				机柜名称:<input type="text" name="idc_name" value="rack name"/>
+				机柜名称:<input type="text" name="idc_name" value="{{ val.idc_name }}"/> <span style="color: red;">{{ name_tips }}</span>
 			</div>
 			<div class="field-wrap">
-				机柜位置:<input type="text" value="rack number" name="rack_number"/>
+				机柜位置:<input type="text" value="{{ val.rack_number }}" name="rack_number"/>
 			</div>
             <div class="field-wrap">
-				开始时间:<input id="start_time" type="text" value="start time" name="start_time" readonly onClick="jeDate({dateCell:'#start_time',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})"/>
+				开始时间:<input id="start_time" type="text" value="{{ val.start_time }}" name="start_time" readonly onClick="jeDate({dateCell:'#start_time',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})"/>
 			</div>
             <div class="field-wrap">
-				结束时间:<input id="end_time" type="text" value="end time" name="end_time" readonly onClick="jeDate({dateCell:'#end_time',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})"/>
+				结束时间:<input id="end_time" type="text" value="{{ val.end_time }}" name="end_time" readonly onClick="jeDate({dateCell:'#end_time',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})"/>
 			</div>
            <div class="field-wrap">
-            托管服务商:
-                <select name="service_provider" class="selectpicker" data-style="btn-success">
-                    {% for item in service_provider_list %}
-                     <option value="{{ item.id }}">{{   item.Service_provider_name }}</option>
-                    {% endfor %}
-                </select>
+{#            托管服务商:#}
+{#                <select name="service_provider" class="selectpicker" data-style="btn-success">#}
+{#                    {% for item in service_provider_list %}#}
+{#                     <option value="{{ item.id }}">{{   item.Service_provider_name }}</option>#}
+{#                    {% endfor %}#}
+{#                </select>#}
+               {% include 'common/service_provider.html' %}
            </div>
 {#            <div class="field-wrap wysiwyg-wrap">#}
 {#				<textarea  name="content" class="post" rows="5"></textarea>#}

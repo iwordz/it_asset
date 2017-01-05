@@ -113,7 +113,10 @@
                     <input id="end_date" type="text" value="server expire time" name="end_date" readonly onClick="jeDate({dateCell:'#end_date',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})"/>
                 </div>
                 <div class="field-wrap">
-                    网络设备:<input type="text" value="network device name" name="switch_name" id="switch_name"/>
+                    网络设备:<select name="switch_name" id="switch_name">
+
+                    </select>
+{#                    网络设备:<input type="text" value="network device name" name="switch_name" id="switch_name"/>#}
                 </div>
                 <div class="field-wrap">
                     设备端口:<input type="text" value="network device port" name="switch_port" id="switch_port"/>
@@ -235,7 +238,12 @@
                     <input id="view_end_date" type="text" value="server expire time" name="end_date" readonly/>
                 </div>
                 <div class="field-wrap">
-                    网络设备:<input type="text" value="network device name" name="switch_name" id="view_switch_name"/>
+
+                    网络设备:
+                    <select name="view_switch_name" id="view_switch_name">
+
+                    </select>
+{#                    <input type="text" value="network device name" name="switch_name" id="view_switch_name"/>#}
                 </div>
                 <div class="field-wrap">
                     设备端口:<input type="text" value="network device port" name="switch_port" id="view_switch_port"/>
@@ -334,10 +342,22 @@
                 var room = data['room'];
                 var server_group = data['owner_group'];
                 var server_type = data['server_type'];
+                var network = data['network'];
                 for (var key in result) {
-                    //alert(key);
-                    //alert(key);
+
                     $("#" + key).val(result[key]);
+                    if (key == 'switch_name') {
+                        var network_name_html = '';
+                        for (var k_1 in network) {
+                            network_selected_html = "";
+                            if (network[k_1]['id'] == result[key]) {
+                                network_selected_html = " selected ";
+                            }
+                            network_name_html += "<option value='" + network[k_1]['id'] + "' " + network_selected_html + ">" + network[k_1]['device_name'] + "</option>";
+                        }
+                        $("#switch_name").html(network_name_html)
+                    }//switch_name
+
                     if (key == 'idc_name') {
                         var idc_name_html = '';
                         for (var k in room) {
@@ -414,8 +434,32 @@
                 var room = data['room'];
                 var server_group = data['owner_group'];
                 var server_type = data['server_type'];
+                var network = data['network'];
                 for (var key in result) {
                     $("#view_" + key).val(result[key]);
+
+
+                    if (key  == 'change_time')
+                    {
+                        var timestamp3 = result[key];
+                        var newDate = new Date();
+                        newDate.setTime(timestamp3 * 1000);
+                        var new_time = newDate.format('yyyy-MM-dd h:m:s');
+                        $("#view_" + key).val(new_time);
+                        //alert("change_time"+new_time);
+                    }
+                    if (key == 'switch_name') {
+                        var network_name_html = '';
+                        for (var k_1 in network) {
+                            network_selected_html = "";
+                            if (network[k_1]['id'] == result[key]) {
+                                network_selected_html = " selected ";
+                            }
+                            network_name_html += "<option value='" + network[k_1]['id'] + "' " + network_selected_html + ">" + network[k_1]['device_name'] + "</option>";
+                        }
+                        $("#view_switch_name").html(network_name_html)
+                    }//switch_name
+
                     if (key == 'idc_name') {
                         var idc_name_html = '';
                         for (var k in room) {

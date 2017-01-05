@@ -12,10 +12,10 @@
         <form method="post" action="/new_room/">{% csrf_token %}
 		 <div class="content">
 			<div class="field-wrap">
-				机房名称:<input name="room_name" type="text" value=""/>
+				机房名称:<input name="room_name" type="text" value="{{ val.room_name }}"/><span style="color: red;">{{ name_tips }}</span>
 			</div>
 			<div class="field-wrap">
-				机房地址:<input name="room_addr" type="text" value=""/>
+				机房地址:<input name="room_addr" type="text" value="{{ val.room_addr }}"/>
 			</div>
 
 			<button type="submit" class="green">新建</button> <button type="reset" class="">重置</button>

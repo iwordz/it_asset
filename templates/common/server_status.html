@@ -1,0 +1,21 @@
+服务器状态:
+<select name="status">
+    {% if val.status == 1 %}
+    <option value="1">开启并使用</option>
+    <option value="0">开启未使用</option>
+    <option value="2">停机</option>
+    {% elif val.status == 0 %}
+    <option value="1">开启并使用</option>
+    <option selected value="0">开启未使用</option>
+    <option value="2">停机</option>
+    {% elif val.status == 2 %}
+        <option value="1">开启并使用</option>
+        <option value="0">开启未使用</option>
+        <option selected value="2">停机</option>
+    {% else %}
+        <option value="1">开启并使用</option>
+        <option value="0">开启未使用</option>
+        <option value="2">停机</option>
+    {% endif %}
+
+</select>

@@ -1,4 +1,4 @@
-#coding=utf-8
+# coding=utf-8
 __author__ = 'fanghouguo'
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
@@ -9,21 +9,25 @@ from django.views.decorators.csrf import csrf_protect
 from django.contrib import auth
 from django.contrib.auth import logout
 from django.contrib.auth.hashers import make_password
-import Query,Sql,ServerGroup,time,UserTime,MakeHtml,json
+import Query, Sql, ServerGroup, time, UserTime, MakeHtml, json
 from app.forms import *
 from SqlConn import SqlConn
+
 
 # dashbord page
 @login_required
 def index(request):
     conn = SqlConn()
-    room_num = Sql.get_count(conn, 'Room', {})
-    rack_num = Sql.get_count(conn, 'Idc', {})
-    server_num = Sql.get_count(conn, 'Server', {})
-    vm_num = Sql.get_count(conn, 'VM', {})
-    online_num = Sql.get_count(conn, 'Server', {"status":1})
-    offline_num = server_num - Sql.get_count(conn, 'Server', {"status":1})
-    return render(request, 'index.html', {"room":room_num,'rack':rack_num,'server':server_num,'vm':vm_num,'online':online_num,'offline':offline_num})
+    room_num = Sql.get_count(conn, 'room', {})
+    rack_num = Sql.get_count(conn, 'idc', {})
+    server_num = Sql.get_count(conn, 'server', {})
+    vm_num = Sql.get_count(conn, 'vm', {})
+    online_num = Sql.get_count(conn, 'server', {"status": 1})
+    offline_num = server_num - Sql.get_count(conn, 'server', {"status": 1})
+    return render(request, 'index.html',
+                  {"room": room_num, 'rack': rack_num, 'server': server_num, 'vm': vm_num, 'online': online_num,
+                   'offline': offline_num})
+
 
 @login_required
 def deleteRackById(request):
@@ -32,12 +36,13 @@ def deleteRackById(request):
     result = {"ret": "delete faild"}
     if id:
         conn = SqlConn()
-        sql = Sql.get_d_sql('Idc', {"id": id})
+        sql = Sql.get_d_sql('idc', {"id": id})
         r = conn.execute(sql)
         result = {"ret": "delete success"}
     else:
         return HttpResponse(json.dumps(result), content_type="application/json")
     return HttpResponse(json.dumps(result), content_type="application/json")
+
 
 @login_required
 def getRackById(request):
@@ -47,12 +52,12 @@ def getRackById(request):
         return HttpResponse(json.dumps(result), content_type="application/json")
     conn = SqlConn()
     key_list = ['id', 'idc_name', 'rack_number', 'start_time', 'end_time', 'service_provider']
-    sql = Sql.get_s_sql('Idc', key_list, {"id": id})
+    sql = Sql.get_s_sql('idc', key_list, {"id": id})
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
 
     key_list_1 = ['id', 'Service_provider_name']
-    sql_1 = Sql.get_s_sql('Service_provider', key_list_1, {})
+    sql_1 = Sql.get_s_sql('service_provider', key_list_1, {})
     r_1 = conn.execute(sql_1)
     servers = Query.fSqlResult(r_1, key_list_1)
 
@@ -62,21 +67,20 @@ def getRackById(request):
     # html = MakeHtml.makeFormTable(result)
     # return render(request, 'test.html', {'ret': html})
 
+
 @login_required
-#test make html
+# test make html
 def html(request):
     id = request.REQUEST.get('id', None)
     if id is None:
         return render(request, 'test.html', {})
     conn = SqlConn()
     key_list = ['id', 'idc_name', 'rack_number', 'start_time', 'end_time', 'service_provider']
-    sql = Sql.get_s_sql('Idc', key_list, {"id": id})
+    sql = Sql.get_s_sql('idc', key_list, {"id": id})
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
     html = MakeHtml.makeFormTable(result)
     return render(request, 'test.html', {'ret': html})
-
-
 
 
 @login_required
@@ -86,11 +90,11 @@ def ajax_rack_list(request):
     pageSize = request.REQUEST.get('pageSize', 6)
     conn = SqlConn()
     key_list = ['id', 'idc_name', 'rack_number', 'start_time', 'end_time', 'service_provider']
-    sql = Sql.get_s_sql('Idc', key_list, {}, page, pageSize)
+    sql = Sql.get_s_sql('idc', key_list, {}, page, pageSize)
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
 
-    totalPage = Sql.get_count(conn, 'Idc', {})
+    totalPage = Sql.get_count(conn, 'idc', {})
     print "totalPage2=" + str(totalPage)
     if totalPage % pageSize:
         totalPage = totalPage / pageSize + 1
@@ -98,7 +102,7 @@ def ajax_rack_list(request):
         totalPage = totalPage / pageSize
 
     key_list_1 = ['id', 'Service_provider_name']
-    sql_1 = Sql.get_s_sql('Service_provider', key_list_1, {})
+    sql_1 = Sql.get_s_sql('service_provider', key_list_1, {})
     r_1 = conn.execute(sql_1)
     servers = Query.fSqlResult(r_1, key_list_1)
     # print servers
@@ -111,7 +115,8 @@ def ajax_rack_list(request):
 
     new_result = []
     for item in result:
-        item['service_provider'] = new_service[item['service_provider']]
+        if new_service.has_key(item['service_provider']):
+            item['service_provider'] = new_service[item['service_provider']]
         item['start_time'] = UserTime.utcToString(float(item['start_time']))
         item['end_time'] = UserTime.utcToString(float(item['end_time']))
         new_result.append(item)
@@ -121,24 +126,23 @@ def ajax_rack_list(request):
     # contexts = {'ret': result,'totalpage':totalPage,'current':page,'lastPage':totalPage}
     # print "current page="+ str(page)
     # return render_to_response('rack_list.html', contexts)
-    #return render(request, 'rack_list.html',
+    # return render(request, 'rack_list.html',
     #              {'ret': result, 'totalpage': totalPage, 'current': page, 'lastPage': totalPage})
 
-    #head = {'a_id':"id", 'b_idc_name':"idc_name", 'c_rack_number':"rack_number", 'd_start_time':"start_time", 'e_end_time':"end_time", 'f_service_provider':"service_provider","x_oper":"oper"}
-    head = {'a_id':"自增序号", 'b_idc_name':"机柜名称", 'c_rack_number':"机柜编号", 'd_start_time':"开始时间", 'e_end_time':"结束时间", 'f_service_provider':"服务提供商","x_oper":"操作"}
+    # head = {'a_id':"id", 'b_idc_name':"idc_name", 'c_rack_number':"rack_number", 'd_start_time':"start_time", 'e_end_time':"end_time", 'f_service_provider':"service_provider","x_oper":"oper"}
+    head = {'a_id': "自增序号", 'b_idc_name': "机柜名称", 'c_rack_number': "机柜编号", 'd_start_time': "开始时间", 'e_end_time': "结束时间",
+            'f_service_provider': "服务提供商", "x_oper": "操作"}
 
     ret = {
         "body": result,
         "head": head,
-        "page" : {
-            "current" : page,
-            "totalpage" : totalPage,
-            "lastpage" : totalPage
+        "page": {
+            "current": page,
+            "totalpage": totalPage,
+            "lastpage": totalPage
         }
     }
-    return HttpResponse(json.dumps(ret,sort_keys=True), content_type="application/json")
-
-
+    return HttpResponse(json.dumps(ret, sort_keys=True), content_type="application/json")
 
 
 @login_required
@@ -146,24 +150,24 @@ def ajax_rack_list(request):
 def rack_jgt(request):
     conn = SqlConn()
     key_list = ['id', 'idc_name', 'rack_number', 'start_time', 'end_time', 'service_provider']
-    sql = Sql.get_s_sql('Idc', key_list, {})
+    sql = Sql.get_s_sql('idc', key_list, {})
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
 
-    #print "result:"+str(result)
+    # print "result:"+str(result)
     key_list_1 = ['id', 'hostname', 'manage_ip', 'other_ip', 'app_name', 'cpu', 'mem', 'disk', 'sn', 'an', 'units',
-                'idc_name', 'rack_number', 'rack_units', 'status','system_version']
+                  'idc_name', 'rack_number', 'rack_units', 'status', 'system_version']
     new_result = []
     for srv in result:
-      sql_1 = Sql.get_s_sql('Server', key_list_1, {"idc_name":srv['id']})
-      r_1 = conn.execute(sql_1)
-      servers = Query.fSqlResult(r_1, key_list_1)
-      idc_name = srv['idc_name']
-      new_result.append([idc_name,servers])
+        sql_1 = Sql.get_s_sql('server', key_list_1, {"idc_name": srv['id']})
+        r_1 = conn.execute(sql_1)
+        servers = Query.fSqlResult(r_1, key_list_1)
+        idc_name = srv['idc_name']
+        new_result.append([idc_name, servers])
 
     conn.close()
     return render(request, 'rack/rack_demo.html',
-                  {'ret': new_result,"menu":"submenu1"})
+                  {'ret': new_result, "menu": "submenu1"})
 
 
 @login_required
@@ -173,11 +177,11 @@ def rack_list(request):
     pageSize = request.REQUEST.get('pageSize', 6)
     conn = SqlConn()
     key_list = ['id', 'idc_name', 'rack_number', 'start_time', 'end_time', 'service_provider']
-    sql = Sql.get_s_sql('Idc', key_list, {}, page, pageSize)
+    sql = Sql.get_s_sql('idc', key_list, {}, page, pageSize)
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
 
-    totalPage = Sql.get_count(conn, 'Idc', {})
+    totalPage = Sql.get_count(conn, 'idc', {})
     print "totalPage2=" + str(totalPage)
     if totalPage % pageSize:
         totalPage = totalPage / pageSize + 1
@@ -185,7 +189,7 @@ def rack_list(request):
         totalPage = totalPage / pageSize
 
     key_list_1 = ['id', 'Service_provider_name']
-    sql_1 = Sql.get_s_sql('Service_provider', key_list_1, {})
+    sql_1 = Sql.get_s_sql('service_provider', key_list_1, {})
     r_1 = conn.execute(sql_1)
     servers = Query.fSqlResult(r_1, key_list_1)
     # print servers
@@ -198,25 +202,29 @@ def rack_list(request):
 
     new_result = []
     for item in result:
-        item['service_provider'] = new_service[item['service_provider']]
+        if new_service.has_key(item['service_provider']):
+            item['service_provider'] = new_service[item['service_provider']]
         item['start_time'] = UserTime.utcToString(float(item['start_time']))
         item['end_time'] = UserTime.utcToString(float(item['end_time']))
         new_result.append(item)
-    #print new_result
+    # print new_result
     conn.close()
-
 
     return render(request, 'rack/rack_list.html',
                   {'ret': result, 'totalpage': totalPage, 'current': page, 'lastPage': totalPage})
+
 
 @login_required
 @csrf_protect
 def del_rack(request):
     pass
 
+
 @login_required
 @csrf_protect
 def new_rack(request):
+    name_tips = ""
+    insert = {}
     if request.method == 'POST':
         idc_name = request.REQUEST.get('idc_name')
         rack_number = request.REQUEST.get('rack_number')
@@ -228,21 +236,26 @@ def new_rack(request):
         editor_current_page = int(request.REQUEST.get('editor_current_page', 1))
         print idc_name, rack_number, start_time, end_time, service_provider
         print  "editor=" + str(editor), "id=" + str(id)
-        if idc_name is not None and rack_number is not None:
+        table = 'idc'
+        isF = isexist(table, 'idc_name', idc_name)
+        insert = {"idc_name": idc_name, 'rack_number': rack_number, 'start_time': UserTime.stringToUtc(start_time),
+                  'end_time': UserTime.stringToUtc(end_time),
+                  'service_provider': service_provider}
+        if isF == 1 and editor == 0:
+            name_tips = "名称重复"
+        elif idc_name is not None and rack_number is not None:
             start_time = time.strptime(start_time, "%Y-%m-%d %H:%M:%S")
             end_time = time.strptime(end_time, "%Y-%m-%d %H:%M:%S")
             start_time = time.mktime(start_time)
             end_time = time.mktime(end_time)
             if start_time > end_time:
                 return
-            table = 'Idc'
-            insert = {"idc_name": idc_name, 'rack_number': rack_number, 'start_time': start_time, 'end_time': end_time,
-                      'service_provider': service_provider}
+
+            sql = ""
             if editor and id:
                 sql = Sql.get_u_sql(table, insert, {"id": id})
             else:
                 sql = Sql.get_i_sql(table, insert)
-            print sql
             conn = SqlConn()
             conn.execute(sql)
             if editor and id:
@@ -253,20 +266,26 @@ def new_rack(request):
             conn.close()
             if rack_id:
                 return HttpResponseRedirect("/rack_list/?p=" + str(editor_current_page))
+        else:
+            name_tips = "参数错误"
+
     else:
         pass
     conn = SqlConn()
     key_list = ['id', 'Service_provider_name']
-    sql = Sql.get_s_sql('Service_provider', key_list, {})
+    sql = Sql.get_s_sql('service_provider', key_list, {})
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
     conn.close()
     # print result
-    return render(request, 'rack/new_rack.html', {'service_provider_list': result})
+    return render(request, 'rack/new_rack.html',
+                  {'service_provider_list': result, "val": insert, "name_tips": name_tips})
+
 
 @login_required
 def rack_config(request):
     return render(request, 'rack/new_rack_config.html', {})
+
 
 @login_required
 def new_rack_config(request):
@@ -287,7 +306,7 @@ def new_rack_config(request):
 
             insert = {"idc_name": idc_name, 'rack_number': rack_number, 'start_time': start_time, 'end_time': end_time,
                       'service_provider': service_provider}
-            table = 'Idc'
+            table = 'idc'
             sql = Sql.get_i_sql(table, insert)
             conn = SqlConn()
             conn.execute(sql)
@@ -300,12 +319,12 @@ def new_rack_config(request):
         pass
     conn = SqlConn()
     key_list = ['id', 'room_name']
-    sql = Sql.get_s_sql('Room', key_list, {})
+    sql = Sql.get_s_sql('room', key_list, {})
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
 
     key_list_1 = ['id', 'idc_name']
-    sql_1 = Sql.get_s_sql('Idc', key_list_1, {})
+    sql_1 = Sql.get_s_sql('idc', key_list_1, {})
     r_1 = conn.execute(sql_1)
     result_1 = Query.fSqlResult(r_1, key_list_1)
 
@@ -314,6 +333,16 @@ def new_rack_config(request):
     return render(request, 'new__config.html', {'room_list': result, 'rack_list': result_1})
 
 
+# 判断是否存在
+def isexist(table, key, val):
+    conn = SqlConn()
+    key_list = ['id']
+    sql = Sql.get_s_sql(table, key_list, {key: val})
+    r = conn.execute(sql)
+    result = Query.fSqlResult(r, key_list)
+    if result:
+        return 1
+    return 0
 
 
 ########################################## start networking
@@ -323,15 +352,18 @@ def network_config(request):
     conn = SqlConn()
     key_list = ['id', 'idc_name', 'manage_ip', 'other_ip', 'dev_type', 'dev_ports', 'sn', 'an', 'units', 'rack_number',
                 'rack_units']
-    sql = Sql.get_s_sql('Network_config', key_list, {})
+    sql = Sql.get_s_sql('network_config', key_list, {})
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
     conn.close()
     return render(request, 'network/network_config.html', {'ret': result})
 
+
 @login_required
 @csrf_protect
 def new_network_config(request):
+    name_tips = ""
+    insert = {}
     if request.method == 'POST':
         device_name = request.REQUEST.get('device_name')
         idc_name = request.REQUEST.get('idc_name')
@@ -347,54 +379,62 @@ def new_network_config(request):
         editor = int(request.REQUEST.get('editor', 0))
         id = int(request.REQUEST.get('id', 0))
         editor_current_page = int(request.REQUEST.get('editor_current_page', 1))
-        print "editor="+str(editor)+",id="+str(id)+',editor_current_page='+str(editor_current_page)
-        if idc_name is not None and rack_number is not None:
+        print "editor=" + str(editor) + ",id=" + str(id) + ',editor_current_page=' + str(editor_current_page)
 
-            insert = {
-                'device_name': device_name,
-                "idc_name": idc_name,
-                'manage_ip': manage_ip,
-                'other_ip': other_ip,
-                'dev_type': dev_type,
-                'dev_ports': dev_ports,
-                'sn': sn,
-                'an': an,
-                'units': units,
-                'rack_number': rack_number,
-                'rack_units': rack_units
-            }
-            table = 'Network_config'
+        insert = {
+            'device_name': device_name,
+            "idc_name": idc_name,
+            'manage_ip': manage_ip,
+            'other_ip': other_ip,
+            'dev_type': dev_type,
+            'dev_ports': dev_ports,
+            'sn': sn,
+            'an': an,
+            'units': units,
+            'rack_number': rack_number,
+            'rack_units': rack_units
+        }
+
+        table = 'network_config'
+        isF = isexist(table, 'device_name', device_name)
+        if isF == 1 and editor == 0:
+            name_tips = "名称重复"
+        elif idc_name is not None and rack_number is not None:
             if editor and id:
-              sql = Sql.get_u_sql(table,insert,{"id":id})
+                sql = Sql.get_u_sql(table, insert, {"id": id})
             else:
-              sql = Sql.get_i_sql(table, insert)
+                sql = Sql.get_i_sql(table, insert)
             conn = SqlConn()
             conn.execute(sql)
             if editor and id:
-              rack_id = 1
+                rack_id = 1
             else:
-             rack_id = conn.last_id(table)
+                rack_id = conn.last_id(table)
             conn.commit()
             conn.close()
             if rack_id:
-                return HttpResponseRedirect("/network_config/?p"+str(editor_current_page))
+                return HttpResponseRedirect("/network_config/?p" + str(editor_current_page))
+        else:
+            name_tips = "参数错误"
+
     else:
         pass
     conn = SqlConn()
     key_list = ['id', 'room_name']
-    sql = Sql.get_s_sql('Room', key_list, {})
+    sql = Sql.get_s_sql('room', key_list, {})
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
 
     key_list_1 = ['id', 'idc_name']
-    sql_1 = Sql.get_s_sql('Idc', key_list_1, {})
+    sql_1 = Sql.get_s_sql('idc', key_list_1, {})
     r_1 = conn.execute(sql_1)
     result_1 = Query.fSqlResult(r_1, key_list_1)
 
     conn.close()
     print result
     # return render(request, 'new__config.html', {'room_list':result,'rack_list':result_1})
-    return render(request, 'network/new_network_config.html', {'room_list': result, 'rack_list': result_1})
+    return render(request, 'network/new_network_config.html',
+                  {'room_list': result, 'rack_list': result_1, "name_tips": name_tips, "val": insert})
 
 
 @login_required
@@ -404,26 +444,28 @@ def getNetwork_configById(request):
     if id is None or id == 0:
         return HttpResponse(json.dumps(result), content_type="application/json")
     conn = SqlConn()
-    key_list = ['id','device_name', 'idc_name', 'manage_ip', 'other_ip', 'dev_type', 'dev_ports', 'sn', 'an', 'units', 'rack_number',
+    key_list = ['id', 'device_name', 'idc_name', 'manage_ip', 'other_ip', 'dev_type', 'dev_ports', 'sn', 'an', 'units',
+                'rack_number',
                 'rack_units']
-    sql = Sql.get_s_sql('network_config', key_list, {"id":id})
+    sql = Sql.get_s_sql('network_config', key_list, {"id": id})
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
     conn.close()
 
     conn = SqlConn()
     key_list = ['id', 'room_name']
-    sql = Sql.get_s_sql('Room', key_list, {})
+    sql = Sql.get_s_sql('room', key_list, {})
     r = conn.execute(sql)
     room = Query.fSqlResult(r, key_list)
 
     key_list_1 = ['id', 'idc_name']
-    sql_1 = Sql.get_s_sql('Idc', key_list_1, {})
+    sql_1 = Sql.get_s_sql('idc', key_list_1, {})
     r_1 = conn.execute(sql_1)
     idc = Query.fSqlResult(r_1, key_list_1)
 
-    ret = {'result': result[0],'idc' : idc,'room' : room}
+    ret = {'result': result[0], 'idc': idc, 'room': room}
     return HttpResponse(json.dumps(ret), content_type="application/json")
+
 
 @login_required
 def deleteNetwork_configById(request):
@@ -438,18 +480,21 @@ def deleteNetwork_configById(request):
     else:
         return HttpResponse(json.dumps(result), content_type="application/json")
     return HttpResponse(json.dumps(result), content_type="application/json")
+
+
 @login_required
 def ajax_network_config(request):
     page = request.REQUEST.get('p', 1)
     pageSize = request.REQUEST.get('pageSize', 6)
     conn = SqlConn()
-    key_list = ['id','device_name', 'idc_name', 'manage_ip', 'other_ip', 'dev_type', 'dev_ports', 'sn', 'an', 'units', 'rack_number',
+    key_list = ['id', 'device_name', 'idc_name', 'manage_ip', 'other_ip', 'dev_type', 'dev_ports', 'sn', 'an', 'units',
+                'rack_number',
                 'rack_units']
-    sql = Sql.get_s_sql('Network_config', key_list, {}, page, pageSize)
+    sql = Sql.get_s_sql('network_config', key_list, {}, page, pageSize)
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
 
-    totalPage = Sql.get_count(conn, 'Network_config', {})
+    totalPage = Sql.get_count(conn, 'network_config', {})
     print "totalPage2=" + str(totalPage)
     if totalPage % pageSize:
         totalPage = totalPage / pageSize + 1
@@ -457,15 +502,14 @@ def ajax_network_config(request):
         totalPage = totalPage / pageSize
     conn.close()
 
-
     conn = SqlConn()
     key_list = ['id', 'room_name']
-    sql = Sql.get_s_sql('Room', key_list, {})
+    sql = Sql.get_s_sql('room', key_list, {})
     r = conn.execute(sql)
     room = Query.fSqlResult(r, key_list)
 
     key_list_1 = ['id', 'idc_name']
-    sql_1 = Sql.get_s_sql('Idc', key_list_1, {})
+    sql_1 = Sql.get_s_sql('idc', key_list_1, {})
     r_1 = conn.execute(sql_1)
     idc = Query.fSqlResult(r_1, key_list_1)
 
@@ -487,19 +531,19 @@ def ajax_network_config(request):
     # }
 
     head = {
-        'a_id':"自增序号",
-        'b_device_name':"设备名称",
-        'c_idc_name':"所在机房",
-        'd_manage_ip':"管理IP",
-        'e_other_ip':"非管理IP",
-        #'e_dev_type':"dev_type",
-        #'f_dev_ports':"dev_ports",
-        #'g_sn':"sn",
-        #'h_an':"an",
-        #'i_units':"units",
-        'j_rack_number':"所在机柜",
-        'k_rack_units':"机柜编号",
-        "x_oper":"操作"
+        'a_id': "自增序号",
+        'b_device_name': "设备名称",
+        'c_idc_name': "所在机房",
+        'd_manage_ip': "管理IP",
+        'e_other_ip': "非管理IP",
+        # 'e_dev_type':"dev_type",
+        # 'f_dev_ports':"dev_ports",
+        # 'g_sn':"sn",
+        # 'h_an':"an",
+        # 'i_units':"units",
+        'j_rack_number': "所在机柜",
+        'k_rack_units': "机柜编号",
+        "x_oper": "操作"
     }
     new_room = {}
     for j in room:
@@ -515,15 +559,16 @@ def ajax_network_config(request):
     ret = {
         "body": new_result,
         "head": head,
-        "idc" : idc,
-        'room' : room,
-        "page" : {
-            "current" : page,
-            "totalpage" : totalPage,
-            "lastpage" : totalPage
+        "idc": idc,
+        'room': room,
+        "page": {
+            "current": page,
+            "totalpage": totalPage,
+            "lastpage": totalPage
         }
     }
-    return HttpResponse(json.dumps(ret,sort_keys=True), content_type="application/json")
+    return HttpResponse(json.dumps(ret, sort_keys=True), content_type="application/json")
+
 
 ########################################## end networking
 
@@ -564,26 +609,34 @@ def getServerById(request):
                 'change_people',
                 'description',
                 'status'
-            ]
-    sql = Sql.get_s_sql('Server', key_list, {"id": id})
+                ]
+    sql = Sql.get_s_sql('server', key_list, {"id": id})
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
 
     conn = SqlConn()
     key_list = ['id', 'room_name']
-    sql = Sql.get_s_sql('Room', key_list, {})
+    sql = Sql.get_s_sql('room', key_list, {})
     r = conn.execute(sql)
     room = Query.fSqlResult(r, key_list)
 
     key_list_1 = ['id', 'idc_name']
-    sql_1 = Sql.get_s_sql('Idc', key_list_1, {})
+    sql_1 = Sql.get_s_sql('idc', key_list_1, {})
     r_1 = conn.execute(sql_1)
     idc = Query.fSqlResult(r_1, key_list_1)
-    #print "idc="+str(idc)
-    #print "result="+str(result)
-    ret = {'result': result[0],'idc' : idc,'room' : room,'owner_group' : ServerGroup.group,'server_type' : ServerGroup.type}
-    print "ret="+str(ret)
+
+    key_list_2 = ['id', 'device_name']
+    sql_2 = Sql.get_s_sql('network_config', key_list_2, {})
+    r_2 = conn.execute(sql_2)
+    network = Query.fSqlResult(r_2, key_list_2)
+
+    # print "idc="+str(idc)
+    # print "result="+str(result)
+    ret = {'result': result[0], 'idc': idc, 'room': room, 'owner_group': ServerGroup.group,
+           'server_type': ServerGroup.type,'network':network}
+    print "ret=" + str(ret)
     return HttpResponse(json.dumps(ret), content_type="application/json")
+
 
 @login_required
 def deleteServerById(request):
@@ -592,7 +645,7 @@ def deleteServerById(request):
     result = {"ret": "delete faild"}
     if id:
         conn = SqlConn()
-        sql = Sql.get_d_sql('Server', {"id": id})
+        sql = Sql.get_d_sql('server', {"id": id})
         r = conn.execute(sql)
         result = {"ret": "delete success"}
     else:
@@ -605,7 +658,7 @@ def server(request):
     conn = SqlConn()
     key_list = ['id', 'hostname', 'manage_ip', 'other_ip', 'app_name', 'cpu', 'mem', 'disk', 'sn', 'an', 'units',
                 'idc_name', 'rack_number', 'rack_units', 'status']
-    sql = Sql.get_s_sql('Server', key_list, {})
+    sql = Sql.get_s_sql('server', key_list, {})
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
     # head = ['id', 'host name', 'manager ip', 'other IP', 'app nane', 'CPU', 'memory', 'disk', 'sn', 'an', 'units',
@@ -629,12 +682,12 @@ def ajaxserver(request):
         'other_ip',
         'app_name',
         'cpu', 'mem', 'disk', 'sn', 'an', 'units',
-                'idc_name', 'rack_number', 'rack_units', 'status']
-    sql = Sql.get_s_sql('Server', key_list, {},page,pageSize)
+        'idc_name', 'rack_number', 'rack_units', 'status']
+    sql = Sql.get_s_sql('server', key_list, {}, page, pageSize)
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
 
-    totalPage = Sql.get_count(conn, 'Idc', {})
+    totalPage = Sql.get_count(conn, 'idc', {})
     print "totalPage2=" + str(totalPage)
     if totalPage % pageSize:
         totalPage = totalPage / pageSize + 1
@@ -663,16 +716,16 @@ def ajaxserver(request):
         'b_hostname': "主机名称",
         'c_manage_ip': "管理IP",
         'd_other_ip': "非管理IP",
-        #'e_app_name': "app_name",
+        # 'e_app_name': "app_name",
         'f_cpu': "CPU",
         'g_mem': "内存",
         'h_disk': "硬盘",
-        #'i_sn': "sn",
-        #'j_an': "an",
-        #'k_units': "units",
-        #'l_idc_name': "idc_name",
-        #'m_rack_number': "rack_number",
-        #'n_rack_units': "rack_units",
+        # 'i_sn': "sn",
+        # 'j_an': "an",
+        # 'k_units': "units",
+        # 'l_idc_name': "idc_name",
+        # 'm_rack_number': "rack_number",
+        # 'n_rack_units': "rack_units",
         'o_status': "状态",
         'p_oper': "操作"
     }
@@ -680,18 +733,20 @@ def ajaxserver(request):
     ret = {
         "body": result,
         "head": head,
-        "page" : {
-            "current" : page,
-            "totalPage" : totalPage,
-            "lastpage" : totalPage
+        "page": {
+            "current": page,
+            "totalPage": totalPage,
+            "lastpage": totalPage
         }
     }
-    return HttpResponse(json.dumps(ret,sort_keys=True), content_type="application/json")
+    return HttpResponse(json.dumps(ret, sort_keys=True), content_type="application/json")
 
 
 @login_required
 @csrf_protect
 def new_server(request):
+    name_tips = ""
+    insert = {}
     if request.method == 'POST':
         idc_name = request.REQUEST.get('idc_name')
         hostname = request.REQUEST.get('hostname')
@@ -714,15 +769,15 @@ def new_server(request):
         end_date = request.REQUEST.get('end_date')
         switch_name = request.REQUEST.get('switch_name')
         switch_port = request.REQUEST.get('switch_port')
-        #change_time = request.REQUEST.get('change_time',None)
-        change_dev_info = request.REQUEST.get('change_dev_info',None)
-        change_people = request.REQUEST.get('change_people',None)
+        # change_time = request.REQUEST.get('change_time',None)
+        change_dev_info = request.REQUEST.get('change_dev_info', None)
+        change_people = request.REQUEST.get('change_people', None)
         description = request.REQUEST.get('description')
         status = request.REQUEST.get('status')
         editor = int(request.REQUEST.get('editor', 0))
         id = int(request.REQUEST.get('id', 0))
         editor_current_page = int(request.REQUEST.get('editor_current_page', 1))
-        print "editor="+str(editor)+",id="+str(id)+',editor_current_page='+str(editor_current_page)
+        print "editor=" + str(editor) + ",id=" + str(id) + ',editor_current_page=' + str(editor_current_page)
         conn = SqlConn()
 
         insert = {
@@ -750,44 +805,55 @@ def new_server(request):
             'status': status,
             'idc_name': idc_name
         }
-        if editor and id:
-            insert['change_time'] = time.time()
-        if change_dev_info:
-            insert['change_dev_info'] = change_dev_info
-        if change_people:
-            insert['change_people'] = change_people
-        table = 'Server'
-        if editor and id:
-         afeck_row =  1
-         sql = Sql.get_u_sql(table,insert,{"id":id})
+        table = 'server'
+        isF = isexist(table, 'hostname', hostname)
+        if isF == 1 and editor == 0:
+            name_tips = "名称重复"
+        elif hostname and manage_ip:
+            if editor and id:
+                insert['change_time'] = time.time()
+            if change_dev_info:
+                insert['change_dev_info'] = change_dev_info
+            if change_people:
+                insert['change_people'] = change_people
+
+            if editor and id:
+                afeck_row = 1
+                sql = Sql.get_u_sql(table, insert, {"id": id})
+            else:
+                sql = Sql.get_i_sql(table, insert)
+            r = conn.execute(sql)
+            if editor and id:
+                afeck_row = 1
+            else:
+                afeck_row = conn.last_id(table)
+            if afeck_row:
+                return HttpResponseRedirect("/server/?p=" + str(editor_current_page))
         else:
-         sql = Sql.get_i_sql(table, insert)
-        r = conn.execute(sql)
-        if editor and id:
-            afeck_row =  1
-        else:
-            afeck_row = conn.last_id(table)
-        if afeck_row:
-            return HttpResponseRedirect("/server/?p="+str(editor_current_page))
+            name_tips = "参数错误"
     conn = SqlConn()
     key_list = ['id', 'room_name']
-    sql = Sql.get_s_sql('Room', key_list, {})
+    sql = Sql.get_s_sql('room', key_list, {})
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
     key_list_1 = ['id', 'idc_name']
-    sql_1 = Sql.get_s_sql('Idc', key_list_1, {})
+    sql_1 = Sql.get_s_sql('idc', key_list_1, {})
     r_1 = conn.execute(sql_1)
     result_1 = Query.fSqlResult(r_1, key_list_1)
 
     server_group = ServerGroup.group
     server_type = ServerGroup.type
-    key_list_2 = ['id', 'idc_name', 'manage_ip', 'other_ip', 'dev_type', 'dev_ports', 'sn', 'an', 'units', 'rack_number',
-                'rack_units']
+    key_list_2 = ['id', 'idc_name', 'manage_ip', 'other_ip', 'dev_type', 'dev_ports', 'sn', 'an', 'units',
+                  'rack_number',
+                  'rack_units']
     sql_2 = Sql.get_s_sql('network_config', key_list_2, {})
     r_2 = conn.execute(sql_2)
     result_2 = Query.fSqlResult(r_2, key_list_2)
     conn.close()
-    return render(request, 'server/new_server.html', {'server_group':server_group,'server_type':server_type,'room_list': result, 'rack_list': result_1,'network':result_2})
+    return render(request, 'server/new_server.html',
+                  {'server_group': server_group, 'server_type': server_type, 'room_list': result, 'rack_list': result_1,
+                   'network': result_2, "val": insert, "name_tips": name_tips})
+
 
 ########################################## server end
 
@@ -796,11 +862,10 @@ def statistics(request):
     return render(request, 'statistics.html', {})
 
 
-
 @login_required
 def users(request):
     conn = SqlConn()
-    key_list = ['id', 'username', 'is_active', 'date_joined','email','last_login']
+    key_list = ['id', 'username', 'is_active', 'date_joined', 'email', 'last_login']
     sql = Sql.get_s_sql('auth_user', key_list, {})
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
@@ -808,13 +873,14 @@ def users(request):
     # return render(request, 'rack_list.html', {'ret': result})
     return render(request, 'users/users.html', {'ret': result})
 
+
 @login_required
 @csrf_protect
 def ajax_users(request):
     page = request.REQUEST.get('p', 1)
     pageSize = request.REQUEST.get('pageSize', 6)
     conn = SqlConn()
-    key_list = ['id', 'username', 'is_active', 'date_joined','email','last_login']
+    key_list = ['id', 'username', 'is_active', 'date_joined', 'email', 'last_login']
     sql = Sql.get_s_sql('auth_user', key_list, {}, page, pageSize)
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
@@ -826,8 +892,9 @@ def ajax_users(request):
     else:
         totalPage = totalPage / pageSize
     conn.close()
-    #head = {'a_id':"id", 'b_room_name':"room_name", 'c_room_addr':"room_addr","d_oper":"oper"}
-    head = {'a_id':"用户ID", 'b_username':"用户名称", 'c_is_active':"是否可用", 'd_date_joined':"加入时间", 'e_email':"邮件",'f_last_login':"最后登录"}
+    # head = {'a_id':"id", 'b_room_name':"room_name", 'c_room_addr':"room_addr","d_oper":"oper"}
+    head = {'a_id': "用户ID", 'b_username': "用户名称", 'c_is_active': "是否可用", 'd_date_joined': "加入时间", 'e_email': "邮件",
+            'f_last_login': "最后登录"}
     new_result = []
     for i in result:
         if i['is_active']:
@@ -836,13 +903,13 @@ def ajax_users(request):
     ret = {
         "body": new_result,
         "head": head,
-        "page" : {
-            "current" : page,
-            "totalpage" : totalPage,
-            "lastpage" : totalPage
+        "page": {
+            "current": page,
+            "totalpage": totalPage,
+            "lastpage": totalPage
         }
     }
-    return HttpResponse(json.dumps(ret,sort_keys=True), content_type="application/json")
+    return HttpResponse(json.dumps(ret, sort_keys=True), content_type="application/json")
 
 
 @login_required
@@ -859,6 +926,7 @@ def deleteUsersById(request):
         return HttpResponse(json.dumps(result), content_type="application/json")
     return HttpResponse(json.dumps(result), content_type="application/json")
 
+
 @login_required
 def getUsersById(request):
     id = request.REQUEST.get('id', None)
@@ -866,7 +934,7 @@ def getUsersById(request):
     if id is None or id == 0:
         return HttpResponse(json.dumps(result), content_type="application/json")
     conn = SqlConn()
-    key_list = ['id', 'username', 'is_active', 'date_joined','email','last_login']
+    key_list = ['id', 'username', 'is_active', 'date_joined', 'email', 'last_login']
     sql = Sql.get_s_sql('auth_user', key_list, {"id": id})
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
@@ -898,7 +966,6 @@ def new_users(request):
     return render(request, 'users/new_users.html', {})
 
 
-
 @login_required
 def getRoomById(request):
     id = request.REQUEST.get('id', None)
@@ -907,7 +974,7 @@ def getRoomById(request):
         return HttpResponse(json.dumps(result), content_type="application/json")
     conn = SqlConn()
     key_list = ['id', 'room_name', 'room_addr']
-    sql = Sql.get_s_sql('Room', key_list, {"id": id})
+    sql = Sql.get_s_sql('room', key_list, {"id": id})
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
     ret = {'result': result[0]}
@@ -921,30 +988,37 @@ def deleteRoomById(request):
     result = {"ret": "delete faild"}
     if id:
         conn = SqlConn()
-        sql = Sql.get_d_sql('Room', {"id": id})
+        sql = Sql.get_d_sql('room', {"id": id})
         r = conn.execute(sql)
         result = {"ret": "delete success"}
     else:
         return HttpResponse(json.dumps(result), content_type="application/json")
     return HttpResponse(json.dumps(result), content_type="application/json")
 
+
 @login_required
 @csrf_protect
 def new_room(request):
+    name_tips = ""
+    insert = {}
     if request.method == 'POST':
         room_name = request.REQUEST.get('room_name')
         room_addr = request.REQUEST.get('room_addr')
         editor = int(request.REQUEST.get('editor', 0))
         id = int(request.REQUEST.get('id', 0))
         editor_current_page = int(request.REQUEST.get('editor_current_page', 1))
-        print "editor="+str(editor)+",id="+str(id)+',editor_current_page='+str(editor_current_page)
-        if room_name is not None and room_addr is not None:
-            insert = {"room_name": room_name, 'room_addr': room_addr}
-            table = 'Room'
+        # print "editor=" + str(editor) + ",id=" + str(id) + ',editor_current_page=' + str(editor_current_page)
+        insert = {"room_name": room_name, 'room_addr': room_addr}
+        table = 'room'
+        isF = isexist(table, 'room_name', room_name)
+        if isF == 1 and editor == 0:
+            name_tips = "名称重复"
+        elif room_name is not None and room_addr is not None:
+
             if editor and id:
-               sql = Sql.get_u_sql(table,insert,{'id':id})
+                sql = Sql.get_u_sql(table, insert, {'id': id})
             else:
-               sql = Sql.get_i_sql(table,insert)
+                sql = Sql.get_i_sql(table, insert)
             conn = SqlConn()
             conn.execute(sql)
             conn.commit()
@@ -954,9 +1028,10 @@ def new_room(request):
                 room_id = conn.last_id(table)
             if room_id:
                 conn.close()
-                return HttpResponseRedirect("/room_list/?p="+str(editor_current_page))
-    return render(request, 'room/new_room.html', {})
-
+                return HttpResponseRedirect("/room_list/?p=" + str(editor_current_page))
+        else:
+            name_tips = "参数错误"
+    return render(request, 'room/new_room.html', {"val": insert, "name_tips": name_tips})
 
 
 @login_required
@@ -966,31 +1041,30 @@ def ajaxroomlist(request):
     pageSize = request.REQUEST.get('pageSize', 6)
     conn = SqlConn()
     key_list = ['id', 'room_name', 'room_addr']
-    sql = Sql.get_s_sql('Room', key_list, {}, page, pageSize)
+    sql = Sql.get_s_sql('room', key_list, {}, page, pageSize)
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
 
-    totalPage = Sql.get_count(conn, 'Idc', {})
+    totalPage = Sql.get_count(conn, 'idc', {})
     print "totalPage2=" + str(totalPage)
     if totalPage % pageSize:
         totalPage = totalPage / pageSize + 1
     else:
         totalPage = totalPage / pageSize
     conn.close()
-    #head = {'a_id':"id", 'b_room_name':"room_name", 'c_room_addr':"room_addr","d_oper":"oper"}
-    head = {'a_id':"自增序号", 'b_room_name':"机房名称", 'c_room_addr':"机房所在地址","d_oper":"操作"}
+    # head = {'a_id':"id", 'b_room_name':"room_name", 'c_room_addr':"room_addr","d_oper":"oper"}
+    head = {'a_id': "自增序号", 'b_room_name': "机房名称", 'c_room_addr': "机房所在地址", "d_oper": "操作"}
 
     ret = {
         "body": result,
         "head": head,
-        "page" : {
-            "current" : page,
-            "totalpage" : totalPage,
-            "lastpage" : totalPage
+        "page": {
+            "current": page,
+            "totalpage": totalPage,
+            "lastpage": totalPage
         }
     }
-    return HttpResponse(json.dumps(ret,sort_keys=True), content_type="application/json")
-
+    return HttpResponse(json.dumps(ret, sort_keys=True), content_type="application/json")
 
 
 @login_required(login_url='/login/')
@@ -998,13 +1072,12 @@ def room_list(request):
     # return render(request, 'room_list.html', {})
     conn = SqlConn()
     key_list = ['id', 'room_name', 'room_addr']
-    sql = Sql.get_s_sql('Room', key_list, {})
+    sql = Sql.get_s_sql('room', key_list, {})
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
     conn.close()
     # return render(request, 'rack_list.html', {'ret': result})
     return render(request, 'room/room_list.html', {'ret': result})
-
 
 
 ############################################ start Service_providerById
@@ -1016,7 +1089,7 @@ def getService_providerById(request):
         return HttpResponse(json.dumps(result), content_type="application/json")
     conn = SqlConn()
     key_list = ['id', 'service_provider_name', 'service_provider_addr']
-    sql = Sql.get_s_sql('Service_provider', key_list, {"id": id})
+    sql = Sql.get_s_sql('service_provider', key_list, {"id": id})
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
     ret = {'result': result[0]}
@@ -1030,28 +1103,35 @@ def deleteService_providerById(request):
     result = {"ret": "delete faild"}
     if id:
         conn = SqlConn()
-        sql = Sql.get_d_sql('Service_provider', {"id": id})
+        sql = Sql.get_d_sql('service_provider', {"id": id})
         r = conn.execute(sql)
         result = {"ret": "delete success"}
     else:
         return HttpResponse(json.dumps(result), content_type="application/json")
     return HttpResponse(json.dumps(result), content_type="application/json")
 
+
 @login_required
 @csrf_protect
 def new_service_provider(request):
+    name_tips = ""
+    insert = {}
     if request.method == 'POST':
         service_provider_name = request.REQUEST.get('service_provider_name')
         service_provider_addr = request.REQUEST.get('service_provider_addr')
         editor = int(request.REQUEST.get('editor', 0))
         id = int(request.REQUEST.get('id', 0))
         editor_current_page = int(request.REQUEST.get('editor_current_page', 1))
-        print "editor="+str(editor)+",id="+str(id)+',editor_current_page='+str(editor_current_page)
-        if service_provider_name is not None and service_provider_addr is not None:
-            insert = {"service_provider_name": service_provider_name, 'service_provider_addr': service_provider_addr}
-            table = 'Service_provider'
+        print "editor=" + str(editor) + ",id=" + str(id) + ',editor_current_page=' + str(editor_current_page)
+        insert = {"service_provider_name": service_provider_name, 'service_provider_addr': service_provider_addr}
+        table = 'service_provider'
+        isF = isexist(table, 'service_provider_name', service_provider_name)
+        if isF == 1 and editor == 0:
+            name_tips = "名称重复"
+        elif service_provider_name is not None and service_provider_addr is not None:
+
             if editor and id:
-                sql = Sql.get_u_sql(table,insert,{"id":id})
+                sql = Sql.get_u_sql(table, insert, {"id": id})
             else:
                 sql = Sql.get_i_sql(table, insert)
 
@@ -1059,29 +1139,29 @@ def new_service_provider(request):
             conn.execute(sql)
 
             if editor and id:
-             uid = 1
+                uid = 1
             else:
-             uid = conn.last_id(table)
+                uid = conn.last_id(table)
             conn.commit()
             conn.close()
             if uid:
-                return HttpResponseRedirect("/service_provider/?p"+str(editor_current_page))
-                #return HttpResponseRedirect("/service_provider/")
-    return render(request, 'service/new_service_provider.html', {})
-
+                return HttpResponseRedirect("/service_provider/?p" + str(editor_current_page))
+        else:
+            name_tips = "参数错误"
+            # return HttpResponseRedirect("/service_provider/")
+    return render(request, 'service/new_service_provider.html', {"val": insert, "name_tips": name_tips})
 
 
 @login_required
 def service_provider(request):
     conn = SqlConn()
     key_list = ['id', 'service_provider_name', 'service_provider_addr']
-    sql = Sql.get_s_sql('Service_provider', key_list, {})
+    sql = Sql.get_s_sql('service_provider', key_list, {})
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
     conn.close()
     # return render(request, 'rack_list.html', {'ret': result})
     return render(request, 'service/service_provider.html', {'ret': result})
-
 
 
 @login_required
@@ -1090,30 +1170,32 @@ def ajax_service_provider(request):
     pageSize = request.REQUEST.get('pageSize', 6)
     conn = SqlConn()
     key_list = ['id', 'service_provider_name', 'service_provider_addr']
-    sql = Sql.get_s_sql('Service_provider', key_list, {}, page, pageSize)
+    sql = Sql.get_s_sql('service_provider', key_list, {}, page, pageSize)
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
 
-    totalPage = Sql.get_count(conn, 'Service_provider', {})
+    totalPage = Sql.get_count(conn, 'service_provider', {})
     print "totalPage2=" + str(totalPage)
     if totalPage % pageSize:
         totalPage = totalPage / pageSize + 1
     else:
         totalPage = totalPage / pageSize
     conn.close()
-    #head = {'a_id':"id", 'b_service_provider_name':"service_provider_name", 'c_service_provider_addr':"service_provider_addr","x_oper":"oper"}
-    head = {'a_id':"自增序号", 'b_service_provider_name':"服务提供商名称", 'c_service_provider_addr':"服务提供商地址","x_oper":"操作"}
+    # head = {'a_id':"id", 'b_service_provider_name':"service_provider_name", 'c_service_provider_addr':"service_provider_addr","x_oper":"oper"}
+    head = {'a_id': "自增序号", 'b_service_provider_name': "服务提供商名称", 'c_service_provider_addr': "服务提供商地址", "x_oper": "操作"}
 
     ret = {
         "body": result,
         "head": head,
-        "page" : {
-            "current" : page,
-            "totalpage" : totalPage,
-            "lastpage" : totalPage
+        "page": {
+            "current": page,
+            "totalpage": totalPage,
+            "lastpage": totalPage
         }
     }
-    return HttpResponse(json.dumps(ret,sort_keys=True), content_type="application/json")
+    return HttpResponse(json.dumps(ret, sort_keys=True), content_type="application/json")
+
+
 ############################################ end Service_providerById
 
 ############################################ start vm
@@ -1124,7 +1206,7 @@ def vm(request):
     conn = SqlConn()
     key_list = ['id', 'hostname', 'manage_ip', 'other_ip', 'app_name', 'cpu', 'mem', 'disk', 'status',
                 'hypervisor_host']
-    sql = Sql.get_s_sql('VM', key_list, {})
+    sql = Sql.get_s_sql('vm', key_list, {})
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
     return render(request, 'vm/vm.html', {'ret': result})
@@ -1133,6 +1215,8 @@ def vm(request):
 @login_required
 @csrf_protect
 def new_vm(request):
+    name_tips = ""
+    insert = {}
     if request.method == 'POST':
         hostname = request.REQUEST.get('hostname')
         manage_ip = request.REQUEST.get('manage_ip')
@@ -1151,10 +1235,11 @@ def new_vm(request):
         hypervisor_host = request.REQUEST.get('hypervisor_host')
         editor = int(request.REQUEST.get('editor', 0))
         id = int(request.REQUEST.get('id', 0))
-        editor_current_page = int(request.REQUEST.get('editor_current_page', 1))
-        print "editor="+str(editor)+",id="+str(id)+',editor_current_page='+str(editor_current_page)
-        conn = SqlConn()
 
+        editor_current_page = int(request.REQUEST.get('editor_current_page', 1))
+        print "editor=" + str(editor) + ",id=" + str(id) + ',editor_current_page=' + str(editor_current_page)
+        conn = SqlConn()
+        table = 'vm'
         insert = {
             "hostname": hostname,
             'manage_ip': manage_ip,
@@ -1173,24 +1258,28 @@ def new_vm(request):
 
         if change_dev_info:
             insert['change_dev_info'] = change_dev_info
-        if   change_people:
-             insert['change_people'] = change_people
+        if change_people:
+            insert['change_people'] = change_people
 
-        table = 'VM'
-        if editor and id:
-           sql = Sql.get_u_sql(table,insert,{"id":id})
+        isF = isexist(table, 'hostname', hostname)
+        if isF == 1 and editor == 0:
+            name_tips = "名称重复"
+        elif hostname and manage_ip:
+            if editor and id:
+                insert['change_time'] = time.time()
+                sql = Sql.get_u_sql(table, insert, {"id": id})
+            else:
+                sql = Sql.get_i_sql(table, insert)
+            conn.execute(sql)
+            if editor and id:
+                efeck_row = 1
+            else:
+                efeck_row = conn.last_id(table)
+            if efeck_row:
+                return HttpResponseRedirect("/vm/?p=" + str(editor_current_page))
         else:
-           sql = Sql.get_i_sql(table, insert)
-        conn.execute(sql)
-
-        if editor and id:
-            efeck_row = 1
-        else:
-            efeck_row = conn.last_id(table)
-        if efeck_row:
-            return HttpResponseRedirect("/vm/?p="+str(editor_current_page))
-    return render(request, 'vm/new_vm.html', {"server_group":ServerGroup.group})
-
+            name_tips = "参数错误"
+    return render(request, 'vm/new_vm.html', {"server_group": ServerGroup.group, "val": insert, "name_tips": name_tips})
 
 
 @login_required
@@ -1201,28 +1290,28 @@ def getVmById(request):
         return HttpResponse(json.dumps(result), content_type="application/json")
     conn = SqlConn()
     key_list = [
-                'id',
-                'hostname',
-                'manage_ip',
-                'other_ip',
-                'app_name',
-                'system_version',
-                'zabbix_template',
-                'owner_group',
-                'cpu',
-                'mem',
-                'disk',
-                'hypervisor_host',
-                'change_time',
-                'change_dev_info',
-                'change_people',
-                'description',
-                'status'
-                ]
-    sql = Sql.get_s_sql('VM', key_list, {"id": id})
+        'id',
+        'hostname',
+        'manage_ip',
+        'other_ip',
+        'app_name',
+        'system_version',
+        'zabbix_template',
+        'owner_group',
+        'cpu',
+        'mem',
+        'disk',
+        'hypervisor_host',
+        'change_time',
+        'change_dev_info',
+        'change_people',
+        'description',
+        'status'
+    ]
+    sql = Sql.get_s_sql('vm', key_list, {"id": id})
     r = conn.execute(sql)
     result = Query.fSqlResult(r, key_list)
-    ret = {'result': result[0],'owner_group':ServerGroup.group}
+    ret = {'result': result[0], 'owner_group': ServerGroup.group}
     return HttpResponse(json.dumps(ret), content_type="application/json")
 
 
@@ -1233,7 +1322,7 @@ def deleteVmById(request):
     result = {"ret": "delete faild"}
     if id:
         conn = SqlConn()
-        sql = Sql.get_d_sql('VM', {"id": id})
+        sql = Sql.get_d_sql('vm', {"id": id})
         r = conn.execute(sql)
         result = {"ret": "delete success"}
     else:
@@ -1297,67 +1386,73 @@ def ajax_vm(request):
     #             'r_oper':"oper"
     # }
     head = {
-                'a_id':"自增序号",
-                'b_hostname':"虚拟主机名称",
-                'c_manage_ip':"管理IP",
-                #'d_other_ip':"other_ip",
-                #'e_app_name':"app_name",
-                #'f_system_version' : "system_version",
-                #'g_zabbix_template' : "zabbix_template",
-                #'h_owner_group' : "owner_group",
-                'i_cpu' :"CPU",
-                'j_mem'  : '内存',
-                'k_disk' : "硬盘",
-                'l_hypervisor_host' : "宿主机地址",
-                #'m_change_time' : "change_time",
-                #'n_change_dev_info' : "change_dev_info",
-                #'o_change_people' : "change_people",
-                #'p_description' : "description",
-                #'q_status' : "status"
-                'r_oper':"操作"
+        'a_id': "自增序号",
+        'b_hostname': "虚拟主机名称",
+        'c_manage_ip': "管理IP",
+        # 'd_other_ip':"other_ip",
+        # 'e_app_name':"app_name",
+        # 'f_system_version' : "system_version",
+        # 'g_zabbix_template' : "zabbix_template",
+        # 'h_owner_group' : "owner_group",
+        'i_cpu': "CPU",
+        'j_mem': '内存',
+        'k_disk': "硬盘",
+        'l_hypervisor_host': "宿主机地址",
+        # 'm_change_time' : "change_time",
+        # 'n_change_dev_info' : "change_dev_info",
+        # 'o_change_people' : "change_people",
+        # 'p_description' : "description",
+        # 'q_status' : "status"
+        'r_oper': "操作"
     }
     ret = {
         "body": result,
         "head": head,
-        "page" : {
-            "current" : page,
-            "totalpage" : totalPage,
-            "lastpage" : totalPage
+        "page": {
+            "current": page,
+            "totalpage": totalPage,
+            "lastpage": totalPage
         }
     }
-    return HttpResponse(json.dumps(ret,sort_keys=True), content_type="application/json")
+    return HttpResponse(json.dumps(ret, sort_keys=True), content_type="application/json")
+
 
 def logout_view(requst):
     logout(requst)
     return HttpResponseRedirect("/login/")
 
-#@login_required
+
+# @login_required
 @csrf_protect
 def login(request):
     login_form = LoginForm()
     return render(request, 'registration/login.html', {'form': login_form})
 
+
 def check_login(request):
     if request.method == 'GET':
         form = LoginForm()
-        return render_to_response('registration/login.html', RequestContext(request, {'form': form,}))
+        return render_to_response('registration/login.html', RequestContext(request, {'form': form, }))
     else:
         form = LoginForm(request.POST)
         if form.is_valid():
             username = request.POST.get('user_name', '')
             password = request.POST.get('passs_word', '')
-            print username,password
+            print username, password
             user = auth.authenticate(username=username, password=password)
-            print "user="+str(user)
+            print "user=" + str(user)
             if user is not None and user.is_active:
                 auth.login(request, user)
                 return HttpResponseRedirect("/index/")
-                #return render_to_response('index.html', RequestContext(request))
+                # return render_to_response('index.html', RequestContext(request))
             else:
-                return render_to_response('registration/login.html', RequestContext(request, {'form': form,'password_is_wrong':True}))
+                return render_to_response('registration/login.html',
+                                          RequestContext(request, {'form': form, 'password_is_wrong': True}))
         else:
-            return render_to_response('registration/login.html', RequestContext(request, {'form': form,}))
-#@login_required
+            return render_to_response('registration/login.html', RequestContext(request, {'form': form, }))
+
+
+# @login_required
 # def check_login(request):
 #     if request.method == 'POST':
 #         login_form = LoginForm(request.POST)
@@ -1386,6 +1481,7 @@ def check_login(request):
 
 def page_not_found(request):
     return render_to_response('404.html')
+
 
 def page_error(request):
     return render_to_response('500.html')

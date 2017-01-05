@@ -302,6 +302,16 @@
                 var server_group = data['owner_group'];
                 for (var key in result) {
                     $("#view_" + key).val(result[key]);
+                     if (key  == 'change_time')
+                    {
+                        var timestamp3 = result[key];
+                        var newDate = new Date();
+                        newDate.setTime(timestamp3 * 1000);
+                        var new_time = newDate.format('yyyy-MM-dd h:m:s');
+                        $("#view_" + key).val(new_time);
+                        //alert("change_time"+new_time);
+                    }
+
                     if (key == 'idc_name') {
                         var idc_name_html = '';
                         for (var k in room) {

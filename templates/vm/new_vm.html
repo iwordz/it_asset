@@ -11,63 +11,65 @@
             </header>
             <div class="content">
                 <div class="field-wrap">
-                    主机名称:<input type="text" value="host name" name="hostname"/>
+                    主机名称:<input type="text" value="{{ val.hostname }}" name="hostname"/><span style="color: red;">{{ name_tips }}</span>
                 </div>
                 <div class="field-wrap">
-                    管理IP:<input type="text" value="manager IP" name="manage_ip"/>
+                    管理IP:<input type="text" value="{{ val.manage_ip }}" name="manage_ip"/>
                 </div>
                 <div class="field-wrap">
-                    其它IP:<input type="text" value="other IP" name="other_ip"/>
+                    其它IP:<input type="text" value="{{ val.other_ip }}" name="other_ip"/>
                 </div>
                 <div class="field-wrap">
-                    应用名称:<input type="text" value="application name" name="app_name"/>
+                    应用名称:<input type="text" value="{{ val.app_name }}" name="app_name"/>
                 </div>
                 <div class="field-wrap">
-                    系统版本:<input type="text" value="os system version" name="system_version"/>
+                    系统版本:<input type="text" value="{{ val.system_version }}" name="system_version"/>
                 </div>
                 <div class="field-wrap">
-                    监控模版:<input type="text" value="monitor template" name="zabbix_template"/>
+                    监控模版:<input type="text" value="{{ val.zabbix_template }}" name="zabbix_template"/>
                 </div>
                 <div class="field-wrap">
 {#                    所属组:<input type="text" value="server owner group" name="owner_group"/>#}
-                      所属组:<select name="owner_group" class="selectpicker" data-style="btn-success">
-                        {% for itm_group in server_group %}
-                            <option value="{{ itm_group.id }}">{{ itm_group.name }}</option>
-                        {% endfor %}
-                    </select>
+{#                      所属组:<select name="owner_group" class="selectpicker" data-style="btn-success">#}
+{#                        {% for itm_group in server_group %}#}
+{#                            <option value="{{ itm_group.id }}">{{ itm_group.name }}</option>#}
+{#                        {% endfor %}#}
+{#                    </select>#}
+                    {% include 'common/group_type.html' %}
                 </div>
                 <div class="field-wrap">
-                    cpu:<input type="text" value="server cpu" name="cpu"/>
+                    cpu:<input type="text" value="{{ val.cpu }}" name="cpu"/>
                 </div>
                 <div class="field-wrap">
-                    memory:<input type="text" value="server memory" name="mem"/>
+                    memory:<input type="text" value="{{ val.mem }}" name="mem"/>
                 </div>
                 <div class="field-wrap">
-                    disk:<input type="text" value="disk" name="disk"/>
+                    disk:<input type="text" value="{{ val.disk }}" name="disk"/>
                 </div>
 
                <div class="field-wrap">
-                    宿主机:<input type="text" value="server units" name="hypervisor_host"/>
+                    宿主机:<input type="text" value="{{ val.hypervisor_host }}" name="hypervisor_host"/>
                 </div>
 
                 <div class="field-wrap">
-                    变更日期:<input type="text" value="service change time" name="change_time"/>
+                    变更日期:<input type="text" value="{{ val.change_time }}" name="change_time"/>
                 </div>
                 <div class="field-wrap">
-                    变更内容:<input type="text" value="server change des" name="change_dev_info"/>
+                    变更内容:<input type="text" value="{{ val.change_dev_info }}" name="change_dev_info"/>
                 </div>
                 <div class="field-wrap">
-                    变更人:<input type="text" value="server changer" name="change_people"/>
+                    变更人:<input type="text" value="{{ val.change_people }}" name="change_people"/>
                 </div>
                 <div class="field-wrap">
-                    描述:<input type="text" value="des" name="description"/>
+                    描述:<input type="text" value="{{ val.description }}" name="description"/>
                 </div>
                 <div class="field-wrap">
-                    服务器状态:<select name="status">
-                    <option value="1">开启并使用</option>
-                    <option value="0">开启未使用</option>
-                    <option value="2">停机</option>
-                </select>
+{#                    服务器状态:<select name="status">#}
+{#                    <option value="1">开启并使用</option>#}
+{#                    <option value="0">开启未使用</option>#}
+{#                    <option value="2">停机</option>#}
+{#                </select>#}
+                    {% include 'common/server_status.html' %}
                 </div>
 
                 <button type="submit" class="green">New</button>

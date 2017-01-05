@@ -1,0 +1,9 @@
+所在机柜:<select name="rack_number" class="selectpicker" data-style="btn-success">
+                    {% for rack_itm in rack_list %}
+                        {% if val.rack_number == rack_itm.id %}
+                     <option  selected value="{{ rack_itm.id }}">{{   rack_itm.idc_name }}</option>
+                        {% else %}
+                     <option value="{{ rack_itm.id }}">{{   rack_itm.idc_name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>

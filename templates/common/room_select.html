@@ -1,0 +1,10 @@
+所在机房:
+                <select name="idc_name" class="selectpicker" data-style="btn-success">
+                    {% for room_itm in room_list %}
+                        {% if val.idc_name == room_itm.id %} }}
+                     <option selected value="{{ room_itm.id }}">{{   room_itm.room_name }}</option>
+                        {% else %}
+                     <option value="{{ room_itm.id }}">{{   room_itm.room_name }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>

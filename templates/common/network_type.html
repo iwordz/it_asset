@@ -1,0 +1,9 @@
+网络设备:<select name="switch_name" class="selectpicker" data-style="btn-success">
+                    {% for network_type in network %}
+                        {% if val.switch_name ==  network_type.id %}
+                        <option  selected value="{{ network_type.id }}">{{ network_type.idc_name }}</option>
+                         {% else %}
+                        <option value="{{ network_type.id }}">{{ network_type.idc_name }}</option>
+                       {% endif %}
+                    {% endfor %}
+                 </select>

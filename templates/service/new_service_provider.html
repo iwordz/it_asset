@@ -12,10 +12,10 @@
         <form method="post" action="/new_service_provider/">{% csrf_token %}
 		 <div class="content">
 			<div class="field-wrap">
-				托管商名称:<input name="service_provider_name" type="text" value=""/>
+				托管商名称:<input name="service_provider_name" type="text" value="{{ val.service_provider_name }}"/> <span style="color: red;">{{ name_tips }}</span>
 			</div>
 			<div class="field-wrap">
-				托管商地址:<input name="service_provider_addr" type="text" value=""/>
+				托管商地址:<input name="service_provider_addr" type="text" value="{{ val.service_provider_addr }}"/>
 			</div>
 
 			<button type="submit" class="green">新建</button> <button type="reset" class="">重置</button>

@@ -1,0 +1,19 @@
+设备类型:<select name="dev_type">
+                {% if val.dev_type == 1 %}
+                   <option selected value="1">类型1</option>
+                    <option value="2">类型2</option>
+                    <option value="3">类型3</option>
+                {% elif val.dev_type == 2 %}
+                   <option  value="1">类型1</option>
+                    <option selected value="2">类型2</option>
+                    <option value="3">类型3</option>
+                {% elif val.dev_type == 3 %}
+                   <option value="1">类型1</option>
+                    <option value="2">类型2</option>
+                    <option selected value="3">类型3</option>
+                {% else %}
+                    <option selected value="1">类型1</option>
+                    <option value="2">类型2</option>
+                    <option value="3">类型3</option>
+                 {% endif %}
+            </select>

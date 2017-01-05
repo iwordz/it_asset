@@ -11,50 +11,73 @@
 		</header>
 		<div class="content">
         <div class="field-wrap">
-				设备名称:<input type="text" value="Network Device Name" name="device_name"/>
+				设备名称:<input type="text" value="{{ val.device_name }}" name="device_name"/> <span style="color: red;">{{ name_tips }}</span>
 			</div>
 			<div class="field-wrap">
-				所在机房:
-                <select name="idc_name" class="selectpicker" data-style="btn-success">
-                    {% for itm in room_list %}
-                     <option value="{{ itm.id }}">{{   itm.room_name }}</option>
-                    {% endfor %}
-                </select>
+{#				所在机房:#}
+{#                <select name="idc_name" class="selectpicker" data-style="btn-success">#}
+{#                    {% for itm in room_list %}#}
+{#                     <option value="{{ itm.id }}">{{   itm.room_name }}</option>#}
+{#                    {% endfor %}#}
+{#                </select>#}
+                {% include 'common/room_select.html' %}
 			</div>
 			<div class="field-wrap">
-				管理IP:<input type="text" value="manager IP" name="manage_ip"/>
+				管理IP:<input type="text" value="{{ val.device_name }}" name="manage_ip"/>
 			</div>
             <div class="field-wrap">
-				其它IP:<input type="text" value="other IP" name="other_ip"/>
+				其它IP:<input type="text" value="{{ val.device_name }}" name="other_ip"/>
 			</div>
             <div class="field-wrap">
-				设备类型:<select name="dev_type">
-                <option value="1">类型1</option>
-                <option value="2">类型2</option>
-                <option value="3">类型3</option>
-            </select>
+{#				设备类型:<select name="dev_type">#}
+{#                {% if val.dev_type == 1 %}#}
+{#                   <option selected value="1">类型1</option>#}
+{#                    <option value="2">类型2</option>#}
+{#                    <option value="3">类型3</option>#}
+{#                {% elif val.dev_type == 2 %}#}
+{#                   <option  value="1">类型1</option>#}
+{#                    <option selected value="2">类型2</option>#}
+{#                    <option value="3">类型3</option>#}
+{#                {% elif val.dev_type == 3 %}#}
+{#                   <option value="1">类型1</option>#}
+{#                    <option value="2">类型2</option>#}
+{#                    <option selected value="3">类型3</option>#}
+{#                {% else %}#}
+{#                    <option selected value="1">类型1</option>#}
+{#                    <option value="2">类型2</option>#}
+{#                    <option value="3">类型3</option>#}
+{#                 {% endif %}#}
+{#            </select>#}
+                {% include 'common/device_type.html' %}
+
+
 			</div>
             <div class="field-wrap">
-				设备端口:<input type="text" value="dev ports" name="dev_ports"/>
+				设备端口:<input type="text" value="{{ val.dev_ports }}" name="dev_ports"/>
 			</div>
         <div class="field-wrap">
-				设备SN号:<input type="text" value="device sn code" name="sn"/>
+				设备SN号:<input type="text" value="{{ val.sn }}" name="sn"/>
 			</div>
         <div class="field-wrap">
-				设备AN号:<input type="text" value="device an code" name="an"/>
+				设备AN号:<input type="text" value="{{ val.an }}" name="an"/>
 			</div>
         <div class="field-wrap">
-				设备槽:<input type="text" value="device units" name="units"/>
+				设备槽:<input type="text" value="{{ val.units }}" name="units"/>
 			</div>
         <div class="field-wrap">
-				所在机柜:<select name="rack_number" class="selectpicker" data-style="btn-success">
-                    {% for itm1 in rack_list %}
-                     <option value="{{ itm1.id }}">{{   itm1.idc_name }}</option>
-                    {% endfor %}
-                </select>
+{#				所在机柜:<select name="rack_number" class="selectpicker" data-style="btn-success">#}
+{#                    {% for itm1 in rack_list %}#}
+{#                        {% if val.rack_number == itm1.id %}#}
+{#                     <option  selected value="{{ itm1.id }}">{{   itm1.idc_name }}</option>#}
+{#                        {% else %}#}
+{#                     <option value="{{ itm1.id }}">{{   itm1.idc_name }}</option>#}
+{#                        {% endif %}#}
+{#                    {% endfor %}#}
+{#                </select>#}
+            {% include 'common/rack_select.html' %}
 			</div>
         <div class="field-wrap">
-				机柜槽:<input type="text" value="rack units" name="rack_units"/>
+				机柜槽:<input type="text" value="{{ val.rack_units }}" name="rack_units"/>
 			</div>
 
 
