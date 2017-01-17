@@ -328,6 +328,8 @@
         //alert("editor");
         var id = $(this).data("id");
         var curr_page = $(this).data("page");
+
+        //alert("id="+id+",curr_page="+curr_page);
         $("#editor_current_page").val(curr_page);
         $.ajax({
             type: "get",
@@ -437,8 +439,6 @@
                 var network = data['network'];
                 for (var key in result) {
                     $("#view_" + key).val(result[key]);
-
-
                     if (key  == 'change_time')
                     {
                         var timestamp3 = result[key];
@@ -446,8 +446,8 @@
                         newDate.setTime(timestamp3 * 1000);
                         var new_time = newDate.format('yyyy-MM-dd h:m:s');
                         $("#view_" + key).val(new_time);
-                        //alert("change_time"+new_time);
-                    }
+                    }//change_time
+
                     if (key == 'switch_name') {
                         var network_name_html = '';
                         for (var k_1 in network) {

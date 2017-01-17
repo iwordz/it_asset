@@ -553,8 +553,10 @@ def ajax_network_config(request):
         new_idc[k['id']] = k['idc_name']
     new_result = []
     for item in result:
-        item['idc_name'] = new_room[item['idc_name']]
-        item['rack_number'] = new_idc[item['rack_number']]
+        if new_room.has_key(item['idc_name']):
+         item['idc_name'] = new_room[item['idc_name']]
+        if new_idc.has_key(item['rack_number']):
+         item['rack_number'] = new_idc[item['rack_number']]
         new_result.append(item)
     ret = {
         "body": new_result,
