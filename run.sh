@@ -1,5 +1,5 @@
 #!/bin/sh
-mysql_dir="./mysql5.7/bin/"
+mysql_dir="./to/path/mysql_path/bin/"
 it_asset_dir="./it_asset/"
 cd $mysql_dir
 ./mysqladmin -uroot -p12345678
