@@ -7,7 +7,7 @@ IT资产管理系统使用说明
 
 3.模块安装：
 
-pip install django=1.7
+pip install django==1.7
 
 pip install MySQL-Python
 
