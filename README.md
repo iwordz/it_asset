@@ -1,5 +1,6 @@
-IT资产管理系统使用说明
 
+
+IT资产管理系统使用说明
 
 1.本系统需要使用Python Django、Python MySQL-db、Bootstrap3、Jquery等模块支持
 
@@ -7,52 +8,42 @@ IT资产管理系统使用说明
 
 3.模块安装：
 
+git clone https://github.com/iwordz/it_asset
+
 pip install django==1.7
 
-pip install MySQL-Python
-
-如果执行上面命令出现找不到"EnvironmentError: mysql_config not found"等字样，则需要执行export PATH=$PATH:/path/mysql/bin
-注意path是你mysql安装的实际目录。
-
-安装以上2个模块可能需要其他模块支持
+pip install MySQL-Python(如果执行上面命令出现找不到"EnvironmentError: mysql_config not found"等字样，则需要执行export PATH=$PATH:/path/mysql/bin 注意path是你mysql安装的实际目录。)
 
 4.本系统已经在Mac OSX和Centos上进行过测试
 
 5.部分功能界面预览
 
-5.1 合作者
-
-![image](https://github.com/iwordz/it_asset/blob/master/static/images/1.jpg)
-
-5.2项目介绍
-
-![image](https://github.com/iwordz/it_asset/blob/master/static/images/2.jpg)
-
-5.3仪表盘功能
+5.1仪表盘功能
 
 ![image](https://github.com/iwordz/it_asset/blob/master/static/images/3.jpg)
 
-5.4机柜分布图
+5.2机柜分布图
 
 ![image](https://github.com/iwordz/it_asset/blob/master/static/images/4.jpg)
 
-5.5配置项管理
+5.3配置项管理
 
 ![image](https://github.com/iwordz/it_asset/blob/master/static/images/5.jpg)
 
-5.6用户管理
+5.4用户管理
 
 ![image](https://github.com/iwordz/it_asset/blob/master/static/images/6.jpg)
 
 
 6.正式发布
 
-
 打开setting.py设置如下参数：
 DEBUG=False
 ALLOWED_HOSTS = ["*"]
 
-
 7.本系统部分使用了开源系统，如有侵犯您的版本，请联系我删除，谢谢合作！
+
+
+8.本系统仅仅是一个实验性的演示系统，不作为正式环境产品。感谢您的参与。如果在测试过程中遇到任何问题，请与我联系。（email:houguofang@gmail.com）
 
 
