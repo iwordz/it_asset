@@ -10,6 +10,12 @@ IT资产管理系统使用说明
 
 git clone https://github.com/iwordz/it_asset
 
+cd it_asset
+
+导入 it_asset.sql mysql数据库文件
+
+下面开始安装Django类库:
+
 pip install django==1.7
 
 pip install MySQL-Python(如果执行上面命令出现找不到"EnvironmentError: mysql_config not found"等字样，则需要执行export PATH=$PATH:/path/mysql/bin 注意path是你mysql安装的实际目录。)
