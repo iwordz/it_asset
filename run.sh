@@ -12,4 +12,4 @@ cd $mysql_dir
 echo "sleep 3 second"
 sleep 3
 cd $it_asset_dir
-python manage.py runserver 0.0.0.0:8000 & 
+nohup python manage.py runserver 0.0.0.0:8000 & 
