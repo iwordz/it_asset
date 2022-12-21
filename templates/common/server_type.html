@@ -1,9 +1,9 @@
-服务器类型:<select name="server_type" class="selectpicker" data-style="btn-success">
-                        {% for itm_type in server_type %}
-                            {% if val.server_type ==  itm_type.id%}
-                            <option selected value="{{ itm_type.id }}">{{ itm_type.name }}</option>
-                            {% else %}
-                            <option value="{{ itm_type.id }}">{{ itm_type.name }}</option>
-                            {% endif %}
-                        {% endfor %}
-                    </select>
+服务器类型:<select class="selectpicker" data-style="btn-success" name="server_type">
+    {% for itm_type in server_type %}
+    {% if val.server_type == itm_type.id%}
+    <option selected value="{{ itm_type.id }}">{{ itm_type.name }}</option>
+    {% else %}
+    <option value="{{ itm_type.id }}">{{ itm_type.name }}</option>
+    {% endif %}
+    {% endfor %}
+</select>

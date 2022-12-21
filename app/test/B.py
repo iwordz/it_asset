@@ -1,8 +1,9 @@
 __author__ = 'fanghouguo'
-#encoding = "utf-8"
 
-import sys
+# encoding = "utf-8"
+
 from A import A
+
 
 class B(A):
 
@@ -10,10 +11,7 @@ class B(A):
         super(B, self).__init__()
 
 
-
-
-
-
 b = B()
 
-print b
+print
+b

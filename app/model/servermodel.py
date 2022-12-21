@@ -1,11 +1,10 @@
-#encoding = 'utf-8'
+# encoding = 'utf-8'
 __author__ = 'fanghouguo'
 
 from basemodel import basemodel
 
 
 class servermodel(basemodel):
-
     db = None
 
     table = 'server'
@@ -18,8 +17,10 @@ class servermodel(basemodel):
 
     def insert(self, data):
         return self.db.insert(self.table, data)
-    def update(self,value,where):
-        return self.db.get_u_sql(self.table,value,where)
+
+    def update(self, value, where):
+        return self.db.get_u_sql(self.table, value, where)
+
     def delete(self, where):
         return self.db.delete(self.table, where)
 

@@ -7,197 +7,202 @@
 </section>
 
 <section class="alert">
-	<form method="get" action="/new_vm/">
-		 <button class="btn btn-success">新建VM服务器</button>
-	</form>
+    <form action="/new_vm/" method="get">
+        <button class="btn btn-success">新建VM服务器</button>
+    </form>
 </section>
 <section class="content">
-	<section class="widget">
-		<header>
-			<span class="icon">&#128196;</span>
-			<hgroup>
-				<h1>VM服务器列表</h1>
-			</hgroup>
-		</header>
+    <section class="widget">
+        <header>
+            <span class="icon">&#128196;</span>
+            <hgroup>
+                <h1>VM服务器列表</h1>
+            </hgroup>
+        </header>
         <div class="content" id="body">
-              <script>
+            <script>
                   var page = getQueryString('p');
                   ajaxRequest("vm",'ajax_vm','get',{"p":page},true);
-              </script>
+
+            </script>
         </div>
-	</section>
+    </section>
 </section>
 
 
-<form method = "post" action = "/new_vm/"> {% csrf_token %}
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<form action="/new_vm/" method="post"> {% csrf_token %}
+    <div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="myModal" role="dialog" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title" id="myModalLabel">编辑VM服务器</h1>
                 </div>
-                <input type="hidden" name="id" id="id" value="">
-                <input type="hidden" name="editor" id="editor" value="1">
-                <input type="hidden" name="editor_current_page" id="editor_current_page">
+                <input id="id" name="id" type="hidden" value="">
+                <input id="editor" name="editor" type="hidden" value="1">
+                <input id="editor_current_page" name="editor_current_page" type="hidden">
                 <div class="content">
-                <div class="field-wrap">
-                    主机名称:<input type="text" value="host name" name="hostname" id="hostname"/>
-                </div>
-                <div class="field-wrap">
-                    管理IP:<input type="text" value="manager IP" name="manage_ip" id="manage_ip"/>
-                </div>
-                <div class="field-wrap">
-                    其它IP:<input type="text" value="other IP" name="other_ip" id="other_ip"/>
-                </div>
-                <div class="field-wrap">
-                    应用名称:<input type="text" value="application name" name="app_name" id="app_name"/>
-                </div>
-                <div class="field-wrap">
-                    系统版本:<input type="text" value="os system version" name="system_version" id="system_version"/>
-                </div>
-                <div class="field-wrap">
-                    监控模版:<input type="text" value="monitor template" name="zabbix_template" id="zabbix_template"/>
-                </div>
+                    <div class="field-wrap">
+                        主机名称:<input id="hostname" name="hostname" type="text" value="host name"/>
+                    </div>
+                    <div class="field-wrap">
+                        管理IP:<input id="manage_ip" name="manage_ip" type="text" value="manager IP"/>
+                    </div>
+                    <div class="field-wrap">
+                        其它IP:<input id="other_ip" name="other_ip" type="text" value="other IP"/>
+                    </div>
+                    <div class="field-wrap">
+                        应用名称:<input id="app_name" name="app_name" type="text" value="application name"/>
+                    </div>
+                    <div class="field-wrap">
+                        系统版本:<input id="system_version" name="system_version" type="text" value="os system version"/>
+                    </div>
+                    <div class="field-wrap">
+                        监控模版:<input id="zabbix_template" name="zabbix_template" type="text" value="monitor template"/>
+                    </div>
 
-                <div class="field-wrap">
-{#                    所属组:<input type="text" value="server owner group" name="owner_group" id="owner_group"/>#}
-                     所属组:<select name="owner_group" id="owner_group" class="selectpicker">
+                    <div class="field-wrap">
+                        {# 所属组:<input id="owner_group" name="owner_group" type="text" value="server owner group"/>#}
+                        所属组:<select class="selectpicker" id="owner_group" name="owner_group">
 
                     </select>
-                </div>
-                <div class="field-wrap">
-                    cpu:<input type="text" value="server cpu" name="cpu" id="cpu"/>
-                </div>
-                <div class="field-wrap">
-                    memory:<input type="text" value="server memory" name="mem" id="mem"/>
-                </div>
-                <div class="field-wrap">
-                    disk:<input type="text" value="disk" name="disk" id="disk"/>
-                </div>
+                    </div>
                     <div class="field-wrap">
-                    宿主机:<input type="text" value="hypervisor host" name="hypervisor_host" id="hypervisor_host"/>
-                </div>
-                <div class="field-wrap">
-                    变更内容:<input type="text" value="server change des" name="change_dev_info" id="change_dev_info"/>
-                </div>
-                <div class="field-wrap">
-                    变更人:<input type="text" value="server changer" name="change_people" id="change_people"/>
-                </div>
-                <div class="field-wrap">
-                    描述:<input type="text" value="des" name="description" id="description"/>
-                </div>
-                <div class="field-wrap">
-                    服务器状态:<select name="status">
-                    <option value="1">开启并使用</option>
-                    <option value="0">开启未使用</option>
-                    <option value="2">停机</option>
-                </select>
-                </div>
+                        cpu:<input id="cpu" name="cpu" type="text" value="server cpu"/>
+                    </div>
+                    <div class="field-wrap">
+                        memory:<input id="mem" name="mem" type="text" value="server memory"/>
+                    </div>
+                    <div class="field-wrap">
+                        disk:<input id="disk" name="disk" type="text" value="disk"/>
+                    </div>
+                    <div class="field-wrap">
+                        宿主机:<input id="hypervisor_host" name="hypervisor_host" type="text" value="hypervisor host"/>
+                    </div>
+                    <div class="field-wrap">
+                        变更内容:<input id="change_dev_info" name="change_dev_info" type="text" value="server change des"/>
+                    </div>
+                    <div class="field-wrap">
+                        变更人:<input id="change_people" name="change_people" type="text" value="server changer"/>
+                    </div>
+                    <div class="field-wrap">
+                        描述:<input id="description" name="description" type="text" value="des"/>
+                    </div>
+                    <div class="field-wrap">
+                        服务器状态:<select name="status">
+                        <option value="1">开启并使用</option>
+                        <option value="0">开启未使用</option>
+                        <option value="2">停机</option>
+                    </select>
+                    </div>
 
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">更改</button>
-                    <button type="submit" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                    <div class="modal-footer">
+                        <button class="btn btn-success" type="submit">更改</button>
+                        <button class="btn btn-danger" data-dismiss="modal" type="submit">关闭</button>
+                    </div>
                 </div>
-            </div>
             </div>
         </div>
     </div>
 </form>
 
-<div class="modal fade" id="myModalView" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+<div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="myModalView" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
 
-            <div class="modal-content">
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-danger" data-dismiss="modal">关闭</button>
+        <div class="modal-content">
+            <div class="modal-footer">
+                <button class="btn btn-danger" data-dismiss="modal" type="submit">关闭</button>
+            </div>
+            <div class="modal-header">
+                <h1 class="modal-title" id="myModalLabel">查看VM服务器详细</h1>
+            </div>
+
+            <div class="content">
+                <div class="field-wrap">
+                    主机名称:<input id="view_hostname" name="hostname" type="text" value="host name"/>
                 </div>
-                <div class="modal-header">
-                    <h1 class="modal-title" id="myModalLabel">查看VM服务器详细</h1>
+                <div class="field-wrap">
+                    管理IP:<input id="view_manage_ip" name="manage_ip" type="text" value="manager IP"/>
+                </div>
+                <div class="field-wrap">
+                    其它IP:<input id="view_other_ip" name="other_ip" type="text" value="other IP"/>
+                </div>
+                <div class="field-wrap">
+                    应用名称:<input id="view_app_name" name="app_name" type="text" value="application name"/>
+                </div>
+                <div class="field-wrap">
+                    系统版本:<input id="view_system_version" name="system_version" type="text" value="os system version"/>
+                </div>
+                <div class="field-wrap">
+                    监控模版:<input id="view_zabbix_template" name="zabbix_template" type="text" value="monitor template"/>
                 </div>
 
-                <div class="content">
                 <div class="field-wrap">
-                    主机名称:<input type="text" value="host name" name="hostname" id="view_hostname"/>
-                </div>
-                <div class="field-wrap">
-                    管理IP:<input type="text" value="manager IP" name="manage_ip" id="view_manage_ip"/>
-                </div>
-                <div class="field-wrap">
-                    其它IP:<input type="text" value="other IP" name="other_ip" id="view_other_ip"/>
-                </div>
-                <div class="field-wrap">
-                    应用名称:<input type="text" value="application name" name="app_name" id="view_app_name"/>
-                </div>
-                <div class="field-wrap">
-                    系统版本:<input type="text" value="os system version" name="system_version" id="view_system_version"/>
-                </div>
-                <div class="field-wrap">
-                    监控模版:<input type="text" value="monitor template" name="zabbix_template" id="view_zabbix_template"/>
-                </div>
+                    {# 所属组:<input id="view_owner_group" name="owner_group" type="text" value="server owner group"/>#}
+                    所属组:<select class="selectpicker" id="view_owner_group" name="owner_group">
 
-                <div class="field-wrap">
-{#                    所属组:<input type="text" value="server owner group" name="owner_group" id="view_owner_group"/>#}
-                    所属组:<select name="owner_group" id="view_owner_group" class="selectpicker">
-
-                    </select>
+                </select>
                 </div>
-{#                <div class="field-wrap">#}
-{#                    服务器类型:<input type="text" value="server type" name="server_type" id="view_server_type"/>#}
-{#                </div>#}
-                <div class="field-wrap">
-                    cpu:<input type="text" value="server cpu" name="cpu" id="view_cpu"/>
+                {#
+                <div class="field-wrap">#}
+                    {# 服务器类型:<input id="view_server_type" name="server_type" type="text" value="server type"/>#}
+                    {#
                 </div>
+                #}
                 <div class="field-wrap">
-                    memory:<input type="text" value="server memory" name="mem" id="view_mem"/>
+                    cpu:<input id="view_cpu" name="cpu" type="text" value="server cpu"/>
                 </div>
                 <div class="field-wrap">
-                    disk:<input type="text" value="disk" name="disk" id="view_disk"/>
-                </div>
-                    <div class="field-wrap">
-                    宿主机:<input type="text" value="hypervisor_host" name="hypervisor_host" id="vm_hypervisor_host"/>
+                    memory:<input id="view_mem" name="mem" type="text" value="server memory"/>
                 </div>
                 <div class="field-wrap">
-                    变更日期:<input type="text" value="service change time" name="change_time" id="view_change_time"/>
+                    disk:<input id="view_disk" name="disk" type="text" value="disk"/>
                 </div>
                 <div class="field-wrap">
-                    变更内容:<input type="text" value="server change des" name="change_dev_info" id="view_change_dev_info"/>
+                    宿主机:<input id="vm_hypervisor_host" name="hypervisor_host" type="text" value="hypervisor_host"/>
                 </div>
                 <div class="field-wrap">
-                    变更人:<input type="text" value="server changer" name="change_people" id="view_change_people"/>
+                    变更日期:<input id="view_change_time" name="change_time" type="text" value="service change time"/>
                 </div>
                 <div class="field-wrap">
-                    描述:<input type="text" value="des" name="description" id="view_description"/>
+                    变更内容:<input id="view_change_dev_info" name="change_dev_info" type="text" value="server change des"/>
                 </div>
                 <div class="field-wrap">
-                    服务器状态:<select name="status" id="view_status">
+                    变更人:<input id="view_change_people" name="change_people" type="text" value="server changer"/>
+                </div>
+                <div class="field-wrap">
+                    描述:<input id="view_description" name="description" type="text" value="des"/>
+                </div>
+                <div class="field-wrap">
+                    服务器状态:<select id="view_status" name="status">
                     <option value="1">开启并使用</option>
                     <option value="0">开启未使用</option>
                     <option value="2">停机</option>
                 </select>
                 </div>
             </div>
-            </div>
         </div>
+    </div>
 
-<div class="modal fade" id="myModalDel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title" id="myModalLabel"><strong>确定删除当前服务器信息?</strong></h1>
-            </div>
-            <input type="hidden" name="delete_id" id="delete_id">
-            <input type="hidden" name="delete_current_page" id="delete_current_page">
+    <div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="myModalDel" role="dialog"
+         tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title" id="myModalLabel"><strong>确定删除当前服务器信息?</strong></h1>
+                </div>
+                <input id="delete_id" name="delete_id" type="hidden">
+                <input id="delete_current_page" name="delete_current_page" type="hidden">
 
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-success btn-delete">删除</button>
-                <button type="submit" class="btn btn-danger" data-dismiss="modal">取消</button>
+                <div class="modal-footer">
+                    <button class="btn btn-success btn-delete" type="submit">删除</button>
+                    <button class="btn btn-danger" data-dismiss="modal" type="submit">取消</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-{% include 'common/footer.html' %}
+    {% include 'common/footer.html' %}
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
     $(".btn-danger.delete").click(function () {
         var rack_id = $(this).data("deleteid");
@@ -356,7 +361,8 @@
         });
     });
 
-</script>
+
+    </script>
 
 
-{% include 'common/footer.html' %}
+    {% include 'common/footer.html' %}

@@ -1,6 +1,6 @@
 {% include 'common/index-header.html' %}
 {% include 'common/left_nav.html' %}
-<form method="post" action="/new_server/">{% csrf_token %}
+<form action="/new_server/" method="post">{% csrf_token %}
     <section class="content">
         <section class="widget" style="min-height:300px">
             <header>
@@ -11,136 +11,159 @@
             </header>
             <div class="content">
                 <div class="field-wrap">
-                    主机名称:<input type="text" value="{{ val.hostname }}" name="hostname"/> <span style="color: red;">{{ name_tips }}</span>
+                    主机名称:<input name="hostname" type="text" value="{{ val.hostname }}"/> <span style="color: red;">{{ name_tips }}</span>
                 </div>
                 <div class="field-wrap">
-                    管理IP:<input type="text" value="{{ val.manage_ip }}" name="manage_ip"/>
+                    管理IP:<input name="manage_ip" type="text" value="{{ val.manage_ip }}"/>
                 </div>
                 <div class="field-wrap">
-                    其它IP:<input type="text" value="{{ val.other_ip }}" name="other_ip"/>
+                    其它IP:<input name="other_ip" type="text" value="{{ val.other_ip }}"/>
                 </div>
                 <div class="field-wrap">
-                    应用名称:<input type="text" value="{{ val.app_name }}" name="app_name"/>
+                    应用名称:<input name="app_name" type="text" value="{{ val.app_name }}"/>
                 </div>
                 <div class="field-wrap">
-                    系统版本:<input type="text" value="{{ val.system_version }}" name="system_version"/>
+                    系统版本:<input name="system_version" type="text" value="{{ val.system_version }}"/>
                 </div>
                 <div class="field-wrap">
-                    监控模版:<input type="text" value="{{ val.zabbix_template }}" name="zabbix_template"/>
+                    监控模版:<input name="zabbix_template" type="text" value="{{ val.zabbix_template }}"/>
                 </div>
 
                 <div class="field-wrap">
-{#                    所属组:<input type="text" value="server owner group" name="owner_group"/>#}
-{#                    所属组:<select name="owner_group" class="selectpicker" data-style="btn-success">#}
-{#                        {% for itm_group in server_group %}#}
-{#                            <option value="{{ itm_group.id }}">{{ itm_group.name }}</option>#}
-{#                        {% endfor %}#}
-{#                    </select>#}
+                    {# 所属组:<input name="owner_group" type="text" value="server owner group"/>#}
+                    {# 所属组:<select class="selectpicker" data-style="btn-success" name="owner_group">#}
+                    {# {% for itm_group in server_group %}#}
+                    {#
+                    <option value="{{ itm_group.id }}">{{ itm_group.name }}</option>
+                    #}
+                    {# {% endfor %}#}
+                    {# </select>#}
 
                     {% include "common/group_type.html" %}
                 </div>
                 <div class="field-wrap">
-{#                    服务器类型:<input type="text" value="server type" name="server_type"/>#}
-{#                    服务器类型:<select name="server_type" class="selectpicker" data-style="btn-success">#}
-{#                        {% for itm_type in server_type %}#}
-{#                            <option value="{{ itm_type.id }}">{{ itm_type.name }}</option>#}
-{#                        {% endfor %}#}
-{#                    </select>#}
+                    {# 服务器类型:<input name="server_type" type="text" value="server type"/>#}
+                    {# 服务器类型:<select class="selectpicker" data-style="btn-success" name="server_type">#}
+                    {# {% for itm_type in server_type %}#}
+                    {#
+                    <option value="{{ itm_type.id }}">{{ itm_type.name }}</option>
+                    #}
+                    {# {% endfor %}#}
+                    {# </select>#}
 
                     {% include 'common/server_type.html' %}
                 </div>
                 <div class="field-wrap">
-                    cpu:<input type="text" value="{{ val.cpu }}" name="cpu"/>
+                    cpu:<input name="cpu" type="text" value="{{ val.cpu }}"/>
                 </div>
                 <div class="field-wrap">
-                    memory:<input type="text" value="{{ val.mem }}" name="mem"/>
+                    memory:<input name="mem" type="text" value="{{ val.mem }}"/>
                 </div>
                 <div class="field-wrap">
-                    disk:<input type="text" value="{{ val.disk }}" name="disk"/>
+                    disk:<input name="disk" type="text" value="{{ val.disk }}"/>
                 </div>
                 <div class="field-wrap">
-                    sn:<input type="text" value="{{ val.sn }}" name="sn"/>
+                    sn:<input name="sn" type="text" value="{{ val.sn }}"/>
                 </div>
                 <div class="field-wrap">
-                    an:<input type="text" value="{{ val.an }}" name="an"/>
+                    an:<input name="an" type="text" value="{{ val.an }}"/>
                 </div>
                 <div class="field-wrap">
-                    cpu型号:<input type="text" value="{{ val.units }}" name="units"/>
+                    cpu型号:<input name="units" type="text" value="{{ val.units }}"/>
                 </div>
                 <div class="field-wrap">
 
-{#                    所在机房:#}
-{#                    <select name="idc_name" class="selectpicker" data-style="btn-success">#}
-{#                        {% for itm in room_list %}#}
-{#                            <option value="{{ itm.id }}">{{ itm.room_name }}</option>#}
-{#                        {% endfor %}#}
-{#                    </select>#}
+                    {# 所在机房:#}
+                    {# <select class="selectpicker" data-style="btn-success" name="idc_name">#}
+                    {# {% for itm in room_list %}#}
+                    {#
+                    <option value="{{ itm.id }}">{{ itm.room_name }}</option>
+                    #}
+                    {# {% endfor %}#}
+                    {# </select>#}
                     {% include 'common/room_select.html' %}
                 </div>
                 <div class="field-wrap">
-{#                    所在机柜:#}
-{#                     <div class="field-wrap">#}
-{#                    所在机柜:<select name="rack_number" class="selectpicker" data-style="btn-success">#}
-{#                    {% for itm1 in rack_list %}#}
-{#                        <option value="{{ itm1.id }}">{{ itm1.idc_name }}</option>#}
-{#                    {% endfor %}#}
-{#                </select>#}
-                    {% include 'common/rack_select.html' %}
-                </div>
+                    {# 所在机柜:#}
+                    {#
+                    <div class="field-wrap">#}
+                        {# 所在机柜:<select class="selectpicker" data-style="btn-success" name="rack_number">#}
+                            {# {% for itm1 in rack_list %}#}
+                            {#
+                            <option value="{{ itm1.id }}">{{ itm1.idc_name }}</option>
+                            #}
+                            {# {% endfor %}#}
+                            {# </select>#}
+                        {% include 'common/rack_select.html' %}
+                    </div>
                 </div>
                 <div class="field-wrap">
-                    机柜编号:<input type="text" value="{{ val.rack_units }}" name="rack_units"/>
+                    机柜编号:<input name="rack_units" type="text" value="{{ val.rack_units }}"/>
                 </div>
                 <div class="field-wrap">
                     服务器购买日期:
-                    <input id="create_date" type="text" value="{{ val.create_date }}" name="create_date" readonly onClick="jeDate({dateCell:'#create_date',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})"/>
+                    <input id="create_date" name="create_date" onClick="jeDate({dateCell:'#create_date',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})" readonly type="text"
+                           value="{{ val.create_date }}"/>
                 </div>
                 <div class="field-wrap">
                     服务器过保日期:
-                    <input id="end_date" type="text" value="{{ val.end_date }}" name="end_date" readonly onClick="jeDate({dateCell:'#end_date',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})"/>
+                    <input id="end_date" name="end_date" onClick="jeDate({dateCell:'#end_date',isTime:true,format:'YYYY-MM-DD hh:mm:ss'})" readonly type="text"
+                           value="{{ val.end_date }}"/>
                 </div>
                 <div class="field-wrap">
-{#                    网络设备:<input type="text" value="network device name" name="switch_name"/>#}
-{#                    网络设备:<select name="switch_name" class="selectpicker" data-style="btn-success">#}
-{#                    {% for itm2 in network %}#}
-{#                        <option value="{{ itm2.id }}">{{ itm2.idc_name }}</option>#}
-{#                    {% endfor %}#}
+                    {# 网络设备:<input name="switch_name" type="text" value="network device name"/>#}
+                    {# 网络设备:<select class="selectpicker" data-style="btn-success" name="switch_name">#}
+                    {# {% for itm2 in network %}#}
+                    {#
+                    <option value="{{ itm2.id }}">{{ itm2.idc_name }}</option>
+                    #}
+                    {# {% endfor %}#}
                     {% include 'common/network_type.html' %}
-                 </select>
+                </select>
                 </div>
                 <div class="field-wrap">
-                    设备端口:<input type="text" value="{{ val.switch_port }}" name="switch_port"/>
+                    设备端口:<input name="switch_port" type="text" value="{{ val.switch_port }}"/>
                 </div>
-{#                <div class="field-wrap">#}
-{#                    变更日期:<input type="text" value="service change time" name="change_time"/>#}
-{#                </div>#}
-                <div class="field-wrap">
-                    变更内容:<input type="text" value="{{ val.change_dev_info }}" name="change_dev_info"/>
+                {#
+                <div class="field-wrap">#}
+                    {# 变更日期:<input name="change_time" type="text" value="service change time"/>#}
+                    {#
                 </div>
+                #}
                 <div class="field-wrap">
-                    变更人:<input type="text" value="{{ val.change_people }}" name="change_people"/>
-                </div>
-                <div class="field-wrap">
-                    描述:<input type="text" value="{{ val.description }}" name="description"/>
+                    变更内容:<input name="change_dev_info" type="text" value="{{ val.change_dev_info }}"/>
                 </div>
                 <div class="field-wrap">
-{#                    服务器状态:<select name="status">#}
-{#                    <option value="1">开启并使用</option>#}
-{#                    <option value="0">开启未使用</option>#}
-{#                    <option value="2">停机</option>#}
-{#                </select>#}
+                    变更人:<input name="change_people" type="text" value="{{ val.change_people }}"/>
+                </div>
+                <div class="field-wrap">
+                    描述:<input name="description" type="text" value="{{ val.description }}"/>
+                </div>
+                <div class="field-wrap">
+                    {# 服务器状态:<select name="status">#}
+                    {#
+                    <option value="1">开启并使用</option>
+                    #}
+                    {#
+                    <option value="0">开启未使用</option>
+                    #}
+                    {#
+                    <option value="2">停机</option>
+                    #}
+                    {# </select>#}
                     {% include 'common/server_status.html' %}
                 </div>
 
-                <button type="submit" class="green">New</button>
-                <button type="reset" class="">Cancel</button>
+                <button class="green" type="submit">New</button>
+                <button class="" type="reset">Cancel</button>
             </div>
         </section>
     </section>
 </form>
 {% include 'common/footer.html' %}
 
-{#<script type="text/javascript">#}
+{#
+<script type="text/javascript">#}
 {#    //jeDate.skin('gray');#}
 {#    jeDate({#}
 {#        dateCell: "#indate",//isinitVal:true,#}
@@ -159,4 +182,5 @@
 {#            alert(val)#}
 {#        }#}
 {#    })#}
-{#</script>#}
+{#
+</script>#}

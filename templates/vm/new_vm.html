@@ -1,79 +1,87 @@
 {% include 'common/index-header.html' %}
 {% include 'common/left_nav.html' %}
 
-<form method="post" action="/new_vm/">{% csrf_token %}
+<form action="/new_vm/" method="post">{% csrf_token %}
     <section class="content">
         <section class="widget" style="min-height:150px">
             <header>
                 <hgroup>
-                   <h1>新建VM服务器</h1>
+                    <h1>新建VM服务器</h1>
                 </hgroup>
             </header>
             <div class="content">
                 <div class="field-wrap">
-                    主机名称:<input type="text" value="{{ val.hostname }}" name="hostname"/><span style="color: red;">{{ name_tips }}</span>
+                    主机名称:<input name="hostname" type="text" value="{{ val.hostname }}"/><span style="color: red;">{{ name_tips }}</span>
                 </div>
                 <div class="field-wrap">
-                    管理IP:<input type="text" value="{{ val.manage_ip }}" name="manage_ip"/>
+                    管理IP:<input name="manage_ip" type="text" value="{{ val.manage_ip }}"/>
                 </div>
                 <div class="field-wrap">
-                    其它IP:<input type="text" value="{{ val.other_ip }}" name="other_ip"/>
+                    其它IP:<input name="other_ip" type="text" value="{{ val.other_ip }}"/>
                 </div>
                 <div class="field-wrap">
-                    应用名称:<input type="text" value="{{ val.app_name }}" name="app_name"/>
+                    应用名称:<input name="app_name" type="text" value="{{ val.app_name }}"/>
                 </div>
                 <div class="field-wrap">
-                    系统版本:<input type="text" value="{{ val.system_version }}" name="system_version"/>
+                    系统版本:<input name="system_version" type="text" value="{{ val.system_version }}"/>
                 </div>
                 <div class="field-wrap">
-                    监控模版:<input type="text" value="{{ val.zabbix_template }}" name="zabbix_template"/>
+                    监控模版:<input name="zabbix_template" type="text" value="{{ val.zabbix_template }}"/>
                 </div>
                 <div class="field-wrap">
-{#                    所属组:<input type="text" value="server owner group" name="owner_group"/>#}
-{#                      所属组:<select name="owner_group" class="selectpicker" data-style="btn-success">#}
-{#                        {% for itm_group in server_group %}#}
-{#                            <option value="{{ itm_group.id }}">{{ itm_group.name }}</option>#}
-{#                        {% endfor %}#}
-{#                    </select>#}
+                    {# 所属组:<input name="owner_group" type="text" value="server owner group"/>#}
+                    {# 所属组:<select class="selectpicker" data-style="btn-success" name="owner_group">#}
+                    {# {% for itm_group in server_group %}#}
+                    {#
+                    <option value="{{ itm_group.id }}">{{ itm_group.name }}</option>
+                    #}
+                    {# {% endfor %}#}
+                    {# </select>#}
                     {% include 'common/group_type.html' %}
                 </div>
                 <div class="field-wrap">
-                    cpu:<input type="text" value="{{ val.cpu }}" name="cpu"/>
+                    cpu:<input name="cpu" type="text" value="{{ val.cpu }}"/>
                 </div>
                 <div class="field-wrap">
-                    memory:<input type="text" value="{{ val.mem }}" name="mem"/>
+                    memory:<input name="mem" type="text" value="{{ val.mem }}"/>
                 </div>
                 <div class="field-wrap">
-                    disk:<input type="text" value="{{ val.disk }}" name="disk"/>
-                </div>
-
-               <div class="field-wrap">
-                    宿主机:<input type="text" value="{{ val.hypervisor_host }}" name="hypervisor_host"/>
+                    disk:<input name="disk" type="text" value="{{ val.disk }}"/>
                 </div>
 
                 <div class="field-wrap">
-                    变更日期:<input type="text" value="{{ val.change_time }}" name="change_time"/>
+                    宿主机:<input name="hypervisor_host" type="text" value="{{ val.hypervisor_host }}"/>
+                </div>
+
+                <div class="field-wrap">
+                    变更日期:<input name="change_time" type="text" value="{{ val.change_time }}"/>
                 </div>
                 <div class="field-wrap">
-                    变更内容:<input type="text" value="{{ val.change_dev_info }}" name="change_dev_info"/>
+                    变更内容:<input name="change_dev_info" type="text" value="{{ val.change_dev_info }}"/>
                 </div>
                 <div class="field-wrap">
-                    变更人:<input type="text" value="{{ val.change_people }}" name="change_people"/>
+                    变更人:<input name="change_people" type="text" value="{{ val.change_people }}"/>
                 </div>
                 <div class="field-wrap">
-                    描述:<input type="text" value="{{ val.description }}" name="description"/>
+                    描述:<input name="description" type="text" value="{{ val.description }}"/>
                 </div>
                 <div class="field-wrap">
-{#                    服务器状态:<select name="status">#}
-{#                    <option value="1">开启并使用</option>#}
-{#                    <option value="0">开启未使用</option>#}
-{#                    <option value="2">停机</option>#}
-{#                </select>#}
+                    {# 服务器状态:<select name="status">#}
+                    {#
+                    <option value="1">开启并使用</option>
+                    #}
+                    {#
+                    <option value="0">开启未使用</option>
+                    #}
+                    {#
+                    <option value="2">停机</option>
+                    #}
+                    {# </select>#}
                     {% include 'common/server_status.html' %}
                 </div>
 
-                <button type="submit" class="green">New</button>
-                <button type="reset" class="">Cancel</button>
+                <button class="green" type="submit">New</button>
+                <button class="" type="reset">Cancel</button>
             </div>
         </section>
     </section>
@@ -99,4 +107,5 @@
             alert(val)
         }
     })
+
 </script>

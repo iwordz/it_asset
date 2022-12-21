@@ -1,90 +1,122 @@
 {% include 'common/index-header.html' %}
 {% include 'common/left_nav.html' %}
-<form method="post" action="/new_network_config/">{% csrf_token %}
- <section class="content">
-	<section class="widget" style="min-height:300px">
-		<header>
-			<span class="icon">&#128196;</span>
-			<hgroup>
-				<h1>新建网络设备</h1>
-			</hgroup>
-		</header>
-		<div class="content">
-        <div class="field-wrap">
-				设备名称:<input type="text" value="{{ val.device_name }}" name="device_name"/> <span style="color: red;">{{ name_tips }}</span>
-			</div>
-			<div class="field-wrap">
-{#				所在机房:#}
-{#                <select name="idc_name" class="selectpicker" data-style="btn-success">#}
-{#                    {% for itm in room_list %}#}
-{#                     <option value="{{ itm.id }}">{{   itm.room_name }}</option>#}
-{#                    {% endfor %}#}
-{#                </select>#}
-                {% include 'common/room_select.html' %}
-			</div>
-			<div class="field-wrap">
-				管理IP:<input type="text" value="{{ val.device_name }}" name="manage_ip"/>
-			</div>
-            <div class="field-wrap">
-				其它IP:<input type="text" value="{{ val.device_name }}" name="other_ip"/>
-			</div>
-            <div class="field-wrap">
-{#				设备类型:<select name="dev_type">#}
-{#                {% if val.dev_type == 1 %}#}
-{#                   <option selected value="1">类型1</option>#}
-{#                    <option value="2">类型2</option>#}
-{#                    <option value="3">类型3</option>#}
-{#                {% elif val.dev_type == 2 %}#}
-{#                   <option  value="1">类型1</option>#}
-{#                    <option selected value="2">类型2</option>#}
-{#                    <option value="3">类型3</option>#}
-{#                {% elif val.dev_type == 3 %}#}
-{#                   <option value="1">类型1</option>#}
-{#                    <option value="2">类型2</option>#}
-{#                    <option selected value="3">类型3</option>#}
-{#                {% else %}#}
-{#                    <option selected value="1">类型1</option>#}
-{#                    <option value="2">类型2</option>#}
-{#                    <option value="3">类型3</option>#}
-{#                 {% endif %}#}
-{#            </select>#}
-                {% include 'common/device_type.html' %}
+<form action="/new_network_config/" method="post">{% csrf_token %}
+    <section class="content">
+        <section class="widget" style="min-height:300px">
+            <header>
+                <span class="icon">&#128196;</span>
+                <hgroup>
+                    <h1>新建网络设备</h1>
+                </hgroup>
+            </header>
+            <div class="content">
+                <div class="field-wrap">
+                    设备名称:<input name="device_name" type="text" value="{{ val.device_name }}"/> <span
+                        style="color: red;">{{ name_tips }}</span>
+                </div>
+                <div class="field-wrap">
+                    {# 所在机房:#}
+                    {# <select class="selectpicker" data-style="btn-success" name="idc_name">#}
+                    {# {% for itm in room_list %}#}
+                    {#
+                    <option value="{{ itm.id }}">{{ itm.room_name }}</option>
+                    #}
+                    {# {% endfor %}#}
+                    {# </select>#}
+                    {% include 'common/room_select.html' %}
+                </div>
+                <div class="field-wrap">
+                    管理IP:<input name="manage_ip" type="text" value="{{ val.device_name }}"/>
+                </div>
+                <div class="field-wrap">
+                    其它IP:<input name="other_ip" type="text" value="{{ val.device_name }}"/>
+                </div>
+                <div class="field-wrap">
+                    {# 设备类型:<select name="dev_type">#}
+                    {# {% if val.dev_type == 1 %}#}
+                    {#
+                    <option selected value="1">类型1</option>
+                    #}
+                    {#
+                    <option value="2">类型2</option>
+                    #}
+                    {#
+                    <option value="3">类型3</option>
+                    #}
+                    {# {% elif val.dev_type == 2 %}#}
+                    {#
+                    <option value="1">类型1</option>
+                    #}
+                    {#
+                    <option selected value="2">类型2</option>
+                    #}
+                    {#
+                    <option value="3">类型3</option>
+                    #}
+                    {# {% elif val.dev_type == 3 %}#}
+                    {#
+                    <option value="1">类型1</option>
+                    #}
+                    {#
+                    <option value="2">类型2</option>
+                    #}
+                    {#
+                    <option selected value="3">类型3</option>
+                    #}
+                    {# {% else %}#}
+                    {#
+                    <option selected value="1">类型1</option>
+                    #}
+                    {#
+                    <option value="2">类型2</option>
+                    #}
+                    {#
+                    <option value="3">类型3</option>
+                    #}
+                    {# {% endif %}#}
+                    {# </select>#}
+                    {% include 'common/device_type.html' %}
 
 
-			</div>
-            <div class="field-wrap">
-				设备端口:<input type="text" value="{{ val.dev_ports }}" name="dev_ports"/>
-			</div>
-        <div class="field-wrap">
-				设备SN号:<input type="text" value="{{ val.sn }}" name="sn"/>
-			</div>
-        <div class="field-wrap">
-				设备AN号:<input type="text" value="{{ val.an }}" name="an"/>
-			</div>
-        <div class="field-wrap">
-				设备槽:<input type="text" value="{{ val.units }}" name="units"/>
-			</div>
-        <div class="field-wrap">
-{#				所在机柜:<select name="rack_number" class="selectpicker" data-style="btn-success">#}
-{#                    {% for itm1 in rack_list %}#}
-{#                        {% if val.rack_number == itm1.id %}#}
-{#                     <option  selected value="{{ itm1.id }}">{{   itm1.idc_name }}</option>#}
-{#                        {% else %}#}
-{#                     <option value="{{ itm1.id }}">{{   itm1.idc_name }}</option>#}
-{#                        {% endif %}#}
-{#                    {% endfor %}#}
-{#                </select>#}
-            {% include 'common/rack_select.html' %}
-			</div>
-        <div class="field-wrap">
-				机柜槽:<input type="text" value="{{ val.rack_units }}" name="rack_units"/>
-			</div>
+                </div>
+                <div class="field-wrap">
+                    设备端口:<input name="dev_ports" type="text" value="{{ val.dev_ports }}"/>
+                </div>
+                <div class="field-wrap">
+                    设备SN号:<input name="sn" type="text" value="{{ val.sn }}"/>
+                </div>
+                <div class="field-wrap">
+                    设备AN号:<input name="an" type="text" value="{{ val.an }}"/>
+                </div>
+                <div class="field-wrap">
+                    设备槽:<input name="units" type="text" value="{{ val.units }}"/>
+                </div>
+                <div class="field-wrap">
+                    {# 所在机柜:<select class="selectpicker" data-style="btn-success" name="rack_number">#}
+                    {# {% for itm1 in rack_list %}#}
+                    {# {% if val.rack_number == itm1.id %}#}
+                    {#
+                    <option selected value="{{ itm1.id }}">{{ itm1.idc_name }}</option>
+                    #}
+                    {# {% else %}#}
+                    {#
+                    <option value="{{ itm1.id }}">{{ itm1.idc_name }}</option>
+                    #}
+                    {# {% endif %}#}
+                    {# {% endfor %}#}
+                    {# </select>#}
+                    {% include 'common/rack_select.html' %}
+                </div>
+                <div class="field-wrap">
+                    机柜槽:<input name="rack_units" type="text" value="{{ val.rack_units }}"/>
+                </div>
 
 
-			<button type="submit" class="green">New</button> <button type="reset" class="">Cancel</button>
-		</div>
-	</section>
- </section>
+                <button class="green" type="submit">New</button>
+                <button class="" type="reset">Cancel</button>
+            </div>
+        </section>
+    </section>
 </form>
 {% include 'common/footer.html' %}
 
@@ -105,4 +137,5 @@
 		minDate:"2014-09-19 00:00:00",
 		okfun:function(val){alert(val)}
 	})
+
 </script>

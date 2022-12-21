@@ -5,18 +5,19 @@ __author_ = 'fanghouguo'
   manager mysql base systax in select,delete isnert into
 '''
 
-from  django.db import connection
 import MySQLdb
+from django.db import connection
+
 
 class Db(object):
-
-    conn  =  None
-    cur  =  None
-    instance  =  None
+    conn = None
+    cur = None
+    instance = None
 
     '''
       init mysql connect
     '''
+
     def __init__(self):
         self.conn = connection
         self.cur = self.conn.cursor()
@@ -25,7 +26,7 @@ class Db(object):
       delete table data
     '''
 
-    def delete(self,table,data):
+    def delete(self, table, data):
         del_data_sql = "delete from %s " % table
         del_data_sql += self.dict_2_str_and(data)
         return self.cur.execute(del_data_sql)
@@ -34,7 +35,7 @@ class Db(object):
       return json object
     '''
 
-    def find(self,table,data):
+    def find(self, table, data):
         sql = "select * from %s " % table
         sql += self.dict_2_str_and(data)
         self.cur.execute(sql)
@@ -52,7 +53,8 @@ class Db(object):
     '''
      
     '''
-    def fSqlResult(self,r, key_list):
+
+    def fSqlResult(self, r, key_list):
         mlist = []
         l = len(key_list)
         if r:
@@ -63,19 +65,19 @@ class Db(object):
                 mlist.append(tmp)
         return mlist
 
-
     '''
       insert into table data
     '''
-    def insert(self,table,data):
-        insert_data_sql = self.dict_2_str_and(data)
-        return  self.cur.execute(insert_data_sql)
 
+    def insert(self, table, data):
+        insert_data_sql = self.dict_2_str_and(data)
+        return self.cur.execute(insert_data_sql)
 
     '''
        dic transfer string
     '''
-    def dict_2_str(self,dictin):
+
+    def dict_2_str(self, dictin):
 
         tmplist = []
         for k, v in dictin.items():
@@ -83,7 +85,7 @@ class Db(object):
             tmplist.append(' ' + tmp + ' ')
         return ','.join(tmplist)
 
-    def dict_2_str_and(self,dictin):
+    def dict_2_str_and(self, dictin):
 
         tmplist = []
         for k, v in dictin.items():
@@ -91,24 +93,25 @@ class Db(object):
             tmplist.append(' ' + tmp + ' ')
         return ' and '.join(tmplist)
 
-    def safe(self,s):
+    def safe(self, s):
         return MySQLdb.escape_string(s)
 
-    def get_count(self,table, condition):
+    def get_count(self, table, condition):
         sql = 'select * from %s ' % table
         if condition:
             sql += ' where %s ' % self.dict_2_str_and(condition)
-        print "count sql=" + str(sql)
+        print
+        "count sql=" + str(sql)
         r = self.cur.execute(sql)
         return r
-        #return len(r)
+        # return len(r)
 
-    def get_i_sql(self,table, dict):
+    def get_i_sql(self, table, dict):
         sql = 'insert into %s set ' % table
         sql += self.dict_2_str(dict)
         return sql
 
-    def get_s_sql(self,table, keys, conditions, page=0, pagesize=3, isdistinct=0):
+    def get_s_sql(self, table, keys, conditions, page=0, pagesize=3, isdistinct=0):
 
         if isdistinct:
             sql = 'select distinct %s ' % ",".join(keys)
@@ -123,7 +126,7 @@ class Db(object):
             sql += ',%s' % pagesize
         return sql
 
-    def get_u_sql(self,table, value, conditions):
+    def get_u_sql(self, table, value, conditions):
 
         sql = 'update %s set ' % table
         sql += self.dict_2_str(value)
@@ -131,7 +134,7 @@ class Db(object):
             sql += ' where %s ' % self.dict_2_str_and(conditions)
         return sql
 
-    def get_d_sql(self,table, conditions):
+    def get_d_sql(self, table, conditions):
 
         sql = 'delete from  %s  ' % table
         if conditions:

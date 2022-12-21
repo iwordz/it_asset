@@ -1,10 +1,10 @@
 托管服务商:
-                <select name="service_provider" class="selectpicker" data-style="btn-success">
-                    {% for provider_item in service_provider_list %}
-                        {% if val.service_provider == provider_item.id %}
-                            <option selected value="{{ provider_item.id }}">{{   provider_item.Service_provider_name }}</option>
-                        {% else %}
-                            <option value="{{ provider_item.id }}">{{   provider_item.Service_provider_name }}</option>
-                        {% endif %}
-                    {% endfor %}
-                </select>
+<select class="selectpicker" data-style="btn-success" name="service_provider">
+    {% for provider_item in service_provider_list %}
+    {% if val.service_provider == provider_item.id %}
+    <option selected value="{{ provider_item.id }}">{{ provider_item.Service_provider_name }}</option>
+    {% else %}
+    <option value="{{ provider_item.id }}">{{ provider_item.Service_provider_name }}</option>
+    {% endif %}
+    {% endfor %}
+</select>

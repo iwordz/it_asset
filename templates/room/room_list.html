@@ -7,66 +7,67 @@
 </section>
 
 <section class="alert">
-	<form method="get" action="/new_room/">
-		 <button class="green">新建机房</button>
-	</form>
+    <form action="/new_room/" method="get">
+        <button class="green">新建机房</button>
+    </form>
 </section>
 <section class="content">
-	<section class="widget">
-		<header>
-			<span class="icon">&#128196;</span>
-			<hgroup>
-				<h1>机房列表</h1>
-				<h2>CMS content Room list</h2>
-			</hgroup>
-		</header>
+    <section class="widget">
+        <header>
+            <span class="icon">&#128196;</span>
+            <hgroup>
+                <h1>机房列表</h1>
+                <h2>CMS content Room list</h2>
+            </hgroup>
+        </header>
         <div class="content" id="body">
-              <script>
+            <script>
                   var page = getQueryString('p');
                   ajaxRequest("room_list",'ajaxroomlist','get',{"p":page});
-              </script>
+
+            </script>
         </div>
-	</section>
+    </section>
 </section>
 
 
-<form method = "post" action = "/new_room/"> {% csrf_token %}
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<form action="/new_room/" method="post"> {% csrf_token %}
+    <div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="myModal" role="dialog" tabindex="-1">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title" id="myModalLabel">编辑机房</h1>
                 </div>
-                <input type="hidden" name="id" id="id" value="">
-                <input type="hidden" name="editor" id="editor" value="1">
-                <input type="hidden" name="editor_current_page" id="editor_current_page">
+                <input id="id" name="id" type="hidden" value="">
+                <input id="editor" name="editor" type="hidden" value="1">
+                <input id="editor_current_page" name="editor_current_page" type="hidden">
                 <div class="field-wrap">
-                    机房名称:<input type="text" id="room_name" value="host name" id="room_name" name="room_name"/>
+                    机房名称:<input id="room_name" id="room_name" name="room_name" type="text" value="host name"/>
                 </div>
                 <div class="field-wrap">
-                    机房位置:<input type="text" value="room_addr" id="room_addr" name="room_addr"/>
+                    机房位置:<input id="room_addr" name="room_addr" type="text" value="room_addr"/>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-success">更改</button>
-                    <button type="submit" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                    <button class="btn btn-success" type="submit">更改</button>
+                    <button class="btn btn-danger" data-dismiss="modal" type="submit">关闭</button>
                 </div>
             </div>
         </div>
     </div>
 </form>
 
-<div class="modal fade" id="myModalDel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div aria-hidden="true" aria-labelledby="myModalLabel" class="modal fade" id="myModalDel" role="dialog" tabindex="-1">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title" id="myModalLabel"><strong>确定删除编辑机柜?</strong></h1>
             </div>
-            <input type="hidden" name="delete_id" id="delete_id">
-            <input type="hidden" name="delete_current_page" id="delete_current_page">
+            <input id="delete_id" name="delete_id" type="hidden">
+            <input id="delete_current_page" name="delete_current_page" type="hidden">
 
             <div class="modal-footer">
-                <button type="submit" class="btn btn-success btn-delete">删除</button>
-                <button type="submit" class="btn btn-danger" data-dismiss="modal">取消</button>
+                <button class="btn btn-success btn-delete" type="submit">删除</button>
+                <button class="btn btn-danger" data-dismiss="modal" type="submit">取消</button>
             </div>
         </div>
     </div>
@@ -134,5 +135,6 @@
             }
         });
     });
+
 </script>
 {% include 'common/footer.html' %}

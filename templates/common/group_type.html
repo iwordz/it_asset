@@ -1,9 +1,9 @@
-所属组:<select name="owner_group" class="selectpicker" data-style="btn-success">
-                        {% for itm_group in server_group %}
-                            {% if val.owner_group == itm_group.id  %}
-                            <option selected value="{{ itm_group.id }}">{{ itm_group.name }}</option>
-                            {% else %}
-                            <option value="{{ itm_group.id }}">{{ itm_group.name }}</option>
-                            {% endif %}
-                        {% endfor %}
-                    </select>
+所属组:<select class="selectpicker" data-style="btn-success" name="owner_group">
+    {% for itm_group in server_group %}
+    {% if val.owner_group == itm_group.id %}
+    <option selected value="{{ itm_group.id }}">{{ itm_group.name }}</option>
+    {% else %}
+    <option value="{{ itm_group.id }}">{{ itm_group.name }}</option>
+    {% endif %}
+    {% endfor %}
+</select>

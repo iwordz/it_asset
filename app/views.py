@@ -1,22 +1,27 @@
 # coding=utf-8
 __author__ = 'fanghouguo'
+
+from django.contrib import auth
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.contrib.auth.hashers import make_password
 from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_protect
-from django.contrib import auth
-from django.contrib.auth import logout
-from django.contrib.auth.hashers import make_password
-import Query, time, UserTime,json
-from model.roommodel import roommodel
-from model.vmmodel import vmmodel
-from model.rackmodel import rackmodel
-from model.servicemodel import servicemodel
-from model.servermodel import servermodel
-from model.usermodel import usermodel
+
+import Query
+import UserTime
+import json
+import time
 from model.newworkingmodel import networkingmodel
+from model.rackmodel import rackmodel
+from model.roommodel import roommodel
+from model.servermodel import servermodel
+from model.servicemodel import servicemodel
+from model.usermodel import usermodel
+from model.vmmodel import vmmodel
 
 
 # dashbord page
@@ -78,7 +83,6 @@ def getRackById(request):
     return HttpResponse(json.dumps(ret), content_type="application/json")
 
 
-
 @login_required
 @csrf_protect
 def ajax_rack_list(request):
@@ -115,7 +119,8 @@ def ajax_rack_list(request):
 
     for srv in servers:
         for id in srv:
-            print id
+            print
+            id
             if id == 'id':
                 new_service[srv[id]] = srv['service_provider_name']
 
@@ -177,7 +182,8 @@ def rack_list(request):
 
     totalPage = rk.count({})
 
-    print "totalPage2=" + str(totalPage)
+    print
+    "totalPage2=" + str(totalPage)
     if totalPage % pageSize:
         totalPage = totalPage / pageSize + 1
     else:
@@ -191,7 +197,8 @@ def rack_list(request):
     new_service = {}
     for srv in servers:
         for id in srv:
-            print id
+            print
+            id
             if id == 'id':
                 new_service[srv[id]] = srv['service_provider_name']
 
@@ -221,8 +228,10 @@ def new_rack(request):
         editor = int(request.REQUEST.get('editor', 0))
         id = int(request.REQUEST.get('id', 0))
         editor_current_page = int(request.REQUEST.get('editor_current_page', 1))
-        print idc_name, rack_number, start_time, end_time, service_provider
-        print  "editor=" + str(editor), "id=" + str(id)
+        print
+        idc_name, rack_number, start_time, end_time, service_provider
+        print
+        "editor=" + str(editor), "id=" + str(id)
         table = 'idc'
         isF = isexist(table, 'idc_name', idc_name)
         insert = {"idc_name": idc_name, 'rack_number': rack_number, 'start_time': UserTime.stringToUtc(start_time),
@@ -273,7 +282,8 @@ def new_rack_config(request):
         start_time = request.REQUEST.get('start_time')
         end_time = request.REQUEST.get('end_time')
         service_provider = request.REQUEST.get('service_provider')
-        print idc_name, rack_number, start_time, end_time, service_provider
+        print
+        idc_name, rack_number, start_time, end_time, service_provider
         if idc_name is not None and rack_number is not None:
             start_time = time.strptime(start_time, "%Y-%m-%d %H:%M:%S")
             end_time = time.strptime(end_time, "%Y-%m-%d %H:%M:%S")
@@ -307,7 +317,7 @@ def new_rack_config(request):
     return render(request, 'new__config.html', {'room_list': result, 'rack_list': result_1})
 
 
-#is field isexist
+# is field isexist
 def isexist(md, key, val):
     key_list = ['id']
     r = md.find({key: val})
@@ -570,7 +580,8 @@ def getServerById(request):
 
     ret = {'result': result[0], 'idc': idc, 'room': room, 'owner_group': ServerGroup.group,
            'server_type': ServerGroup.type, 'network': network}
-    print "ret=" + str(ret)
+    print
+    "ret=" + str(ret)
     return HttpResponse(json.dumps(ret), content_type="application/json")
 
 
@@ -817,7 +828,8 @@ def ajax_users(request):
         if i['last_login']:
             i['last_login'] = str(i['last_login'])
         new_result.append(i)
-    print new_result
+    print
+    new_result
     ret = {
         "body": new_result,
         "head": head,
@@ -979,9 +991,11 @@ def room_list(request):
 
     rm = roommodel()
     r = rm.find({})
-    print r
+    print
+    r
     result = Query.fSqlResult(r, key_list)
-    print result
+    print
+    result
     return render(request, 'room/room_list.html', {'ret': result})
 
 

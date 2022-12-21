@@ -3,35 +3,59 @@
 <head>
     <meta charset="utf-8">
     <title>资产管理系统</title>
-    <meta name="description" content=""/>
-    <meta name="keywords" content=""/>
-    <meta name="robots" content=""/>
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
-{#    {% load staticfiles %}#}
-{#    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">#}
-{##}
-{#    <!-- 可选的Bootstrap主题文件（一般不用引入） -->#}
-{#    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">#}
-{#    <link rel="stylesheet" href="{% static 'css/style.css' %}" media="all"/>#}
-    {#	<link rel="stylesheet" href="{% static 'css/cypager.min.css' %}" media="all" />#}
-{#    <!--[if IE]><link rel="stylesheet" href="{% static 'css/ie.css' %}" media="all" /><![endif]-->#}
-{#    <!--[if lt IE 9]><link rel="stylesheet" href="{% static 'css/lt-ie-9.css' %}" media="all" /><![endif]-->#}
-{#    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>#}
-{##}
-{#    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->#}
-{#    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>#}
-{#    <script src="http://ajax.useso.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>#}
-{#    <script src="{% static 'js/main.js' %}?v=1111"></script>#}
+    <meta content="" name="description"/>
+    <meta content="" name="keywords"/>
+    <meta content="" name="robots"/>
+    <meta content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" name="viewport">
+    {# {% load staticfiles %}#}
+    {#
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    #}
+    {##}
+    {#    <!-- 可选的Bootstrap主题文件（一般不用引入） -->#}
+    {#
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap-theme.min.css" rel="stylesheet">
+    #}
+    {#
+    <link href="{% static 'css/style.css' %}" media="all" rel="stylesheet"/>
+    #}
+    {#
+    <link href="{% static 'css/cypager.min.css' %}" media="all" rel="stylesheet"/>
+    #}
+    {#    <!--[if IE]>
+    <link rel="stylesheet" href="{% static 'css/ie.css' %}" media="all"/><![endif]-->#}
+    {#    <!--[if lt IE 9]>
+    <link rel="stylesheet" href="{% static 'css/lt-ie-9.css' %}" media="all"/><![endif]-->#}
+    {#
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    #}
+    {##}
+    {#    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->#}
+    {#
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    #}
+    {#
+    <script src="http://ajax.useso.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    #}
+    {#
+    <script src="{% static 'js/main.js' %}?v=1111"></script>
+    #}
     {% load staticfiles %}
-    <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}">
+    <link href="{% static 'css/bootstrap/bootstrap.min.css' %}" rel="stylesheet" type="text/css">
 
     <!-- 可选的Bootstrap主题文件（一般不用引入） -->
-    <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap/bootstrap-theme.min.css' %}">
-    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" media="all"/>
-    {#	<link rel="stylesheet" href="{% static 'css/cypager.min.css' %}" media="all" />#}
-    <!--[if IE]><link rel="stylesheet" href="{% static 'css/ie.css' %}" media="all" /><![endif]-->
-    <!--[if lt IE 9]><link rel="stylesheet" href="{% static 'css/lt-ie-9.css' %}" media="all" /><![endif]-->
-{#    <script src="{% static 'css/style.css' %}"></script>#}
+    <link href="{% static 'css/bootstrap/bootstrap-theme.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/style.css' %}" media="all" rel="stylesheet" type="text/css"/>
+    {#
+    <link href="{% static 'css/cypager.min.css' %}" media="all" rel="stylesheet"/>
+    #}
+    <!--[if IE]>
+    <link rel="stylesheet" href="{% static 'css/ie.css' %}" media="all"/><![endif]-->
+    <!--[if lt IE 9]>
+    <link rel="stylesheet" href="{% static 'css/lt-ie-9.css' %}" media="all"/><![endif]-->
+    {#
+    <script src="{% static 'css/style.css' %}"></script>
+    #}
 
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="{% static 'js/jquery-3.1.1.js' %}"></script>
@@ -43,17 +67,17 @@
 <div class="testing">
     {% load staticfiles %}
     <header class="main">
-    	<h1><img src="{% static 'images/sylogo.png' %}" width="245" height="69"> 视云网络IT资产管理系统</h1>
-    	<input type="text" value="搜索" />
+        <h1><img height="69" src="{% static 'images/sylogo.png' %}" width="245"> 视云网络IT资产管理系统</h1>
+        <input type="text" value="搜索"/>
     </header>
     <section class="user">
         <div class="profile-img">
 
-            <p><img src="{% static 'images/uiface2.png' %}" alt="" height="40" width="40"/>{{ request.user }}欢迎您登陆</p>
+            <p><img alt="" height="40" src="{% static 'images/uiface2.png' %}" width="40"/>{{ request.user }}欢迎您登陆</p>
         </div>
         <div class="buttons">
             <button class="ico-font">&#9206;</button>
-		<span class="button dropdown">
+            <span class="button dropdown">
 			<a href="#">通知<span class="pip">1</span></a>
 			<ul class="notice">
                 <li>
@@ -66,7 +90,7 @@
                 </li>
             </ul>
 		</span>
-		<span class="button dropdown">
+            <span class="button dropdown">
 			<a href="#">收件箱<span class="pip">1</span></a>
 			<ul class="notice">
                 <li>
@@ -81,8 +105,8 @@
                 </li>
             </ul>
 		</span>
-{#            <span class="button">Live</span>#}
-{#            <span class="button">Help</span>#}
+            {# <span class="button">Live</span>#}
+            {# <span class="button">Help</span>#}
             <span class="button blue"><a href="/logout_view/">退出</a></span>
         </div>
     </section>

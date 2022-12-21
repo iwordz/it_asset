@@ -2,13 +2,13 @@
 <body class="login">
 <section>
     <h1><strong>用户登录</strong></h1>
-     {% if password_is_wrong %}
-        <div class="alert alert-error">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            <div style="color: #ffffff;"><h4>错误!</h4>用户名或密码错误</div>
-        </div>
+    {% if password_is_wrong %}
+    <div class="alert alert-error">
+        <button class="close" data-dismiss="alert" type="button">×</button>
+        <div style="color: #ffffff;"><h4>错误!</h4>用户名或密码错误</div>
+    </div>
     {% endif %}
-    <form method="post" action="/check_login/">{% csrf_token %}
+    <form action="/check_login/" method="post">{% csrf_token %}
         <tr>
             <th><label for="id_user_name">User name:</label></th>
             <td><input id="id_user_name" name="user_name" type="text"/></td>
@@ -59,6 +59,7 @@
 
         });
     });
+
 </script>
 </body>
 </html>
